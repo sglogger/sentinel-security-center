@@ -1,0 +1,99 @@
+# Local development environment for WP Security Center.
+#
+# Copy to docker-compose.yml (which is gitignored) and adjust ports if they
+# clash with another project. `cp .env.example .env` first if you want to
+# override credentials or ports without editing this file.
+#
+#   docker compose up -d
+#   open http://localhost:9090          # WordPress
+#   open http://localhost:9091          # phpMyAdmin
+#   open http://localhost:9025          # Mailpit — every alert e-mail lands here
+#
+# ./local_wp_core starts empty; the official image populates it with WordPress
+# core on first boot. The repo root is mounted straight in as the plugin
+# directory, so edits are live with no build step.
+
+services:
+  db:
+    image: mariadb:11
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wordpress
+      MARIADB_PASSWORD: ${DB_PASSWORD:-wordpress}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootpass}
+    volumes:
+      - ./db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      retries: 5
+
+  wordpress:
+    image: wordpress:latest
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    ports:
+      - "${WP_PORT:-9090}:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:-wordpress}
+      WORDPRESS_DEBUG: "1"
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_DEBUG_LOG', true);
+        define('WP_DEBUG_DISPLAY', false);
+        define('SCRIPT_DEBUG', true);
+        define('WP_ENVIRONMENT_TYPE', 'local');
+        // Uncomment to exercise the kill switch (see README "Locking yourself out"):
+        // define('WPSEC_DISABLE_BLOCKING', true);
+    volumes:
+      - ./local_wp_core:/var/www/html
+      - .:/var/www/html/wp-content/plugins/wp-security-center
+      - ./dev/mu-plugins:/var/www/html/wp-content/mu-plugins
+
+  # The official `wordpress` image does NOT bundle WP-CLI — only the separate
+  # `wordpress:cli` image does. Running as uid 33 (www-data) keeps file
+  # ownership consistent with the web container and avoids --allow-root.
+  wpcli:
+    image: wordpress:cli
+    depends_on:
+      db:
+        condition: service_healthy
+    user: "33:33"
+    entrypoint: /bin/sh
+    command: -c "tail -f /dev/null"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:-wordpress}
+    volumes:
+      - ./local_wp_core:/var/www/html
+      - .:/var/www/html/wp-content/plugins/wp-security-center
+      - ./dev/mu-plugins:/var/www/html/wp-content/mu-plugins
+
+  # Catches every wp_mail() so alert delivery can actually be verified.
+  mailpit:
+    image: axllent/mailpit:latest
+    restart: unless-stopped
+    ports:
+      - "${MAILPIT_PORT:-9025}:8025"
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    ports:
+      - "${PMA_PORT:-9091}:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: ${DB_ROOT_PASSWORD:-rootpass}
+      UPLOAD_LIMIT: 256M

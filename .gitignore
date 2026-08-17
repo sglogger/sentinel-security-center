@@ -1,0 +1,23 @@
+# Local dev scaffolding — not part of the shipped plugin
+docker-compose.yml
+.env
+CLAUDE.md
+.claude/
+local_wp_core/
+db_data/
+steven/
+
+# Dependencies. vendor/ is installed by CI with --no-dev and shipped inside the
+# release ZIP, so it is built rather than tracked. composer.lock IS tracked:
+# the release workflow triggers on it and CI keys its cache off it.
+vendor/
+
+# Build / tooling artefacts
+.phpunit.cache/
+.phpunit.result.cache
+*.zip
+*.log
+languages/*.mo
+
+# OS
+.DS_Store

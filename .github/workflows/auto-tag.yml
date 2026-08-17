@@ -1,0 +1,197 @@
+name: Auto-tag & release from plugin version
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - wp-security-center.php
+      - composer.lock
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  tag-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      # The version lives in three places that must never drift apart: the
+      # plugin header, the runtime constant, and readme.txt's Stable tag
+      # (which the updater parses for the "View details" modal).
+      - name: Read and cross-check version
+        id: ver
+        run: |
+          HEADER=$(grep -E '^\s*\*\s*Version:' wp-security-center.php | head -n1 | awk -F: '{print $2}' | xargs)
+          CONST=$(grep -E "define\(\s*'WPSEC_VERSION'" wp-security-center.php | sed -E "s/.*'([0-9.]+)'.*/\1/")
+          STABLE=$(grep -E '^Stable tag:' readme.txt | awk -F: '{print $2}' | xargs)
+          if [ -z "$HEADER" ]; then
+            echo "::error::Could not find Version header in wp-security-center.php"
+            exit 1
+          fi
+          if [ "$HEADER" != "$CONST" ]; then
+            echo "::error::Version header ($HEADER) and WPSEC_VERSION ($CONST) disagree"
+            exit 1
+          fi
+          if [ "$HEADER" != "$STABLE" ]; then
+            echo "::error::Version header ($HEADER) and readme.txt Stable tag ($STABLE) disagree"
+            exit 1
+          fi
+          echo "version=$HEADER" >> "$GITHUB_OUTPUT"
+          echo "tag=v$HEADER"    >> "$GITHUB_OUTPUT"
+
+      - name: Check if tag already exists
+        id: exists
+        run: |
+          if git rev-parse -q --verify "refs/tags/${{ steps.ver.outputs.tag }}" >/dev/null; then
+            echo "Tag ${{ steps.ver.outputs.tag }} already exists – skipping tag creation."
+            echo "tag_exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag_exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create & push tag
+        if: steps.exists.outputs.tag_exists == 'false'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "${{ steps.ver.outputs.tag }}" -m "Release ${{ steps.ver.outputs.tag }}"
+          git push origin "${{ steps.ver.outputs.tag }}"
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer:v2
+          coverage: none
+
+      # vendor/ SHIPS in this plugin (the MaxMind MMDB reader is a runtime
+      # dependency), so it is installed here without dev packages and is NOT
+      # excluded from the ZIP below.
+      - name: Install runtime dependencies only
+        run: composer install --no-dev --no-interaction --no-progress --optimize-autoloader --classmap-authoritative --prefer-dist
+
+      - name: Assert no dev packages leaked into vendor/
+        run: |
+          test -f vendor/autoload.php || { echo "::error::vendor/autoload.php missing"; exit 1; }
+          for d in phpunit squizlabs wp-coding-standards phpcompatibility dealerdirect; do
+            if [ -d "vendor/$d" ]; then
+              echo "::error::dev package vendor/$d present — refusing to ship"
+              exit 1
+            fi
+          done
+
+      - name: Compile translations
+        run: |
+          if ls languages/*.po >/dev/null 2>&1; then
+            sudo apt-get update -qq && sudo apt-get install -y -qq gettext
+            for po in languages/*.po; do
+              msgfmt "$po" -o "${po%.po}.mo"
+            done
+          fi
+
+      # Deliberately an ALLOW list, not an exclude list. With excludes, every
+      # file added to the repo later (a doc, a scratch script, a new tool
+      # config) silently ends up in the shipped plugin. With an allow list it
+      # cannot: anything not named here is simply never copied.
+      #
+      # Shipped: the bootstrap, the code, the assets, and the two files
+      # WordPress itself consumes — readme.txt (the plugin details modal is
+      # rendered from it) and LICENSE.txt (the GPL requires it to accompany
+      # distribution). Nothing else is needed at runtime.
+      - name: Stage plugin files
+        run: |
+          SLUG=wp-security-center
+          STAGE="$RUNNER_TEMP/$SLUG"
+          rm -rf "$STAGE"
+          mkdir -p "$STAGE"
+
+          for path in \
+            wp-security-center.php \
+            uninstall.php \
+            index.php \
+            readme.txt \
+            LICENSE.txt
+          do
+            test -f "$path" || { echo "::error::required file $path is missing"; exit 1; }
+            cp "$path" "$STAGE/"
+          done
+
+          for dir in includes admin assets languages vendor; do
+            test -d "$dir" || { echo "::error::required directory $dir is missing"; exit 1; }
+            cp -a "$dir" "$STAGE/"
+          done
+
+          # Third-party packages ship their own test suites and docs. None of
+          # it is needed at runtime and it is a meaningful share of the ZIP.
+          find "$STAGE/vendor" -type d \
+            \( -name tests -o -name test -o -name doc -o -name docs \
+               -o -name examples -o -name .github -o -name bin \) \
+            -prune -exec rm -rf {} + 2>/dev/null || true
+          find "$STAGE" \( -name '*.md' -o -name '*.po' -o -name '.DS_Store' \
+                           -o -name '.gitignore' -o -name '.gitattributes' \
+                           -o -name 'phpunit.xml*' -o -name '.editorconfig' \) \
+            -delete 2>/dev/null || true
+
+      # A ZIP that carries dev scaffolding is a packaging bug, so fail the
+      # release rather than publish it.
+      - name: Verify nothing unwanted was staged
+        run: |
+          SLUG=wp-security-center
+          STAGE="$RUNNER_TEMP/$SLUG"
+
+          echo "--- staged tree (excluding vendor internals) ---"
+          find "$STAGE" -not -path '*/vendor/*/*' | sort
+
+          # Never acceptable anywhere in the package.
+          ANYWHERE='docker-compose|CLAUDE\.md|/\.env|local_wp_core|db_data|node_modules|/\.git|/tests?/|/steven/|\.po$|\.zip$'
+          if find "$STAGE" | grep -Ei "$ANYWHERE"; then
+            echo "::error::development files found in the staged plugin (listed above)"
+            exit 1
+          fi
+
+          # Tooling config is only forbidden at the plugin root. A vendored
+          # package legitimately carries its own composer.json, and deleting
+          # files from inside a dependency is how you break it.
+          for unwanted in composer.json composer.lock phpunit.xml.dist phpcs.xml.dist docker-compose.yml-example .env.example README.md CHANGELOG.md; do
+            if [ -e "$STAGE/$unwanted" ]; then
+              echo "::error::$unwanted must not ship inside the plugin"
+              exit 1
+            fi
+          done
+
+          for unwanted in tests dev .github steven local_wp_core db_data; do
+            if [ -e "$STAGE/$unwanted" ]; then
+              echo "::error::directory $unwanted must not ship inside the plugin"
+              exit 1
+            fi
+          done
+
+          # A WordPress plugin is identified by its header; without this the
+          # ZIP is not installable at all.
+          grep -q '^\s*\*\s*Plugin Name:' "$STAGE/wp-security-center.php" \
+            || { echo "::error::plugin header missing from the staged bootstrap"; exit 1; }
+
+          test -f "$STAGE/vendor/autoload.php" || { echo "::error::vendor/autoload.php missing from the staged plugin"; exit 1; }
+
+          echo "--- staged size ---"
+          du -sh "$STAGE"
+
+      - name: Build plugin ZIP
+        run: |
+          SLUG=wp-security-center
+          cd "$RUNNER_TEMP"
+          zip -rq "$GITHUB_WORKSPACE/$SLUG.zip" "$SLUG"
+          unzip -l "$GITHUB_WORKSPACE/$SLUG.zip" | tail -1
+
+      - name: Create / update GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.ver.outputs.tag }}
+          files: wp-security-center.zip
+          generate_release_notes: true
+          fail_on_unmatched_files: true

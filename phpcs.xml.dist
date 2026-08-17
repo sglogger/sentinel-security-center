@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<ruleset name="WP Security Center">
+	<description>WordPress coding standards for WP Security Center.</description>
+
+	<file>.</file>
+
+	<exclude-pattern>/vendor/*</exclude-pattern>
+	<exclude-pattern>/node_modules/*</exclude-pattern>
+	<exclude-pattern>/local_wp_core/*</exclude-pattern>
+	<exclude-pattern>/db_data/*</exclude-pattern>
+	<exclude-pattern>/steven/*</exclude-pattern>
+
+	<arg name="extensions" value="php"/>
+	<arg name="colors"/>
+	<arg value="ps"/>
+	<arg name="parallel" value="8"/>
+
+	<rule ref="WordPress-Extra">
+		<!-- Files are class-kebab-case.php holding Underscore_Case classes,
+			 the WordPress core convention. The sniff expects one or the other
+			 to be renamed; we follow core, not PSR-4. -->
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+
+		<!-- Short array syntax is the house style and is used consistently
+			 across this author's plugins. WPCS 3 defaults to long arrays. -->
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+	</rule>
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array" value="wp-security-center"/>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array" value="wpsec,WPSEC,WPSecurityCenter"/>
+		</properties>
+	</rule>
+
+	<config name="minimum_wp_version" value="6.5"/>
+
+	<rule ref="PHPCompatibility"/>
+	<config name="testVersion" value="8.1-"/>
+
+	<!-- The unit tests are plain PHP against WordPress-free classes; the
+		 WordPress file/naming conventions do not apply to them. -->
+	<rule ref="WordPress.Files.FileName">
+		<exclude-pattern>/tests/*</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<exclude-pattern>/tests/*</exclude-pattern>
+	</rule>
+</ruleset>

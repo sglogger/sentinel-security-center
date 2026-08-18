@@ -54,11 +54,30 @@ final class Plugin {
 		// uploading files rather than through the updater.
 		Installer::maybe_migrate();
 
+		// Monitors and the login guard must run on every request: a plugin can
+		// be activated over AJAX, a user created through the REST API, and a
+		// login happens on the front end.
+		$this->add( 'logger', new Logger() );
+		$this->add( 'plugin_monitor', new Plugin_Monitor() );
+		$this->add( 'user_monitor', new User_Monitor() );
+		$this->add( 'option_monitor', new Option_Monitor() );
+		$this->add( 'login_guard', new Login_Guard() );
+		$this->add( 'bypass_token', new Bypass_Token() );
+
+		// Scheduled work. Registering the handlers is cheap; they only do
+		// anything when their cron event fires.
+		$this->add( 'file_scanner', new File_Scanner() );
+		$this->add( 'user_reconciler', new User_Reconciler() );
+		$this->add( 'config_scanner', new Config_Scanner() );
+		$this->add( 'core_checksums', new Core_Checksums() );
+		$this->add( 'geoip_database', new Geoip_Database() );
+
 		// Admin surface. Everything user-visible is gated on `manage_options`
-		// inside this component — the plugin must be imperceptible to anyone
+		// inside these components — the plugin must be imperceptible to anyone
 		// who is not an administrator.
 		if ( is_admin() ) {
 			$this->add( 'admin', new Admin() );
+			$this->add( 'csv_exporter', new Csv_Exporter() );
 		}
 
 		// GitHub Releases self-updater. Only ever needed in the admin, during

@@ -141,6 +141,26 @@ final class Installer {
 
 		update_option( self::OPTION_VERSION, WPSEC_VERSION );
 		update_option( self::OPTION_DATA_VERSION, WPSEC_DATA_VERSION );
+
+		// Adopt the site as it is today. Without this an established install
+		// would greet the administrator with a wall of "new file" and "unknown
+		// user" reports for things that have been in place for years, and the
+		// real signal would drown in it.
+		User_Reconciler::establish_baseline();
+		Config_Scanner::establish_baseline();
+		File_Scanner::establish_baseline();
+
+		Logger::log(
+			'security_center.activated',
+			[
+				'object_id' => WPSEC_VERSION,
+				'message'   => sprintf(
+					'WP Security Center %s was activated. The current state of users, files and configuration has been recorded as the baseline; changes from here on will be reported.',
+					WPSEC_VERSION
+				),
+				'data'      => [ 'version' => WPSEC_VERSION ],
+			]
+		);
 	}
 
 	/**
@@ -149,6 +169,18 @@ final class Installer {
 	 * in uninstall(), and only when explicitly opted into.
 	 */
 	public static function deactivate(): void {
+		// Recorded before the cron jobs go, so the log shows that monitoring
+		// stopped and when. A deactivation nobody noticed is how a compromise
+		// stays invisible.
+		Logger::log(
+			'security_center.deactivated',
+			[
+				'object_id' => WPSEC_VERSION,
+				'message'   => 'WP Security Center was deactivated. Nothing is being monitored until it is switched back on.',
+				'data'      => [ 'version' => WPSEC_VERSION ],
+			]
+		);
+
 		foreach ( array_keys( self::cron_schedule() ) as $hook ) {
 			wp_clear_scheduled_hook( $hook );
 		}

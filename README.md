@@ -8,7 +8,7 @@ log, and e-mails you immediately when it matters.
 Distributed from GitHub Releases, not wordpress.org. The plugin updates itself
 in place; no helper plugin is required.
 
-**Status:** in development. See [CHANGELOG.md](CHANGELOG.md) for what exists.
+**Status:** feature complete as of 1.1.0. See [CHANGELOG.md](CHANGELOG.md).
 
 ---
 
@@ -156,6 +156,18 @@ composer lint    # PHPCS, WordPress-Extra + PHPCompatibility
 composer fix     # PHPCBF
 ```
 
+`phpcs.xml.dist` records a handful of deliberate exemptions, each with the
+reason next to it — direct filesystem access in the scanners (WP_Filesystem is
+not initialised during cron, which is when they run), and custom-table SQL where
+the table name is interpolated from `$wpdb->prefix` while every value is bound.
+If you add a query to one of those files, that rule still stands: **table name
+interpolated, values always bound.**
+
+`phpcbf` must not be run over `admin/views/` unattended. Whitespace inside a
+`<textarea>` is significant, and the embedded-PHP sniffs will happily reformat
+it onto its own lines and inject newlines into saved field values. The relevant
+sniffs are switched off for that directory.
+
 The unit suite deliberately does not boot WordPress. The logic worth testing —
 IP resolution, trusted-proxy validation, IPv4/IPv6 CIDR matching, the access
 decision, backdoor signatures — was factored into WordPress-free classes for
@@ -199,6 +211,22 @@ versions, tags, installs runtime dependencies with `--no-dev`, asserts no dev
 package leaked into `vendor/`, compiles the `.po` files, builds the ZIP and
 publishes the GitHub release. Sites running an older version pick it up through
 the built-in updater.
+
+## Translations
+
+Source strings are English. A complete German translation ships in
+`languages/`. To regenerate after changing strings:
+
+```sh
+docker compose exec wpcli wp i18n make-pot wp-content/plugins/wp-security-center \
+  wp-content/plugins/wp-security-center/languages/wp-security-center.pot \
+  --exclude=vendor,tests,dev,local_wp_core --slug=wp-security-center
+docker compose exec wpcli sh -c 'cd /var/www/html/wp-content/plugins/wp-security-center \
+  && wp i18n make-mo languages/ languages/'
+```
+
+Only the `.po` is tracked; the release workflow compiles the `.mo` so the two
+can never drift apart.
 
 ## Licence
 

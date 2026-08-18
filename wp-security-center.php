@@ -3,7 +3,7 @@
  * Plugin Name:       WP Security Center
  * Plugin URI:        https://github.com/sglogger/wp-security-center
  * Description:       Security monitoring and alerting for WordPress. Logs and alerts on plugin/theme changes, administrator and role changes, configuration changes, filesystem integrity and logins from countries outside your allow list — with optional login blocking. Administrator-only, with immediate e-mail alerts.
- * Version:           1.0.0
+ * Version:           1.1.0
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Author:            Steven Glogger
@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // -----------------------------------------------------------------------------
 // Plugin constants
 // -----------------------------------------------------------------------------
-define( 'WPSEC_VERSION', '1.0.0' );
+define( 'WPSEC_VERSION', '1.1.0' );
 define( 'WPSEC_FILE', __FILE__ );
 define( 'WPSEC_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WPSEC_URL', plugin_dir_url( __FILE__ ) );
@@ -96,7 +96,44 @@ if ( version_compare( (string) get_bloginfo( 'version' ), WPSEC_MIN_WP, '<' ) ) 
 require_once WPSEC_DIR . 'includes/class-plugin.php';
 require_once WPSEC_DIR . 'includes/class-installer.php';
 require_once WPSEC_DIR . 'includes/class-updater.php';
+
+// Core: the event catalogue, request context, and the write path.
+require_once WPSEC_DIR . 'includes/class-event-registry.php';
+require_once WPSEC_DIR . 'includes/class-context.php';
+require_once WPSEC_DIR . 'includes/class-logger.php';
+require_once WPSEC_DIR . 'includes/class-log-query.php';
+require_once WPSEC_DIR . 'includes/class-alerts.php';
+require_once WPSEC_DIR . 'includes/class-mailer.php';
+
+// Location handling. Ip_Matcher, Ip_Resolver and Access_Policy are free of
+// WordPress so the decision logic can be unit-tested on its own.
+require_once WPSEC_DIR . 'includes/geo/class-ip-matcher.php';
+require_once WPSEC_DIR . 'includes/geo/class-ip-resolver.php';
+require_once WPSEC_DIR . 'includes/geo/class-access-policy.php';
+require_once WPSEC_DIR . 'includes/geo/class-tar-reader.php';
+require_once WPSEC_DIR . 'includes/geo/class-geoip-database.php';
+require_once WPSEC_DIR . 'includes/geo/class-country-resolver.php';
+require_once WPSEC_DIR . 'includes/geo/class-cloudflare-ranges.php';
+require_once WPSEC_DIR . 'includes/geo/class-allowlist.php';
+require_once WPSEC_DIR . 'includes/geo/class-bypass-token.php';
+require_once WPSEC_DIR . 'includes/geo/class-login-guard.php';
+
+// Hook-driven monitors.
+require_once WPSEC_DIR . 'includes/monitors/class-plugin-monitor.php';
+require_once WPSEC_DIR . 'includes/monitors/class-user-monitor.php';
+require_once WPSEC_DIR . 'includes/monitors/class-option-monitor.php';
+
+// Scheduled scanners, for everything that has no usable hook.
+require_once WPSEC_DIR . 'includes/scanners/class-signature-scanner.php';
+require_once WPSEC_DIR . 'includes/scanners/class-file-scanner.php';
+require_once WPSEC_DIR . 'includes/scanners/class-user-reconciler.php';
+require_once WPSEC_DIR . 'includes/scanners/class-config-scanner.php';
+require_once WPSEC_DIR . 'includes/scanners/class-core-checksums.php';
+
+// Admin surface.
 require_once WPSEC_DIR . 'admin/class-admin.php';
+require_once WPSEC_DIR . 'admin/class-log-list-table.php';
+require_once WPSEC_DIR . 'admin/class-csv-exporter.php';
 
 // -----------------------------------------------------------------------------
 // Lifecycle hooks

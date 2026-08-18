@@ -1,0 +1,1453 @@
+# German translation for WP Security Center.
+# Copyright (C) 2026 Steven Glogger
+# This file is distributed under the same licence as the WP Security Center plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Security Center 1.1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/sglogger/wp-security-center/issues\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: wp-security-center\n"
+
+
+#. Plugin Name of the plugin
+#: wp-security-center.php
+msgid "WP Security Center"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: wp-security-center.php
+msgid "https://github.com/sglogger/wp-security-center"
+msgstr ""
+
+#. Description of the plugin
+#: wp-security-center.php
+msgid "Security monitoring and alerting for WordPress. Logs and alerts on plugin/theme changes, administrator and role changes, configuration changes, filesystem integrity and logins from countries outside your allow list — with optional login blocking. Administrator-only, with immediate e-mail alerts."
+msgstr "Sicherheitsüberwachung und Alarmierung für WordPress. Protokolliert und meldet Änderungen an Plugins und Themes, an Administratoren und Rollen, an der Konfiguration und am Dateibestand sowie Logins aus Ländern ausserhalb deiner Positivliste — mit optionaler Login-Sperre. Nur für Administratoren sichtbar, mit sofortigen E-Mail-Alarmen."
+
+#. Author of the plugin
+#: wp-security-center.php
+msgid "Steven Glogger"
+msgstr ""
+
+#. Author URI of the plugin
+#: wp-security-center.php
+msgid "https://www.glogger.ch"
+msgstr ""
+
+#: admin/class-admin.php:49
+#: admin/class-admin.php:50
+msgid "Security Center"
+msgstr "Security Center"
+
+#: admin/class-admin.php:60
+#: admin/class-admin.php:61
+msgid "Event Log"
+msgstr "Ereignisprotokoll"
+
+#: admin/class-admin.php:69
+#: admin/class-admin.php:70
+msgid "Status"
+msgstr "Status"
+
+#: admin/class-admin.php:78
+#: admin/class-admin.php:79
+#: admin/views/page-diagnostics.php:44
+msgid "Diagnostics"
+msgstr "Diagnose"
+
+#: admin/class-admin.php:87
+#: admin/class-admin.php:88
+#: admin/class-admin.php:134
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: admin/class-admin.php:101
+msgid "Events per page"
+msgstr "Ereignisse pro Seite"
+
+#: admin/class-admin.php:161
+msgid "No countries are on the allow list, so login location rules do nothing at all. Add at least your own country on the Settings screen."
+msgstr "Es steht kein Land auf der Positivliste, die Standortregeln greifen deshalb überhaupt nicht. Trage in den Einstellungen mindestens dein eigenes Land ein."
+
+#: admin/class-admin.php:168
+msgid "Login blocking is armed but no working country lookup is available. Blocking will stand itself down until a GeoIP database is installed."
+msgstr "Die Login-Sperre ist scharf, es steht aber keine funktionierende Länderermittlung zur Verfügung. Die Sperre entschärft sich selbst, bis eine GeoIP-Datenbank installiert ist."
+
+#: admin/class-admin.php:175
+msgid "The GeoIP database is out of date. It is still being used, but country results may be wrong for recently reassigned addresses."
+msgstr "Die GeoIP-Datenbank ist veraltet. Sie wird weiter benutzt, bei kürzlich neu vergebenen Adressen kann das Land aber falsch sein."
+
+#: admin/class-admin.php:204
+msgid "Security Event Log"
+msgstr "Sicherheits-Ereignisprotokoll"
+
+#. translators: %d: number of matching events
+#: admin/class-admin.php:211
+#, php-format
+msgid "%d matching event."
+msgid_plural "%d matching events."
+msgstr[0] "%d passendes Ereignis."
+msgstr[1] "%d passende Ereignisse."
+
+#: admin/class-admin.php:219
+msgid "Search log"
+msgstr "Protokoll durchsuchen"
+
+#: admin/class-admin.php:269
+msgid "You do not have permission to change these settings."
+msgstr "Du hast keine Berechtigung, diese Einstellungen zu ändern."
+
+#: admin/class-admin.php:583
+msgid "Settings saved."
+msgstr "Einstellungen gespeichert."
+
+#: admin/class-admin.php:584
+msgid "The GeoIP database was downloaded and installed."
+msgstr "Die GeoIP-Datenbank wurde heruntergeladen und installiert."
+
+#: admin/class-admin.php:585
+msgid "The GeoIP database could not be downloaded. See the Status screen for the reason."
+msgstr "Die GeoIP-Datenbank konnte nicht heruntergeladen werden. Den Grund zeigt die Status-Seite."
+
+#: admin/class-admin.php:586
+msgid "The test alert was accepted for delivery. Check the recipient inbox."
+msgstr "Der Testalarm wurde zur Zustellung angenommen. Prüfe das Postfach des Empfängers."
+
+#: admin/class-admin.php:588
+msgid "All scans have been run. Any findings are in the event log."
+msgstr "Alle Prüfungen wurden ausgeführt. Etwaige Funde stehen im Ereignisprotokoll."
+
+#: admin/class-admin.php:589
+msgid "All sessions were destroyed. Everyone, including you, must sign in again."
+msgstr "Alle Sitzungen wurden beendet. Alle müssen sich neu anmelden, du eingeschlossen."
+
+#: admin/class-admin.php:612
+msgid "The test alert could not be sent. Check that at least one recipient is configured."
+msgstr "Der Testalarm konnte nicht gesendet werden. Prüfe, ob mindestens ein Empfänger eingetragen ist."
+
+#. translators: %s: error message from the mail layer
+#: admin/class-admin.php:617
+#, php-format
+msgid "The test alert could not be sent: %s"
+msgstr "Der Testalarm konnte nicht gesendet werden: %s"
+
+#: admin/class-csv-exporter.php:29
+msgid "You do not have permission to export the security log."
+msgstr "Du hast keine Berechtigung, das Sicherheitsprotokoll zu exportieren."
+
+#: admin/class-csv-exporter.php:48
+msgid "The export could not be started."
+msgstr "Der Export konnte nicht gestartet werden."
+
+#: admin/class-log-list-table.php:45
+#: includes/class-mailer.php:74
+msgid "Time (UTC)"
+msgstr "Zeit (UTC)"
+
+#: admin/class-log-list-table.php:46
+#: admin/views/page-settings.php:126
+#: includes/class-mailer.php:71
+msgid "Severity"
+msgstr "Schweregrad"
+
+#: admin/class-log-list-table.php:47
+#: admin/views/page-settings.php:125
+#: includes/class-mailer.php:70
+msgid "Event"
+msgstr "Ereignis"
+
+#: admin/class-log-list-table.php:48
+msgid "Description"
+msgstr "Beschreibung"
+
+#: admin/class-log-list-table.php:49
+#: includes/class-mailer.php:80
+msgid "Performed by"
+msgstr "Ausgeführt von"
+
+#: admin/class-log-list-table.php:50
+#: admin/class-log-list-table.php:353
+#: includes/class-mailer.php:101
+msgid "IP address"
+msgstr "IP-Adresse"
+
+#: admin/class-log-list-table.php:105
+msgid "No events recorded yet."
+msgstr "Noch keine Ereignisse aufgezeichnet."
+
+#. translators: %s: human-readable time difference
+#: admin/class-log-list-table.php:135
+#, php-format
+msgid "%s ago"
+msgstr "vor %s"
+
+#: admin/class-log-list-table.php:205
+#: includes/class-mailer.php:120
+msgid "Details"
+msgstr "Details"
+
+#: admin/class-log-list-table.php:213
+msgid "Alert e-mail sent"
+msgstr "Alarm-E-Mail versendet"
+
+#: admin/class-log-list-table.php:215
+msgid "Alert e-mail FAILED to send"
+msgstr "Alarm-E-Mail konnte NICHT versendet werden"
+
+#: admin/class-log-list-table.php:217
+msgid "Alert e-mail suppressed (hourly budget)"
+msgstr "Alarm-E-Mail zurückgehalten (Stundenlimit)"
+
+#: admin/class-log-list-table.php:232
+msgid "anonymous"
+msgstr "anonym"
+
+#. translators: %s: affected user login
+#: admin/class-log-list-table.php:253
+#, php-format
+msgid "affected: %s"
+msgstr "betroffen: %s"
+
+#: admin/class-log-list-table.php:314
+msgid "All categories"
+msgstr "Alle Kategorien"
+
+#: admin/class-log-list-table.php:326
+msgid "Any severity"
+msgstr "Jeder Schweregrad"
+
+#. translators: %s: severity name
+#: admin/class-log-list-table.php:335
+#, php-format
+msgid "%s and above"
+msgstr "%s und höher"
+
+#: admin/class-log-list-table.php:344
+msgid "All time"
+msgstr "Gesamter Zeitraum"
+
+#: admin/class-log-list-table.php:345
+msgid "Last 24 hours"
+msgstr "Letzte 24 Stunden"
+
+#: admin/class-log-list-table.php:345
+msgid "Last 7 days"
+msgstr "Letzte 7 Tage"
+
+#: admin/class-log-list-table.php:345
+msgid "Last 30 days"
+msgstr "Letzte 30 Tage"
+
+#: admin/class-log-list-table.php:345
+msgid "Last 90 days"
+msgstr "Letzte 90 Tage"
+
+#: admin/class-log-list-table.php:356
+msgid "Filter"
+msgstr "Filtern"
+
+#: admin/class-log-list-table.php:359
+msgid "Export CSV"
+msgstr "CSV exportieren"
+
+#: admin/views/page-diagnostics.php:46
+msgid "How this request was seen"
+msgstr "Wie diese Anfrage erkannt wurde"
+
+#: admin/views/page-diagnostics.php:50
+msgid "Connecting address (REMOTE_ADDR)"
+msgstr "Verbindende Adresse (REMOTE_ADDR)"
+
+#: admin/views/page-diagnostics.php:54
+msgid "Is it a trusted proxy?"
+msgstr "Ist das ein vertrauenswürdiger Proxy?"
+
+#: admin/views/page-diagnostics.php:57
+msgid "Yes — forwarding headers are being honoured"
+msgstr "Ja — Weiterleitungs-Header werden ausgewertet"
+
+#: admin/views/page-diagnostics.php:59
+msgid "No — forwarding headers are ignored entirely"
+msgstr "Nein — Weiterleitungs-Header werden vollständig ignoriert"
+
+#: admin/views/page-diagnostics.php:64
+msgid "Resolved client address"
+msgstr "Ermittelte Client-Adresse"
+
+#: admin/views/page-diagnostics.php:74
+msgid "Forwarded-for chain"
+msgstr "Forwarded-For-Kette"
+
+#: admin/views/page-diagnostics.php:79
+msgid "(trusted proxy)"
+msgstr "(vertrauenswürdiger Proxy)"
+
+#: admin/views/page-diagnostics.php:79
+msgid "(not trusted)"
+msgstr "(nicht vertrauenswürdig)"
+
+#: admin/views/page-diagnostics.php:85
+#: admin/views/page-diagnostics.php:158
+msgid "Country"
+msgstr "Land"
+
+#: admin/views/page-diagnostics.php:92
+msgid "from the CDN country header"
+msgstr "aus dem Länder-Header des CDN"
+
+#: admin/views/page-diagnostics.php:94
+msgid "from the local GeoIP database"
+msgstr "aus der lokalen GeoIP-Datenbank"
+
+#: admin/views/page-diagnostics.php:95
+msgid "no source available"
+msgstr "keine Quelle verfügbar"
+
+#: admin/views/page-diagnostics.php:101
+msgid "What would happen on login"
+msgstr "Was bei einem Login passieren würde"
+
+#: admin/views/page-diagnostics.php:105
+msgid "Allowed"
+msgstr "Erlaubt"
+
+#: admin/views/page-diagnostics.php:106
+msgid "Allowed, but reported"
+msgstr "Erlaubt, aber gemeldet"
+
+#: admin/views/page-diagnostics.php:107
+msgid "BLOCKED"
+msgstr "GESPERRT"
+
+#. translators: %s: internal name of the rule that decided
+#: admin/views/page-diagnostics.php:114
+#, php-format
+msgid "Decided by: %s"
+msgstr "Entschieden durch: %s"
+
+#: admin/views/page-diagnostics.php:121
+msgid "What would happen for another address?"
+msgstr "Was würde bei einer anderen Adresse passieren?"
+
+#: admin/views/page-diagnostics.php:125
+msgid "Test"
+msgstr "Testen"
+
+#: admin/views/page-diagnostics.php:134
+msgid "That is not a valid IP address."
+msgstr "Das ist keine gültige IP-Adresse."
+
+#: admin/views/page-diagnostics.php:157
+#: admin/views/page-status.php:246
+msgid "Address"
+msgstr "Adresse"
+
+#: admin/views/page-diagnostics.php:159
+msgid "Verdict"
+msgstr "Ergebnis"
+
+#: admin/views/page-diagnostics.php:160
+msgid "Rules consulted"
+msgstr "Geprüfte Regeln"
+
+#: admin/views/page-diagnostics.php:166
+msgid "Incoming headers"
+msgstr "Eingehende Header"
+
+#: admin/views/page-diagnostics.php:167
+msgid "Everything the web server passed to PHP for this request. Use it to work out which header your proxy actually sets."
+msgstr "Alles, was der Webserver für diese Anfrage an PHP übergeben hat. Damit findest du heraus, welchen Header dein Proxy tatsächlich setzt."
+
+#: admin/views/page-settings.php:23
+msgid "General"
+msgstr "Allgemein"
+
+#: admin/views/page-settings.php:24
+msgid "Alerts"
+msgstr "Alarme"
+
+#: admin/views/page-settings.php:25
+msgid "Login & Location"
+msgstr "Login & Standort"
+
+#: admin/views/page-settings.php:26
+msgid "File Integrity"
+msgstr "Dateiintegrität"
+
+#: admin/views/page-settings.php:30
+msgid "Security Center Settings"
+msgstr "Security-Center-Einstellungen"
+
+#: admin/views/page-settings.php:48
+msgid "Alert recipients"
+msgstr "Alarm-Empfänger"
+
+#: admin/views/page-settings.php:53
+msgid "One e-mail address per line. Alerts are sent immediately, with no delay and no digest."
+msgstr "Eine E-Mail-Adresse pro Zeile. Alarme gehen sofort raus, ohne Verzögerung und ohne Sammelmeldung."
+
+#: admin/views/page-settings.php:57
+msgid "Sender name"
+msgstr "Absendername"
+
+#: admin/views/page-settings.php:61
+msgid "Sender address"
+msgstr "Absenderadresse"
+
+#: admin/views/page-settings.php:64
+msgid "Leave empty to use the WordPress default sender."
+msgstr "Leer lassen, um den Standardabsender von WordPress zu verwenden."
+
+#: admin/views/page-settings.php:68
+msgid "Hourly e-mail limit"
+msgstr "Stündliches E-Mail-Limit"
+
+#: admin/views/page-settings.php:71
+msgid "A safety valve, not a digest. Alerts are always immediate; only if this many messages are sent within an hour is delivery paused and a single summary sent instead. Every event is still written to the log. 0 disables the limit."
+msgstr "Ein Sicherheitsventil, keine Sammelmeldung. Alarme gehen immer sofort raus; erst wenn innerhalb einer Stunde so viele Nachrichten versendet wurden, pausiert der Versand und es geht eine einzelne Zusammenfassung raus. Protokolliert wird trotzdem jedes Ereignis. 0 deaktiviert das Limit."
+
+#: admin/views/page-settings.php:75
+msgid "Keep log entries for"
+msgstr "Protokolleinträge aufbewahren für"
+
+#: admin/views/page-settings.php:78
+#: admin/views/page-settings.php:280
+msgid "days"
+msgstr "Tage"
+
+#: admin/views/page-settings.php:79
+msgid "Older entries are removed daily. 0 keeps everything forever."
+msgstr "Ältere Einträge werden täglich entfernt. 0 behält alles dauerhaft."
+
+#: admin/views/page-settings.php:83
+msgid "On uninstall"
+msgstr "Bei Deinstallation"
+
+#: admin/views/page-settings.php:87
+msgid "Delete the event log and all settings when the plugin is uninstalled"
+msgstr "Ereignisprotokoll und alle Einstellungen bei der Deinstallation löschen"
+
+#: admin/views/page-settings.php:89
+msgid "Off by default. Discarding an audit trail should be a deliberate choice."
+msgstr "Standardmässig aus. Ein Prüfprotokoll zu verwerfen sollte eine bewusste Entscheidung sein."
+
+#: admin/views/page-settings.php:97
+msgid "Verify delivery"
+msgstr "Zustellung prüfen"
+
+#: admin/views/page-settings.php:98
+msgid "This plugin is only worth anything if its alerts actually arrive. A rejected sender address fails silently on many hosts, so it is worth proving delivery once."
+msgstr "Dieses Plugin ist nur etwas wert, wenn seine Alarme auch ankommen. Eine abgelehnte Absenderadresse scheitert auf vielen Hostings stillschweigend — es lohnt sich, die Zustellung einmal nachzuweisen."
+
+#: admin/views/page-settings.php:101
+msgid "Send a test alert"
+msgstr "Testalarm senden"
+
+#: admin/views/page-settings.php:107
+msgid "Choose what happens for each event. \"E-mail\" sends immediately and also writes to the log; \"Log only\" records it without sending; \"Off\" ignores the event entirely."
+msgstr "Lege für jedes Ereignis fest, was passiert. „E-Mail“ versendet sofort und protokolliert zusätzlich; „Nur protokollieren“ zeichnet auf, ohne zu versenden; „Aus“ ignoriert das Ereignis vollständig."
+
+#: admin/views/page-settings.php:127
+#: admin/views/page-settings.php:176
+msgid "Action"
+msgstr "Aktion"
+
+#: admin/views/page-settings.php:140
+msgid "E-mail"
+msgstr "E-Mail"
+
+#: admin/views/page-settings.php:140
+msgid "Log only"
+msgstr "Nur protokollieren"
+
+#: admin/views/page-settings.php:140
+msgid "Off"
+msgstr "Aus"
+
+#: admin/views/page-settings.php:167
+#: admin/views/page-status.php:51
+msgid "Location checks"
+msgstr "Standortprüfung"
+
+#: admin/views/page-settings.php:171
+msgid "Evaluate and log the country of every successful login"
+msgstr "Land jedes erfolgreichen Logins auswerten und protokollieren"
+
+#: admin/views/page-settings.php:180
+msgid "Monitor only — alert, but let the login through"
+msgstr "Nur beobachten — alarmieren, den Login aber durchlassen"
+
+#: admin/views/page-settings.php:184
+msgid "Block logins from countries that are not on the list"
+msgstr "Logins aus Ländern sperren, die nicht auf der Liste stehen"
+
+#: admin/views/page-settings.php:187
+msgid "Blocking cannot be armed: no working country lookup is available. Install a GeoIP database below, or configure a trusted CDN country header."
+msgstr "Die Sperre lässt sich nicht scharf schalten: Es steht keine funktionierende Länderermittlung zur Verfügung. Installiere unten eine GeoIP-Datenbank oder richte einen vertrauenswürdigen CDN-Länder-Header ein."
+
+#: admin/views/page-settings.php:189
+msgid "Blocking cannot be armed while the country list is empty."
+msgstr "Die Sperre lässt sich nicht scharf schalten, solange die Länderliste leer ist."
+
+#: admin/views/page-settings.php:192
+msgid "An address whose country cannot be determined counts as not allowed and is blocked. VPN and Tor traffic usually falls into this category. If the lookup breaks entirely, blocking switches itself back to monitor mode rather than locking everyone out."
+msgstr "Eine Adresse, deren Land sich nicht ermitteln lässt, gilt als nicht erlaubt und wird gesperrt. VPN- und Tor-Verkehr fällt in der Regel in diese Kategorie. Fällt die Ermittlung ganz aus, schaltet die Sperre selbst in den Beobachtungsmodus zurück, statt alle auszusperren."
+
+#: admin/views/page-settings.php:197
+#: admin/views/page-status.php:66
+msgid "Allowed countries"
+msgstr "Erlaubte Länder"
+
+#: admin/views/page-settings.php:201
+msgid "Two-letter ISO country codes, separated by spaces. For example: CH DE AT"
+msgstr "Zweibuchstabige ISO-Ländercodes, durch Leerzeichen getrennt. Zum Beispiel: CH DE AT"
+
+#. translators: 1: country name, 2: country code
+#: admin/views/page-settings.php:206
+#, php-format
+msgid "You are currently connecting from %1$s (%2$s)."
+msgstr "Du verbindest dich derzeit aus %1$s (%2$s)."
+
+#: admin/views/page-settings.php:216
+msgid "Always-allowed addresses"
+msgstr "Immer erlaubte Adressen"
+
+#: admin/views/page-settings.php:219
+msgid "One IP address or CIDR block per line, IPv4 or IPv6. These skip the country rule entirely. Private, loopback and link-local addresses are always allowed and need not be listed."
+msgstr "Eine IP-Adresse oder ein CIDR-Block pro Zeile, IPv4 oder IPv6. Diese umgehen die Länderregel vollständig. Private, Loopback- und Link-Local-Adressen sind ohnehin immer erlaubt und müssen nicht eingetragen werden."
+
+#: admin/views/page-settings.php:223
+#: admin/views/page-status.php:92
+msgid "Trusted proxies"
+msgstr "Vertrauenswürdige Proxys"
+
+#: admin/views/page-settings.php:226
+msgid "Forwarding headers such as X-Forwarded-For are read ONLY when the connecting address is in this list. Leave it empty if the site is not behind a proxy or CDN — trusting a header that anyone can send would let an attacker choose their own apparent location."
+msgstr "Weiterleitungs-Header wie X-Forwarded-For werden NUR ausgewertet, wenn die verbindende Adresse in dieser Liste steht. Lass sie leer, wenn die Website nicht hinter einem Proxy oder CDN steht — einem Header zu vertrauen, den jeder senden kann, liesse einen Angreifer seinen scheinbaren Standort selbst wählen."
+
+#: admin/views/page-settings.php:229
+msgid "Use the country header supplied by the CDN (CF-IPCountry) when available"
+msgstr "Den vom CDN gelieferten Länder-Header (CF-IPCountry) verwenden, wenn vorhanden"
+
+#: admin/views/page-settings.php:234
+msgid "API authentication"
+msgstr "API-Authentifizierung"
+
+#: admin/views/page-settings.php:238
+msgid "Apply location rules to application passwords and XML-RPC as well"
+msgstr "Standortregeln auch auf Anwendungspasswörter und XML-RPC anwenden"
+
+#: admin/views/page-settings.php:240
+msgid "Off by default. These authenticate through the same mechanism as an interactive login, so turning this on can silently break integrations whose servers sit abroad."
+msgstr "Standardmässig aus. Diese authentifizieren über denselben Mechanismus wie ein interaktiver Login — einschalten kann Integrationen, deren Server im Ausland stehen, stillschweigend lahmlegen."
+
+#: admin/views/page-settings.php:244
+msgid "Bypass link"
+msgstr "Notfall-Link"
+
+#: admin/views/page-settings.php:248
+msgid "E-mail a single-use recovery link whenever a login is blocked"
+msgstr "Bei jedem gesperrten Login einen einmalig nutzbaren Wiederherstellungslink versenden"
+
+#: admin/views/page-settings.php:251
+msgid "Link valid for"
+msgstr "Link gültig für"
+
+#: admin/views/page-settings.php:253
+msgid "minutes"
+msgstr "Minuten"
+
+#: admin/views/page-settings.php:256
+msgid "grants access for"
+msgstr "gewährt Zugang für"
+
+#: admin/views/page-settings.php:258
+msgid "hours"
+msgstr "Stunden"
+
+#: admin/views/page-settings.php:264
+msgid "MaxMind licence key"
+msgstr "MaxMind-Lizenzschlüssel"
+
+#: admin/views/page-settings.php:272
+msgid "The key is set in wp-config.php via WPSEC_MAXMIND_LICENSE_KEY and cannot be edited here."
+msgstr "Der Schlüssel ist in der wp-config.php über WPSEC_MAXMIND_LICENSE_KEY gesetzt und lässt sich hier nicht bearbeiten."
+
+#: admin/views/page-settings.php:274
+msgid "A free GeoLite2 key from MaxMind. The database cannot be bundled with the plugin because MaxMind's licence forbids redistributing it. Defining WPSEC_MAXMIND_LICENSE_KEY in wp-config.php keeps the key out of the database entirely."
+msgstr "Ein kostenloser GeoLite2-Schlüssel von MaxMind. Die Datenbank darf dem Plugin nicht beiliegen, weil MaxMinds Lizenz die Weitergabe verbietet. WPSEC_MAXMIND_LICENSE_KEY in der wp-config.php hält den Schlüssel vollständig aus der Datenbank heraus."
+
+#: admin/views/page-settings.php:278
+msgid "Warn when the database is older than"
+msgstr "Warnen, wenn die Datenbank älter ist als"
+
+#: admin/views/page-settings.php:290
+msgid "Quick actions"
+msgstr "Schnellaktionen"
+
+#: admin/views/page-settings.php:293
+msgid "Download the GeoIP database now"
+msgstr "GeoIP-Datenbank jetzt herunterladen"
+
+#: admin/views/page-settings.php:298
+msgid "Add my current country to the list"
+msgstr "Mein aktuelles Land zur Liste hinzufügen"
+
+#. translators: %s: preset name
+#: admin/views/page-settings.php:310
+#, php-format
+msgid "Add trusted proxies: %s"
+msgstr "Vertrauenswürdige Proxys hinzufügen: %s"
+
+#: admin/views/page-settings.php:325
+msgid "The plugin never modifies, quarantines or deletes a file. It only reports what it finds."
+msgstr "Das Plugin verändert, verschiebt und löscht niemals eine Datei. Es meldet nur, was es findet."
+
+#: admin/views/page-settings.php:330
+msgid "What to scan"
+msgstr "Was geprüft wird"
+
+#: admin/views/page-settings.php:332
+msgid "wp-content/mu-plugins — loads before everything and cannot be deactivated from the dashboard"
+msgstr "wp-content/mu-plugins — lädt vor allem anderen und lässt sich im Backend nicht deaktivieren"
+
+#: admin/views/page-settings.php:333
+msgid "PHP files under wp-content/uploads — one should never exist there"
+msgstr "PHP-Dateien unter wp-content/uploads — dort gehört nie eine hin"
+
+#: admin/views/page-settings.php:334
+msgid "wp-config.php and .htaccess"
+msgstr "wp-config.php und .htaccess"
+
+#: admin/views/page-settings.php:335
+msgid "WordPress core files, against the official checksums"
+msgstr "WordPress-Kerndateien, gegen die offiziellen Prüfsummen"
+
+#: admin/views/page-settings.php:339
+msgid "Backdoor heuristics"
+msgstr "Backdoor-Heuristik"
+
+#: admin/views/page-settings.php:341
+msgid "Check new PHP files for patterns common in web shells"
+msgstr "Neue PHP-Dateien auf Muster prüfen, die für Web-Shells typisch sind"
+
+#: admin/views/page-settings.php:343
+msgid "Report at a score of"
+msgstr "Melden ab einem Wert von"
+
+#: admin/views/page-settings.php:345
+msgid "out of 100"
+msgstr "von 100"
+
+#: admin/views/page-settings.php:348
+msgid "Lower catches more and produces more false positives. Every pattern here has legitimate uses on its own; the score is what distinguishes them."
+msgstr "Niedriger findet mehr und erzeugt mehr Fehlalarme. Jedes einzelne Muster hat für sich genommen legitime Verwendungen; erst der Wert unterscheidet sie."
+
+#: admin/views/page-settings.php:352
+msgid "Files per scan run"
+msgstr "Dateien pro Prüflauf"
+
+#: admin/views/page-settings.php:355
+msgid "A ceiling so a very large uploads directory cannot exhaust the PHP time limit. Anything not reached is covered by the next run."
+msgstr "Eine Obergrenze, damit ein sehr grosses Upload-Verzeichnis nicht das PHP-Zeitlimit sprengt. Was nicht erreicht wurde, deckt der nächste Lauf ab."
+
+#: admin/views/page-settings.php:359
+msgid "Ignore paths containing"
+msgstr "Pfade ignorieren, die enthalten"
+
+#: admin/views/page-settings.php:362
+msgid "One fragment per line. Anything whose path contains it is skipped."
+msgstr "Ein Fragment pro Zeile. Alles, dessen Pfad es enthält, wird übersprungen."
+
+#: admin/views/page-status.php:40
+msgid "Security Center Status"
+msgstr "Security-Center-Status"
+
+#: admin/views/page-status.php:44
+msgid "Login protection"
+msgstr "Login-Schutz"
+
+#: admin/views/page-status.php:53
+msgid "Enabled"
+msgstr "Aktiviert"
+
+#: admin/views/page-status.php:53
+msgid "Disabled"
+msgstr "Deaktiviert"
+
+#: admin/views/page-status.php:57
+msgid "Action on a disallowed country"
+msgstr "Aktion bei nicht erlaubtem Land"
+
+#: admin/views/page-status.php:59
+msgid "Block the login"
+msgstr "Login sperren"
+
+#: admin/views/page-status.php:59
+msgid "Monitor only"
+msgstr "Nur beobachten"
+
+#: admin/views/page-status.php:61
+msgid "Logins from countries not on the list are refused."
+msgstr "Logins aus Ländern, die nicht auf der Liste stehen, werden abgewiesen."
+
+#: admin/views/page-status.php:62
+msgid "Logins are allowed through and reported. Nothing is blocked."
+msgstr "Logins werden durchgelassen und gemeldet. Nichts wird gesperrt."
+
+#: admin/views/page-status.php:70
+msgid "None configured — no location rule can apply"
+msgstr "Keine eingetragen — es kann keine Standortregel greifen"
+
+#: admin/views/page-status.php:74
+msgid "Country lookup"
+msgstr "Länderermittlung"
+
+#: admin/views/page-status.php:76
+msgid "Working"
+msgstr "Funktioniert"
+
+#: admin/views/page-status.php:76
+msgid "Unavailable"
+msgstr "Nicht verfügbar"
+
+#: admin/views/page-status.php:78
+msgid "If this breaks, blocking automatically falls back to monitor mode."
+msgstr "Fällt das aus, schaltet die Sperre automatisch in den Beobachtungsmodus zurück."
+
+#: admin/views/page-status.php:79
+msgid "Blocking cannot be armed until this works."
+msgstr "Die Sperre lässt sich erst scharf schalten, wenn das funktioniert."
+
+#: admin/views/page-status.php:83
+msgid "Emergency kill switch"
+msgstr "Notabschaltung"
+
+#: admin/views/page-status.php:86
+msgid "ACTIVE — blocking is disabled"
+msgstr "AKTIV — die Sperre ist deaktiviert"
+
+#: admin/views/page-status.php:87
+msgid "Not active"
+msgstr "Nicht aktiv"
+
+#: admin/views/page-status.php:88
+msgid "Set WPSEC_DISABLE_BLOCKING in wp-config.php to disable blocking without dashboard access."
+msgstr "Setze WPSEC_DISABLE_BLOCKING in der wp-config.php, um die Sperre ohne Zugang zum Backend zu deaktivieren."
+
+#. translators: %d: number of configured ranges
+#: admin/views/page-status.php:97
+#, php-format
+msgid "%d range configured"
+msgid_plural "%d ranges configured"
+msgstr[0] "%d Bereich eingetragen"
+msgstr[1] "%d Bereiche eingetragen"
+
+#: admin/views/page-status.php:100
+msgid "None — forwarding headers are ignored"
+msgstr "Keine — Weiterleitungs-Header werden ignoriert"
+
+#: admin/views/page-status.php:101
+msgid "This is the correct setting unless the site sits behind a proxy or CDN."
+msgstr "Das ist die richtige Einstellung, sofern die Website nicht hinter einem Proxy oder CDN steht."
+
+#: admin/views/page-status.php:107
+msgid "GeoIP database"
+msgstr "GeoIP-Datenbank"
+
+#: admin/views/page-status.php:114
+msgid "Database file"
+msgstr "Datenbankdatei"
+
+#: admin/views/page-status.php:116
+msgid "Installed"
+msgstr "Installiert"
+
+#: admin/views/page-status.php:116
+msgid "Not installed"
+msgstr "Nicht installiert"
+
+#: admin/views/page-status.php:117
+msgid "Add a MaxMind licence key on the Settings screen and download it."
+msgstr "Trage in den Einstellungen einen MaxMind-Lizenzschlüssel ein und lade sie herunter."
+
+#: admin/views/page-status.php:122
+msgid "Database age"
+msgstr "Alter der Datenbank"
+
+#. translators: %s: human-readable time difference
+#: admin/views/page-status.php:127
+#, php-format
+msgid "%s old"
+msgstr "%s alt"
+
+#: admin/views/page-status.php:130
+#: includes/geo/class-country-resolver.php:264
+msgid "Unknown"
+msgstr "Unbekannt"
+
+#: admin/views/page-status.php:131
+msgid "Still in use, but results may be wrong for recently reassigned addresses."
+msgstr "Wird weiter benutzt, bei kürzlich neu vergebenen Adressen kann das Ergebnis aber falsch sein."
+
+#: admin/views/page-status.php:135
+msgid "Self test"
+msgstr "Selbsttest"
+
+#: admin/views/page-status.php:137
+msgid "A known address resolves correctly"
+msgstr "Eine bekannte Adresse wird korrekt aufgelöst"
+
+#: admin/views/page-status.php:137
+msgid "Lookup failed"
+msgstr "Ermittlung fehlgeschlagen"
+
+#: admin/views/page-status.php:144
+msgid "Reachable over the web?"
+msgstr "Über das Web erreichbar?"
+
+#: admin/views/page-status.php:147
+msgid "YES — the database can be downloaded by anyone"
+msgstr "JA — die Datenbank kann von jedem heruntergeladen werden"
+
+#: admin/views/page-status.php:148
+msgid "No"
+msgstr "Nein"
+
+#: admin/views/page-status.php:150
+msgid "nginx ignores .htaccess. Add a deny rule for this path, or move the file outside the webroot with WPSEC_GEOIP_PATH."
+msgstr "nginx ignoriert .htaccess. Ergänze eine Deny-Regel für diesen Pfad oder verschiebe die Datei mit WPSEC_GEOIP_PATH aus dem Webroot heraus."
+
+#: admin/views/page-status.php:157
+msgid "Last error"
+msgstr "Letzter Fehler"
+
+#: admin/views/page-status.php:163
+msgid "Alerting"
+msgstr "Alarmierung"
+
+#: admin/views/page-status.php:171
+msgid "Recipients"
+msgstr "Empfänger"
+
+#: admin/views/page-status.php:173
+msgid "None — no alert can be delivered"
+msgstr "Keine — es kann kein Alarm zugestellt werden"
+
+#: admin/views/page-status.php:177
+msgid "E-mails sent this hour"
+msgstr "In dieser Stunde versendete E-Mails"
+
+#. translators: %d: number of suppressed alerts
+#: admin/views/page-status.php:183
+#, php-format
+msgid "%d alerts were held back this hour. They are all in the log."
+msgstr "%d Alarme wurden in dieser Stunde zurückgehalten. Sie stehen alle im Protokoll."
+
+#: admin/views/page-status.php:192
+msgid "Scheduled scans"
+msgstr "Geplante Prüfungen"
+
+#: admin/views/page-status.php:196
+msgid "Task"
+msgstr "Aufgabe"
+
+#: admin/views/page-status.php:197
+msgid "Next run"
+msgstr "Nächster Lauf"
+
+#: admin/views/page-status.php:203
+msgid "User reconciliation"
+msgstr "Benutzerabgleich"
+
+#: admin/views/page-status.php:204
+msgid "File integrity scan"
+msgstr "Dateiintegritätsprüfung"
+
+#: admin/views/page-status.php:205
+msgid "Configuration snapshot"
+msgstr "Konfigurations-Momentaufnahme"
+
+#: admin/views/page-status.php:206
+msgid "Core checksum verification"
+msgstr "Kern-Prüfsummenabgleich"
+
+#: admin/views/page-status.php:207
+msgid "GeoIP database refresh"
+msgstr "GeoIP-Datenbank-Aktualisierung"
+
+#: admin/views/page-status.php:208
+msgid "Log retention cleanup"
+msgstr "Protokoll-Aufräumlauf"
+
+#: admin/views/page-status.php:222
+msgid "Not scheduled"
+msgstr "Nicht geplant"
+
+#: admin/views/page-status.php:224
+msgid "Overdue"
+msgstr "Überfällig"
+
+#: admin/views/page-status.php:236
+msgid "WP-Cron is disabled, so a real system cron must be driving wp-cron.php. That is the recommended setup."
+msgstr "WP-Cron ist deaktiviert, ein echter System-Cron muss also wp-cron.php aufrufen. Das ist die empfohlene Einrichtung."
+
+#: admin/views/page-status.php:238
+msgid "WP-Cron runs on site traffic. On a quiet site these tasks can be badly late — which is precisely when a compromised site stops receiving visitors. Consider disabling WP-Cron and driving wp-cron.php from a real system cron."
+msgstr "WP-Cron läuft über den Website-Verkehr. Auf einer ruhigen Website können diese Aufgaben stark verspätet laufen — also genau dann, wenn eine kompromittierte Website keine Besucher mehr bekommt. Erwäge, WP-Cron zu deaktivieren und wp-cron.php über einen echten System-Cron aufzurufen."
+
+#: admin/views/page-status.php:242
+msgid "Active bypass grants"
+msgstr "Aktive Notfall-Freigaben"
+
+#: admin/views/page-status.php:247
+msgid "Expires"
+msgstr "Läuft ab"
+
+#: admin/views/page-status.php:248
+msgid "User"
+msgstr "Benutzer"
+
+#: admin/views/page-status.php:264
+msgid "Actions"
+msgstr "Aktionen"
+
+#: admin/views/page-status.php:267
+msgid "Run all scans now"
+msgstr "Alle Prüfungen jetzt ausführen"
+
+#: admin/views/page-status.php:273
+msgid "Revoke all bypass grants"
+msgstr "Alle Notfall-Freigaben widerrufen"
+
+#: admin/views/page-status.php:279
+msgid "Sign every user out"
+msgstr "Alle Benutzer abmelden"
+
+#: admin/views/page-status.php:280
+msgid "Sessions created before location blocking was armed are not affected by it, because cookie checks never run the login rules. This ends every session, including your own."
+msgstr "Sitzungen, die vor dem Scharfschalten der Standortsperre entstanden sind, bleiben davon unberührt, weil die Cookie-Prüfung die Login-Regeln nie durchläuft. Das hier beendet jede Sitzung, auch deine eigene."
+
+#: includes/class-event-registry.php:217
+msgid "Critical"
+msgstr "Kritisch"
+
+#: includes/class-event-registry.php:219
+msgid "High"
+msgstr "Hoch"
+
+#: includes/class-event-registry.php:221
+msgid "Warning"
+msgstr "Warnung"
+
+#: includes/class-event-registry.php:223
+msgid "Notice"
+msgstr "Hinweis"
+
+#: includes/class-event-registry.php:225
+msgid "Info"
+msgstr "Info"
+
+#: includes/class-event-registry.php:236
+msgid "Plugins"
+msgstr "Plugins"
+
+#: includes/class-event-registry.php:237
+msgid "Themes"
+msgstr "Themes"
+
+#: includes/class-event-registry.php:238
+msgid "Users & administrators"
+msgstr "Benutzer & Administratoren"
+
+#: includes/class-event-registry.php:239
+msgid "Application passwords"
+msgstr "Anwendungspasswörter"
+
+#: includes/class-event-registry.php:240
+msgid "Logins"
+msgstr "Logins"
+
+#: includes/class-event-registry.php:241
+msgid "Configuration"
+msgstr "Konfiguration"
+
+#: includes/class-event-registry.php:242
+msgid "Files & integrity"
+msgstr "Dateien & Integrität"
+
+#: includes/class-event-registry.php:243
+msgid "Plugin status"
+msgstr "Plugin-Status"
+
+#: includes/class-installer.php:129
+msgid "WP Security Center does not support WordPress Multisite. It has not been activated."
+msgstr "WP Security Center unterstützt WordPress-Multisite nicht. Es wurde nicht aktiviert."
+
+#: includes/class-installer.php:130
+msgid "Multisite is not supported"
+msgstr "Multisite wird nicht unterstützt"
+
+#: includes/class-mailer.php:69
+msgid "Site"
+msgstr "Website"
+
+#: includes/class-mailer.php:87
+msgid "Affected user"
+msgstr "Betroffener Benutzer"
+
+#: includes/class-mailer.php:95
+msgid "Object"
+msgstr "Objekt"
+
+#: includes/class-mailer.php:108
+msgid "Request context"
+msgstr "Anfragekontext"
+
+#: includes/class-mailer.php:129
+msgid "Full log:"
+msgstr "Vollständiges Protokoll:"
+
+#: includes/class-mailer.php:130
+msgid "Alert settings:"
+msgstr "Alarm-Einstellungen:"
+
+#: includes/class-mailer.php:132
+msgid "Sent by WP Security Center. If this alert is noise, the event type can be switched to log-only on the settings screen."
+msgstr "Gesendet von WP Security Center. Falls dieser Alarm nur Rauschen ist, lässt sich der Ereignistyp in den Einstellungen auf „nur protokollieren“ umstellen."
+
+#: includes/class-mailer.php:206
+#, php-format
+msgid "Plugin installed: %1$s"
+msgstr "Plugin installiert: %1$s"
+
+#: includes/class-mailer.php:207
+#, php-format
+msgid "Plugin activated: %1$s"
+msgstr "Plugin aktiviert: %1$s"
+
+#: includes/class-mailer.php:208
+#, php-format
+msgid "Plugin deactivated: %1$s"
+msgstr "Plugin deaktiviert: %1$s"
+
+#: includes/class-mailer.php:209
+#, php-format
+msgid "Plugin updated: %1$s"
+msgstr "Plugin aktualisiert: %1$s"
+
+#: includes/class-mailer.php:210
+#, php-format
+msgid "Plugin deleted: %1$s"
+msgstr "Plugin gelöscht: %1$s"
+
+#: includes/class-mailer.php:211
+#, php-format
+msgid "Plugin auto-updated: %1$s"
+msgstr "Plugin automatisch aktualisiert: %1$s"
+
+#: includes/class-mailer.php:212
+#, php-format
+msgid "Plugin appeared without an install: %1$s"
+msgstr "Plugin ohne Installation aufgetaucht: %1$s"
+
+#: includes/class-mailer.php:213
+#, php-format
+msgid "Theme installed: %1$s"
+msgstr "Theme installiert: %1$s"
+
+#: includes/class-mailer.php:214
+#, php-format
+msgid "Theme activated: %1$s"
+msgstr "Theme aktiviert: %1$s"
+
+#: includes/class-mailer.php:215
+#, php-format
+msgid "Theme updated: %1$s"
+msgstr "Theme aktualisiert: %1$s"
+
+#: includes/class-mailer.php:216
+#, php-format
+msgid "Theme deleted: %1$s"
+msgstr "Theme gelöscht: %1$s"
+
+#: includes/class-mailer.php:217
+#, php-format
+msgid "New user created: %1$s"
+msgstr "Neuer Benutzer angelegt: %1$s"
+
+#: includes/class-mailer.php:218
+#, php-format
+msgid "New ADMINISTRATOR created: %1$s"
+msgstr "Neuer ADMINISTRATOR angelegt: %1$s"
+
+#: includes/class-mailer.php:219
+#, php-format
+msgid "User deleted: %1$s"
+msgstr "Benutzer gelöscht: %1$s"
+
+#: includes/class-mailer.php:220
+#, php-format
+msgid "ADMINISTRATOR deleted: %1$s"
+msgstr "ADMINISTRATOR gelöscht: %1$s"
+
+#: includes/class-mailer.php:221
+#, php-format
+msgid "Role changed for %1$s"
+msgstr "Rolle geändert für %1$s"
+
+#: includes/class-mailer.php:222
+#, php-format
+msgid "%1$s was promoted to ADMINISTRATOR"
+msgstr "%1$s wurde zum ADMINISTRATOR hochgestuft"
+
+#: includes/class-mailer.php:223
+#, php-format
+msgid "%1$s was demoted from administrator"
+msgstr "%1$s wurde als Administrator herabgestuft"
+
+#: includes/class-mailer.php:224
+#, php-format
+msgid "E-mail address changed for %1$s"
+msgstr "E-Mail-Adresse geändert für %1$s"
+
+#: includes/class-mailer.php:225
+#, php-format
+msgid "E-mail change requested for %1$s"
+msgstr "E-Mail-Änderung angefordert für %1$s"
+
+#: includes/class-mailer.php:226
+#, php-format
+msgid "Password changed for %1$s"
+msgstr "Passwort geändert für %1$s"
+
+#: includes/class-mailer.php:227
+#, php-format
+msgid "Password reset requested for %1$s"
+msgstr "Passwort-Zurücksetzung angefordert für %1$s"
+
+#: includes/class-mailer.php:228
+#, php-format
+msgid "Password reset completed for %1$s"
+msgstr "Passwort-Zurücksetzung abgeschlossen für %1$s"
+
+#: includes/class-mailer.php:229
+#, php-format
+msgid "Administrator %1$s modified their own account"
+msgstr "Administrator %1$s hat das eigene Konto geändert"
+
+#: includes/class-mailer.php:230
+#, php-format
+msgid "Login name changed: %1$s"
+msgstr "Loginname geändert: %1$s"
+
+#: includes/class-mailer.php:231
+#, php-format
+msgid "User created directly in the database: %1$s"
+msgstr "Benutzer direkt in der Datenbank angelegt: %1$s"
+
+#: includes/class-mailer.php:232
+#, php-format
+msgid "User deleted directly in the database: %1$s"
+msgstr "Benutzer direkt in der Datenbank gelöscht: %1$s"
+
+#: includes/class-mailer.php:233
+#, php-format
+msgid "User modified directly in the database: %1$s"
+msgstr "Benutzer direkt in der Datenbank geändert: %1$s"
+
+#: includes/class-mailer.php:234
+#, php-format
+msgid "Application password created for %1$s"
+msgstr "Anwendungspasswort angelegt für %1$s"
+
+#: includes/class-mailer.php:235
+#, php-format
+msgid "Application password revoked for %1$s"
+msgstr "Anwendungspasswort widerrufen für %1$s"
+
+#: includes/class-mailer.php:236
+#, php-format
+msgid "Login from a country that is not on the allow list: %1$s"
+msgstr "Login aus einem Land, das nicht auf der Positivliste steht: %1$s"
+
+#: includes/class-mailer.php:237
+#, php-format
+msgid "Login WOULD have been blocked (monitor mode): %1$s"
+msgstr "Login WÄRE gesperrt worden (Beobachtungsmodus): %1$s"
+
+#: includes/class-mailer.php:238
+#, php-format
+msgid "Login BLOCKED from a disallowed country: %1$s"
+msgstr "Login aus nicht erlaubtem Land GESPERRT: %1$s"
+
+#: includes/class-mailer.php:239
+#, php-format
+msgid "Login allowed by a bypass grant: %1$s"
+msgstr "Login durch eine Notfall-Freigabe erlaubt: %1$s"
+
+#: includes/class-mailer.php:240
+#, php-format
+msgid "Bypass link redeemed by %1$s"
+msgstr "Notfall-Link eingelöst von %1$s"
+
+#: includes/class-mailer.php:241
+#, php-format
+msgid "Login would have been blocked but the kill switch is active: %1$s"
+msgstr "Login wäre gesperrt worden, aber die Notabschaltung ist aktiv: %1$s"
+
+#: includes/class-mailer.php:242
+msgid "The site URL was changed"
+msgstr "Die Website-URL wurde geändert"
+
+#: includes/class-mailer.php:243
+msgid "The home URL was changed"
+msgstr "Die Startseiten-URL wurde geändert"
+
+#: includes/class-mailer.php:244
+msgid "The site administrator e-mail address was changed"
+msgstr "Die Administrator-E-Mail-Adresse der Website wurde geändert"
+
+#: includes/class-mailer.php:245
+msgid "A change of the administrator e-mail address was requested"
+msgstr "Eine Änderung der Administrator-E-Mail-Adresse wurde angefordert"
+
+#: includes/class-mailer.php:246
+msgid "Open user registration was changed"
+msgstr "Die offene Benutzerregistrierung wurde geändert"
+
+#: includes/class-mailer.php:247
+msgid "The default role for new users was changed"
+msgstr "Die Standardrolle für neue Benutzer wurde geändert"
+
+#: includes/class-mailer.php:248
+msgid "Search engine visibility was changed"
+msgstr "Die Sichtbarkeit für Suchmaschinen wurde geändert"
+
+#: includes/class-mailer.php:249
+msgid "Automatic update settings were changed"
+msgstr "Die Einstellungen für automatische Updates wurden geändert"
+
+#: includes/class-mailer.php:250
+msgid "The active plugin list was written directly"
+msgstr "Die Liste aktiver Plugins wurde direkt geschrieben"
+
+#: includes/class-mailer.php:251
+msgid "XML-RPC availability changed"
+msgstr "Die Verfügbarkeit von XML-RPC hat sich geändert"
+
+#: includes/class-mailer.php:252
+msgid "The file-editing configuration changed"
+msgstr "Die Konfiguration für die Dateibearbeitung hat sich geändert"
+
+#: includes/class-mailer.php:253
+#, php-format
+msgid "A file was edited through the built-in editor: %1$s"
+msgstr "Eine Datei wurde über den eingebauten Editor bearbeitet: %1$s"
+
+#: includes/class-mailer.php:254
+msgid "An automatic-update constant changed"
+msgstr "Eine Konstante für automatische Updates hat sich geändert"
+
+#: includes/class-mailer.php:255
+#, php-format
+msgid "New scheduled task: %1$s"
+msgstr "Neue geplante Aufgabe: %1$s"
+
+#: includes/class-mailer.php:256
+#, php-format
+msgid "Scheduled task removed: %1$s"
+msgstr "Geplante Aufgabe entfernt: %1$s"
+
+#: includes/class-mailer.php:257
+#, php-format
+msgid "New must-use plugin appeared: %1$s"
+msgstr "Neues Must-Use-Plugin aufgetaucht: %1$s"
+
+#: includes/class-mailer.php:258
+msgid "wp-config.php was modified"
+msgstr "wp-config.php wurde verändert"
+
+#: includes/class-mailer.php:259
+msgid ".htaccess was modified"
+msgstr ".htaccess wurde verändert"
+
+#: includes/class-mailer.php:260
+#, php-format
+msgid "New file in mu-plugins: %1$s"
+msgstr "Neue Datei in mu-plugins: %1$s"
+
+#: includes/class-mailer.php:261
+#, php-format
+msgid "Changed file in mu-plugins: %1$s"
+msgstr "Geänderte Datei in mu-plugins: %1$s"
+
+#: includes/class-mailer.php:262
+#, php-format
+msgid "PHP file found in the uploads directory: %1$s"
+msgstr "PHP-Datei im Upload-Verzeichnis gefunden: %1$s"
+
+#: includes/class-mailer.php:263
+#, php-format
+msgid ".htaccess in the uploads directory changed: %1$s"
+msgstr ".htaccess im Upload-Verzeichnis geändert: %1$s"
+
+#: includes/class-mailer.php:264
+#, php-format
+msgid "Known PHP file in uploads changed: %1$s"
+msgstr "Bekannte PHP-Datei in uploads geändert: %1$s"
+
+#: includes/class-mailer.php:265
+#, php-format
+msgid "Possible backdoor signature: %1$s"
+msgstr "Mögliche Backdoor-Signatur: %1$s"
+
+#: includes/class-mailer.php:266
+#, php-format
+msgid "Modified WordPress core file: %1$s"
+msgstr "Veränderte WordPress-Kerndatei: %1$s"
+
+#: includes/class-mailer.php:267
+#, php-format
+msgid "Missing WordPress core file: %1$s"
+msgstr "Fehlende WordPress-Kerndatei: %1$s"
+
+#: includes/class-mailer.php:268
+#, php-format
+msgid "Unrecognised file in a core directory: %1$s"
+msgstr "Unbekannte Datei in einem Kernverzeichnis: %1$s"
+
+#: includes/class-mailer.php:269
+msgid "The GeoIP database could not be updated"
+msgstr "Die GeoIP-Datenbank konnte nicht aktualisiert werden"
+
+#: includes/class-mailer.php:270
+msgid "The GeoIP database is missing"
+msgstr "Die GeoIP-Datenbank fehlt"
+
+#: includes/class-mailer.php:271
+msgid "Login blocking was automatically disarmed"
+msgstr "Die Login-Sperre wurde automatisch entschärft"
+
+#: includes/class-mailer.php:272
+msgid "Alert e-mails are being throttled"
+msgstr "Alarm-E-Mails werden gedrosselt"
+
+#: includes/class-mailer.php:273
+msgid "WP Security Center was activated"
+msgstr "WP Security Center wurde aktiviert"
+
+#: includes/class-mailer.php:274
+msgid "WP Security Center was deactivated"
+msgstr "WP Security Center wurde deaktiviert"
+
+#: includes/class-updater.php:128
+msgid "See the GitHub release notes for details."
+msgstr "Einzelheiten stehen in den GitHub-Release-Notes."
+
+#: includes/class-updater.php:178
+msgid "Could not rename the downloaded update folder."
+msgstr "Der heruntergeladene Update-Ordner konnte nicht umbenannt werden."
+
+#: includes/geo/class-cloudflare-ranges.php:55
+msgid "The Cloudflare address list could not be retrieved."
+msgstr "Die Cloudflare-Adressliste konnte nicht abgerufen werden."
+
+#: includes/geo/class-cloudflare-ranges.php:99
+msgid "Cloudflare"
+msgstr "Cloudflare"
+
+#: includes/geo/class-cloudflare-ranges.php:103
+msgid "Traefik / Docker / private networks"
+msgstr "Traefik / Docker / private Netze"
+
+#: includes/geo/class-cloudflare-ranges.php:107
+msgid "Loopback only"
+msgstr "Nur Loopback"
+
+#: includes/geo/class-country-resolver.php:260
+msgid "Local network"
+msgstr "Lokales Netz"
+
+#: includes/geo/class-geoip-database.php:125
+msgid "No MaxMind licence key is configured."
+msgstr "Es ist kein MaxMind-Lizenzschlüssel eingetragen."
+
+#: includes/geo/class-geoip-database.php:134
+msgid "The uploads directory is not writable."
+msgstr "Das Upload-Verzeichnis ist nicht beschreibbar."
+
+#: includes/geo/class-geoip-database.php:179
+msgid "The downloaded database failed its checksum verification."
+msgstr "Die heruntergeladene Datenbank hat die Prüfsummenkontrolle nicht bestanden."
+
+#: includes/geo/class-geoip-database.php:197
+msgid "The extracted file does not look like a MaxMind database."
+msgstr "Die entpackte Datei sieht nicht wie eine MaxMind-Datenbank aus."
+
+#: includes/geo/class-geoip-database.php:204
+msgid "The new database could not replace the existing one."
+msgstr "Die neue Datenbank konnte die bestehende nicht ersetzen."
+
+#: includes/geo/class-geoip-database.php:241
+msgid "MaxMind rejected the licence key."
+msgstr "MaxMind hat den Lizenzschlüssel abgelehnt."
+
+#. translators: %d: HTTP status code
+#: includes/geo/class-geoip-database.php:246
+#, php-format
+msgid "MaxMind returned HTTP %d."
+msgstr "MaxMind antwortete mit HTTP %d."
+
+#: includes/geo/class-tar-reader.php:35
+msgid "The downloaded archive could not be read."
+msgstr "Das heruntergeladene Archiv konnte nicht gelesen werden."
+
+#: includes/geo/class-tar-reader.php:42
+msgid "The downloaded archive was empty."
+msgstr "Das heruntergeladene Archiv war leer."
+
+#: includes/geo/class-tar-reader.php:48
+msgid "The downloaded archive is not valid gzip data."
+msgstr "Das heruntergeladene Archiv enthält keine gültigen gzip-Daten."
+
+#: includes/geo/class-tar-reader.php:76
+msgid "The archive contains an unsafe file path and was rejected."
+msgstr "Das Archiv enthält einen unsicheren Dateipfad und wurde abgewiesen."
+
+#: includes/geo/class-tar-reader.php:85
+msgid "The downloaded archive is truncated."
+msgstr "Das heruntergeladene Archiv ist unvollständig."
+
+#: includes/geo/class-tar-reader.php:92
+msgid "The extracted database could not be written to disk."
+msgstr "Die entpackte Datenbank konnte nicht auf die Festplatte geschrieben werden."
+
+#: includes/geo/class-tar-reader.php:103
+msgid "The archive did not contain the expected database file."
+msgstr "Das Archiv enthielt nicht die erwartete Datenbankdatei."
+
+#: includes/scanners/class-user-reconciler.php:177
+msgid "login name"
+msgstr "Loginname"
+
+#: includes/scanners/class-user-reconciler.php:178
+msgid "e-mail address"
+msgstr "E-Mail-Adresse"
+
+#: includes/scanners/class-user-reconciler.php:179
+msgid "nicename"
+msgstr "Nicename"
+
+#: includes/scanners/class-user-reconciler.php:180
+msgid "display name"
+msgstr "Anzeigename"
+
+#: includes/scanners/class-user-reconciler.php:181
+msgid "roles"
+msgstr "Rollen"
+

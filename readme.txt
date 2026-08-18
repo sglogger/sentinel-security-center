@@ -4,7 +4,7 @@ Tags: security, activity log, audit log, geoblocking, file integrity
 Requires at least: 6.5
 Tested up to: 6.9
 Requires PHP: 8.1
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,10 +74,26 @@ No. Activation on a network stops with a message rather than misbehaving quietly
 
 == Changelog ==
 
+= 1.1.0 =
+* First functional release. Everything below is new.
+* Event log with a filterable admin viewer, search, sorting, per-page control and CSV export of exactly the filtered view.
+* Monitoring of plugins and themes: install, activate, deactivate, update, delete, auto-update, and plugins that appear on disk without an install.
+* Monitoring of users and administrators: creation, deletion, role change, promotion and demotion, e-mail and password changes, application passwords, and changes an administrator makes to their own account.
+* Detection of user records altered directly in the database, by hourly reconciliation against a stored baseline. This is the only way to see a changed login name, which WordPress itself provides no path for.
+* Configuration monitoring: critical options, wp-config.php and .htaccess hashes, WordPress core files against the official checksums, cron jobs, new must-use plugins, XML-RPC and file-editor state.
+* File integrity for wp-content/mu-plugins and any PHP file under uploads, with weighted backdoor-signature heuristics. Files are only ever read, never modified, quarantined or deleted.
+* Geo-aware login control: country from a trusted CDN header or a local MaxMind GeoLite2 database, monitor mode by default, optional blocking, and four independent ways back in if you lock yourself out.
+* Immediate e-mail alerts, configurable per event type as e-mail, log only, or off, with an hourly circuit breaker so a mass finding cannot flood a mail server.
+* Diagnostics screen showing how the site sees your address, and a what-if test for any other address.
+* Complete German translation.
+
 = 1.0.0 =
-* Initial release.
+* Initial scaffolding release.
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+The first release that actually does anything. Review Settings after upgrading: alerts are off until recipients are set, and login blocking stays in monitor mode until you arm it.
 
 = 1.0.0 =
 Initial release.

@@ -4,7 +4,7 @@ Tags: security, activity log, audit log, two-factor, file integrity
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 1.5.0
+Stable tag: 1.5.1
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,6 +103,9 @@ No. Activation on a network stops with a message rather than misbehaving quietly
 
 == Changelog ==
 
+= 1.5.1 =
+* Fixed: a stale composer.lock left over from the 1.4.0 rename made the automated test run fail. Build tooling only; the plugin itself is unchanged from 1.5.0.
+
 = 1.5.0 =
 * Fixed: readme.txt declared "Tested up to: 7.0.4". That field takes a WordPress major version only, and a patch number in it is an error at review time, so it now reads 7.0.
 * Fixed: the release ZIP shipped a vendor/ directory built by Composer without the composer.json that describes it, which the plugin review tooling flags. composer.json is now packaged alongside it.
@@ -155,6 +158,9 @@ No. Activation on a network stops with a message rather than misbehaving quietly
 * Initial scaffolding release.
 
 == Upgrade Notice ==
+
+= 1.5.1 =
+A build-tooling fix with no functional change from 1.5.0. Nothing to do after updating.
 
 = 1.5.0 =
 Packaging and metadata only: no functional change, and nothing to do after updating.

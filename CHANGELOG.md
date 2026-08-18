@@ -9,6 +9,16 @@ When a release goes out, the same summary must also be added to the
 `== Changelog ==` section of `readme.txt` — that is what WordPress shows in the
 plugin details modal.
 
+## [1.5.1] - 2026-08-18
+
+### Fixed
+
+- **`composer.lock` was out of date with `composer.json`.** The 1.4.0 rename
+  changed the package name in `composer.json`, and the package name is part of
+  the content hash Composer records in the lock — so `composer validate
+  --strict` failed the CI test job on every run since. The lock has been
+  regenerated; only the hash changed, no dependency versions moved.
+
 ## [1.5.0] - 2026-08-18
 
 ### Fixed

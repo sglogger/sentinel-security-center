@@ -52,7 +52,7 @@ final class Cloudflare_Ranges {
 				'v4'      => (array) ( $stored['v4'] ?? [] ),
 				'v6'      => (array) ( $stored['v6'] ?? [] ),
 				'fetched' => (int) ( $stored['fetched'] ?? 0 ),
-				'error'   => __( 'The Cloudflare address list could not be retrieved.', 'wp-security-center' ),
+				'error'   => __( 'The Cloudflare address list could not be retrieved.', 'sentinel-security-center' ),
 			];
 		}
 
@@ -96,15 +96,15 @@ final class Cloudflare_Ranges {
 
 		return [
 			'cloudflare' => [
-				'label'  => __( 'Cloudflare', 'wp-security-center' ),
+				'label'  => __( 'Cloudflare', 'sentinel-security-center' ),
 				'ranges' => array_merge( $cf['v4'], $cf['v6'] ),
 			],
 			'docker'     => [
-				'label'  => __( 'Traefik / Docker / private networks', 'wp-security-center' ),
+				'label'  => __( 'Traefik / Docker / private networks', 'sentinel-security-center' ),
 				'ranges' => [ '172.16.0.0/12', '10.0.0.0/8', '192.168.0.0/16', 'fc00::/7' ],
 			],
 			'loopback'   => [
-				'label'  => __( 'Loopback only', 'wp-security-center' ),
+				'label'  => __( 'Loopback only', 'sentinel-security-center' ),
 				'ranges' => [ '127.0.0.0/8', '::1/128' ],
 			],
 		];

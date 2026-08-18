@@ -45,7 +45,7 @@ final class Plugin {
 		$this->booted = true;
 
 		load_plugin_textdomain(
-			'wp-security-center',
+			'sentinel-security-center',
 			false,
 			dirname( WPSEC_BASENAME ) . '/languages'
 		);

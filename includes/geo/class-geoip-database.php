@@ -152,7 +152,7 @@ final class Geoip_Database {
 		$key = self::license_key();
 
 		if ( '' === $key ) {
-			$state['last_error'] = __( 'No MaxMind licence key is configured.', 'wp-security-center' );
+			$state['last_error'] = __( 'No MaxMind licence key is configured.', 'sentinel-security-center' );
 			update_option( Installer::OPTION_GEOIP_STATE, $state, false );
 
 			return new \WP_Error( 'wpsec_geoip_no_key', $state['last_error'] );
@@ -161,7 +161,7 @@ final class Geoip_Database {
 		$dir = self::directory();
 
 		if ( '' === $dir ) {
-			$state['last_error'] = __( 'The uploads directory is not writable.', 'wp-security-center' );
+			$state['last_error'] = __( 'The uploads directory is not writable.', 'sentinel-security-center' );
 			update_option( Installer::OPTION_GEOIP_STATE, $state, false );
 
 			return new \WP_Error( 'wpsec_geoip_no_dir', $state['last_error'] );
@@ -212,7 +212,7 @@ final class Geoip_Database {
 
 			if ( is_string( $expected ) && '' !== $expected && ! hash_equals( $expected, (string) $actual ) ) {
 				@unlink( $tmp );
-				return self::fail( $state, __( 'The downloaded database failed its checksum verification.', 'wp-security-center' ) );
+				return self::fail( $state, __( 'The downloaded database failed its checksum verification.', 'sentinel-security-center' ) );
 			}
 		}
 
@@ -230,14 +230,14 @@ final class Geoip_Database {
 
 		if ( ! self::looks_valid( $staged ) ) {
 			@unlink( $staged );
-			return self::fail( $state, __( 'The extracted file does not look like a MaxMind database.', 'wp-security-center' ) );
+			return self::fail( $state, __( 'The extracted file does not look like a MaxMind database.', 'sentinel-security-center' ) );
 		}
 
 		$live = $dir . self::FILE;
 
 		if ( ! @rename( $staged, $live ) ) {
 			@unlink( $staged );
-			return self::fail( $state, __( 'The new database could not replace the existing one.', 'wp-security-center' ) );
+			return self::fail( $state, __( 'The new database could not replace the existing one.', 'sentinel-security-center' ) );
 		}
 
 		$state['path']         = $live;
@@ -274,12 +274,12 @@ final class Geoip_Database {
 		$code = (int) wp_remote_retrieve_response_code( $response );
 
 		if ( 401 === $code || 403 === $code ) {
-			return __( 'MaxMind rejected the licence key.', 'wp-security-center' );
+			return __( 'MaxMind rejected the licence key.', 'sentinel-security-center' );
 		}
 
 		if ( 200 !== $code ) {
 			/* translators: %d: HTTP status code */
-			return sprintf( __( 'MaxMind returned HTTP %d.', 'wp-security-center' ), $code );
+			return sprintf( __( 'MaxMind returned HTTP %d.', 'sentinel-security-center' ), $code );
 		}
 
 		return null;

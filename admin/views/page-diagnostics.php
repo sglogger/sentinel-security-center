@@ -42,27 +42,27 @@ $wpsec_decision = Access_Policy::decide(
 $wpsec_test_ip = isset( $_GET['test_ip'] ) ? sanitize_text_field( wp_unslash( (string) $_GET['test_ip'] ) ) : '';
 ?>
 <div class="wrap">
-	<h1><?php esc_html_e( 'Diagnostics', 'wp-security-center' ); ?></h1>
+	<h1><?php esc_html_e( 'Diagnostics', 'sentinel-security-center' ); ?></h1>
 
-	<h2><?php esc_html_e( 'How this request was seen', 'wp-security-center' ); ?></h2>
+	<h2><?php esc_html_e( 'How this request was seen', 'sentinel-security-center' ); ?></h2>
 	<table class="widefat striped" style="max-width:900px;">
 		<tbody>
 			<tr>
-				<th style="width:280px;"><?php esc_html_e( 'Connecting address (REMOTE_ADDR)', 'wp-security-center' ); ?></th>
+				<th style="width:280px;"><?php esc_html_e( 'Connecting address (REMOTE_ADDR)', 'sentinel-security-center' ); ?></th>
 				<td><code><?php echo esc_html( (string) ( $wpsec_detail['remote'] ?? '—' ) ); ?></code></td>
 			</tr>
 			<tr>
-				<th><?php esc_html_e( 'Is it a trusted proxy?', 'wp-security-center' ); ?></th>
+				<th><?php esc_html_e( 'Is it a trusted proxy?', 'sentinel-security-center' ); ?></th>
 				<td>
 					<?php if ( $wpsec_detail['remote_trusted'] ) : ?>
-						<strong style="color:#00a32a;"><?php esc_html_e( 'Yes — forwarding headers are being honoured', 'wp-security-center' ); ?></strong>
+						<strong style="color:#00a32a;"><?php esc_html_e( 'Yes — forwarding headers are being honoured', 'sentinel-security-center' ); ?></strong>
 					<?php else : ?>
-						<strong><?php esc_html_e( 'No — forwarding headers are ignored entirely', 'wp-security-center' ); ?></strong>
+						<strong><?php esc_html_e( 'No — forwarding headers are ignored entirely', 'sentinel-security-center' ); ?></strong>
 					<?php endif; ?>
 				</td>
 			</tr>
 			<tr>
-				<th><?php esc_html_e( 'Resolved client address', 'wp-security-center' ); ?></th>
+				<th><?php esc_html_e( 'Resolved client address', 'sentinel-security-center' ); ?></th>
 				<td>
 					<code><?php echo esc_html( (string) ( $wpsec_ip ?? '—' ) ); ?></code>
 					<?php if ( '' !== (string) $wpsec_detail['source'] ) : ?>
@@ -72,18 +72,18 @@ $wpsec_test_ip = isset( $_GET['test_ip'] ) ? sanitize_text_field( wp_unslash( (s
 			</tr>
 			<?php if ( ! empty( $wpsec_detail['chain'] ) ) : ?>
 			<tr>
-				<th><?php esc_html_e( 'Forwarded-for chain', 'wp-security-center' ); ?></th>
+				<th><?php esc_html_e( 'Forwarded-for chain', 'sentinel-security-center' ); ?></th>
 				<td>
 					<?php foreach ( $wpsec_detail['chain'] as $wpsec_hop ) : ?>
 						<?php $wpsec_hop_trusted = Ip_Matcher::in_any( $wpsec_hop, (array) ( $wpsec_geo['trusted_proxies'] ?? [] ) ); ?>
 						<code><?php echo esc_html( $wpsec_hop ); ?></code>
-						<small><?php echo $wpsec_hop_trusted ? esc_html__( '(trusted proxy)', 'wp-security-center' ) : esc_html__( '(not trusted)', 'wp-security-center' ); ?></small><br>
+						<small><?php echo $wpsec_hop_trusted ? esc_html__( '(trusted proxy)', 'sentinel-security-center' ) : esc_html__( '(not trusted)', 'sentinel-security-center' ); ?></small><br>
 					<?php endforeach; ?>
 				</td>
 			</tr>
 			<?php endif; ?>
 			<tr>
-				<th><?php esc_html_e( 'Country', 'wp-security-center' ); ?></th>
+				<th><?php esc_html_e( 'Country', 'sentinel-security-center' ); ?></th>
 				<td>
 					<strong><?php echo esc_html( Country_Resolver::country_name( $wpsec_here['country'] ) ); ?></strong>
 					<code><?php echo esc_html( $wpsec_here['country'] ); ?></code>
@@ -91,23 +91,23 @@ $wpsec_test_ip = isset( $_GET['test_ip'] ) ? sanitize_text_field( wp_unslash( (s
 					<?php
 						echo esc_html(
 							'header' === $wpsec_here['source']
-								? __( 'from the CDN country header', 'wp-security-center' )
+								? __( 'from the CDN country header', 'sentinel-security-center' )
 								: ( 'database' === $wpsec_here['source']
-									? __( 'from the local GeoIP database', 'wp-security-center' )
-									: __( 'no source available', 'wp-security-center' ) )
+									? __( 'from the local GeoIP database', 'sentinel-security-center' )
+									: __( 'no source available', 'sentinel-security-center' ) )
 						);
 						?>
 					)</small>
 				</td>
 			</tr>
 			<tr>
-				<th><?php esc_html_e( 'What would happen on login', 'wp-security-center' ); ?></th>
+				<th><?php esc_html_e( 'What would happen on login', 'sentinel-security-center' ); ?></th>
 				<td>
 					<?php
 					$wpsec_labels = [
-						Access_Policy::ALLOW   => [ '#00a32a', __( 'Allowed', 'wp-security-center' ) ],
-						Access_Policy::MONITOR => [ '#dba617', __( 'Allowed, but reported', 'wp-security-center' ) ],
-						Access_Policy::BLOCK   => [ '#d63638', __( 'BLOCKED', 'wp-security-center' ) ],
+						Access_Policy::ALLOW   => [ '#00a32a', __( 'Allowed', 'sentinel-security-center' ) ],
+						Access_Policy::MONITOR => [ '#dba617', __( 'Allowed, but reported', 'sentinel-security-center' ) ],
+						Access_Policy::BLOCK   => [ '#d63638', __( 'BLOCKED', 'sentinel-security-center' ) ],
 					];
 					$wpsec_label  = $wpsec_labels[ $wpsec_decision['action'] ] ?? [ '#646970', $wpsec_decision['action'] ];
 					?>
@@ -115,7 +115,7 @@ $wpsec_test_ip = isset( $_GET['test_ip'] ) ? sanitize_text_field( wp_unslash( (s
 					<br><small>
 					<?php
 						/* translators: %s: internal name of the rule that decided */
-						printf( esc_html__( 'Decided by: %s', 'wp-security-center' ), '<code>' . esc_html( $wpsec_decision['rail'] ) . '</code>' );
+						printf( esc_html__( 'Decided by: %s', 'sentinel-security-center' ), '<code>' . esc_html( $wpsec_decision['rail'] ) . '</code>' );
 					?>
 					</small>
 				</td>
@@ -123,11 +123,11 @@ $wpsec_test_ip = isset( $_GET['test_ip'] ) ? sanitize_text_field( wp_unslash( (s
 		</tbody>
 	</table>
 
-	<h2><?php esc_html_e( 'What would happen for another address?', 'wp-security-center' ); ?></h2>
+	<h2><?php esc_html_e( 'What would happen for another address?', 'sentinel-security-center' ); ?></h2>
 	<form method="get">
 		<input type="hidden" name="page" value="<?php echo esc_attr( Admin::MENU_DIAGNOSTICS ); ?>">
 		<input type="text" name="test_ip" class="regular-text code" value="<?php echo esc_attr( $wpsec_test_ip ); ?>" placeholder="89.160.20.112">
-		<?php submit_button( __( 'Test', 'wp-security-center' ), 'secondary', 'submit', false ); ?>
+		<?php submit_button( __( 'Test', 'sentinel-security-center' ), 'secondary', 'submit', false ); ?>
 	</form>
 
 	<?php if ( '' !== $wpsec_test_ip ) : ?>
@@ -136,7 +136,7 @@ $wpsec_test_ip = isset( $_GET['test_ip'] ) ? sanitize_text_field( wp_unslash( (s
 
 		if ( null === $wpsec_norm ) :
 			?>
-			<p style="color:#d63638;"><?php esc_html_e( 'That is not a valid IP address.', 'wp-security-center' ); ?></p>
+			<p style="color:#d63638;"><?php esc_html_e( 'That is not a valid IP address.', 'sentinel-security-center' ); ?></p>
 		<?php else : ?>
 			<?php
 			$wpsec_test_country = Country_Resolver::lookup( $wpsec_norm );
@@ -160,17 +160,17 @@ $wpsec_test_ip = isset( $_GET['test_ip'] ) ? sanitize_text_field( wp_unslash( (s
 			?>
 			<table class="widefat striped" style="max-width:900px;">
 				<tbody>
-					<tr><th style="width:280px;"><?php esc_html_e( 'Address', 'wp-security-center' ); ?></th><td><code><?php echo esc_html( $wpsec_norm ); ?></code></td></tr>
-					<tr><th><?php esc_html_e( 'Country', 'wp-security-center' ); ?></th><td><?php echo esc_html( Country_Resolver::country_name( $wpsec_test_country ) ); ?> <code><?php echo esc_html( $wpsec_test_country ); ?></code></td></tr>
-					<tr><th><?php esc_html_e( 'Verdict', 'wp-security-center' ); ?></th><td><strong><?php echo esc_html( $wpsec_test_decision['action'] ); ?></strong> — <code><?php echo esc_html( $wpsec_test_decision['rail'] ); ?></code></td></tr>
-					<tr><th><?php esc_html_e( 'Rules consulted', 'wp-security-center' ); ?></th><td><code><?php echo esc_html( implode( ' → ', $wpsec_test_decision['trace'] ) ); ?></code></td></tr>
+					<tr><th style="width:280px;"><?php esc_html_e( 'Address', 'sentinel-security-center' ); ?></th><td><code><?php echo esc_html( $wpsec_norm ); ?></code></td></tr>
+					<tr><th><?php esc_html_e( 'Country', 'sentinel-security-center' ); ?></th><td><?php echo esc_html( Country_Resolver::country_name( $wpsec_test_country ) ); ?> <code><?php echo esc_html( $wpsec_test_country ); ?></code></td></tr>
+					<tr><th><?php esc_html_e( 'Verdict', 'sentinel-security-center' ); ?></th><td><strong><?php echo esc_html( $wpsec_test_decision['action'] ); ?></strong> — <code><?php echo esc_html( $wpsec_test_decision['rail'] ); ?></code></td></tr>
+					<tr><th><?php esc_html_e( 'Rules consulted', 'sentinel-security-center' ); ?></th><td><code><?php echo esc_html( implode( ' → ', $wpsec_test_decision['trace'] ) ); ?></code></td></tr>
 				</tbody>
 			</table>
 		<?php endif; ?>
 	<?php endif; ?>
 
-	<h2><?php esc_html_e( 'Incoming headers', 'wp-security-center' ); ?></h2>
-	<p class="description"><?php esc_html_e( 'Everything the web server passed to PHP for this request. Use it to work out which header your proxy actually sets.', 'wp-security-center' ); ?></p>
+	<h2><?php esc_html_e( 'Incoming headers', 'sentinel-security-center' ); ?></h2>
+	<p class="description"><?php esc_html_e( 'Everything the web server passed to PHP for this request. Use it to work out which header your proxy actually sets.', 'sentinel-security-center' ); ?></p>
 	<table class="widefat striped" style="max-width:900px;">
 		<tbody>
 		<?php

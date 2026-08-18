@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class Updater {
 
 	/** GitHub repository in "owner/name" form. */
-	private const REPO = 'sglogger/wp-security-center';
+	private const REPO = 'sglogger/sentinel-security-center';
 
 	/** How long to cache the GitHub release lookup, in seconds. */
 	private const CACHE_TTL = 6 * HOUR_IN_SECONDS;
@@ -40,10 +40,10 @@ final class Updater {
 	/** Transient holding the cached GitHub release payload. */
 	private const CACHE_KEY = 'wpsec_gh_release';
 
-	/** Plugin basename, e.g. "wp-security-center/wp-security-center.php". */
+	/** Plugin basename, e.g. "sentinel-security-center/sentinel-security-center.php". */
 	private string $basename;
 
-	/** Plugin directory slug, e.g. "wp-security-center". */
+	/** Plugin directory slug, e.g. "sentinel-security-center". */
 	private string $slug;
 
 	/** Currently installed version. */
@@ -97,7 +97,7 @@ final class Updater {
 			[
 				'Authorization' => 'Bearer ' . $token,
 				'Accept'        => 'application/octet-stream',
-				'User-Agent'    => 'wp-security-center',
+				'User-Agent'    => 'sentinel-security-center',
 			]
 		);
 
@@ -259,11 +259,11 @@ final class Updater {
 		}
 
 		if ( empty( $sections['changelog'] ) ) {
-			$sections['changelog'] = '<p>' . esc_html__( 'See the GitHub release notes for details.', 'wp-security-center' ) . '</p>';
+			$sections['changelog'] = '<p>' . esc_html__( 'See the GitHub release notes for details.', 'sentinel-security-center' ) . '</p>';
 		}
 
 		$info = [
-			'name'              => 'WP Security Center',
+			'name'              => 'Sentinel Security Center',
 			'slug'              => $this->slug,
 			// Without this WordPress offers a "WordPress.org Plugin Page" link
 			// built from the slug, and this plugin has no page there.
@@ -342,7 +342,7 @@ final class Updater {
 
 		return new \WP_Error(
 			'wpsec_rename_failed',
-			esc_html__( 'Could not rename the downloaded update folder.', 'wp-security-center' )
+			esc_html__( 'Could not rename the downloaded update folder.', 'sentinel-security-center' )
 		);
 	}
 
@@ -741,7 +741,7 @@ final class Updater {
 	private function api_headers(): array {
 		$headers = [
 			'Accept'     => 'application/vnd.github+json',
-			'User-Agent' => 'wp-security-center',
+			'User-Agent' => 'sentinel-security-center',
 		];
 
 		$token = $this->token();

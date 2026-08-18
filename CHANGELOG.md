@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to WP Security Center are documented here.
+All notable changes to Sentinel Security Center are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and
 this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -8,6 +8,37 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 When a release goes out, the same summary must also be added to the
 `== Changelog ==` section of `readme.txt` — that is what WordPress shows in the
 plugin details modal.
+
+## [1.4.0] - 2026-08-18
+
+### Changed
+
+- **The plugin is now called Sentinel Security Center.** WordPress.org does not
+  allow a plugin display name or permalink to begin with "wp", so the name, the
+  slug and the text domain all had to change: `wp-security-center` became
+  `sentinel-security-center`, and the main plugin file was renamed to match. The
+  GitHub repository moved to `sglogger/sentinel-security-center`; the old URLs
+  redirect, and the updater now queries the new one.
+
+  Nothing you have configured is lost. Option names, hook names, the database
+  tables and the GeoIP directory under `uploads/` all keep their `wpsec` prefix
+  and are untouched, so your settings, the log, the file and user baselines and
+  any downloaded GeoIP database survive the upgrade unchanged.
+
+  **This upgrade needs one manual step.** WordPress deactivates a plugin before
+  updating it and reactivates it afterwards by the path it recorded — and that
+  path, the old main file, no longer exists. The reactivation therefore fails
+  and the plugin is left switched off. Open the Plugins screen and activate
+  Sentinel Security Center by hand; monitoring resumes with your existing
+  settings and baselines, and no further action is needed. Until you do,
+  nothing is being monitored. Sites installing the plugin for the first time
+  are unaffected.
+
+  Upgraded sites keep the old `wp-security-center` directory name, because the
+  updater installs into the directory the plugin already occupies. That is
+  cosmetic: every path in the plugin is derived from its own location. To tidy
+  it up, deactivate, delete and install the new ZIP — settings and log survive,
+  as they live in the database.
 
 ## [1.3.0] - 2026-08-18
 
@@ -298,6 +329,7 @@ GitHub Releases self-updater, CI and the local development environment.
   as though it were a valid release, producing a fatal error on the Plugins
   screen. Affects any repository without a published release.
 
-[1.1.1]: https://github.com/sglogger/wp-security-center/releases/tag/v1.1.1
-[1.1.0]: https://github.com/sglogger/wp-security-center/releases/tag/v1.1.0
-[1.0.0]: https://github.com/sglogger/wp-security-center/releases/tag/v1.0.0
+[1.4.0]: https://github.com/sglogger/sentinel-security-center/releases/tag/v1.4.0
+[1.1.1]: https://github.com/sglogger/sentinel-security-center/releases/tag/v1.1.1
+[1.1.0]: https://github.com/sglogger/sentinel-security-center/releases/tag/v1.1.0
+[1.0.0]: https://github.com/sglogger/sentinel-security-center/releases/tag/v1.0.0

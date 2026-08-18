@@ -23,11 +23,11 @@ final class Admin {
 	/** Capability required for every screen and action in this plugin. */
 	public const CAP = 'manage_options';
 
-	public const MENU_LOG         = 'wp-security-center';
-	public const MENU_SETTINGS    = 'wp-security-center-settings';
-	public const MENU_DIAGNOSTICS = 'wp-security-center-diagnostics';
-	public const MENU_STATUS      = 'wp-security-center-status';
-	public const MENU_HARDENING   = 'wp-security-center-hardening';
+	public const MENU_LOG         = 'sentinel-security-center';
+	public const MENU_SETTINGS    = 'sentinel-security-center-settings';
+	public const MENU_DIAGNOSTICS = 'sentinel-security-center-diagnostics';
+	public const MENU_STATUS      = 'sentinel-security-center-status';
+	public const MENU_HARDENING   = 'sentinel-security-center-hardening';
 
 	private const NONCE = 'wpsec_settings';
 
@@ -47,8 +47,8 @@ final class Admin {
 
 	public function add_menu(): void {
 		$hook = add_menu_page(
-			__( 'Security Center', 'wp-security-center' ),
-			__( 'Security Center', 'wp-security-center' ),
+			__( 'Security Center', 'sentinel-security-center' ),
+			__( 'Security Center', 'sentinel-security-center' ),
 			self::CAP,
 			self::MENU_LOG,
 			[ $this, 'render_log' ],
@@ -58,8 +58,8 @@ final class Admin {
 
 		add_submenu_page(
 			self::MENU_LOG,
-			__( 'Event Log', 'wp-security-center' ),
-			__( 'Event Log', 'wp-security-center' ),
+			__( 'Event Log', 'sentinel-security-center' ),
+			__( 'Event Log', 'sentinel-security-center' ),
 			self::CAP,
 			self::MENU_LOG,
 			[ $this, 'render_log' ]
@@ -67,8 +67,8 @@ final class Admin {
 
 		add_submenu_page(
 			self::MENU_LOG,
-			__( 'Status', 'wp-security-center' ),
-			__( 'Status', 'wp-security-center' ),
+			__( 'Status', 'sentinel-security-center' ),
+			__( 'Status', 'sentinel-security-center' ),
 			self::CAP,
 			self::MENU_STATUS,
 			[ $this, 'render_status' ]
@@ -76,8 +76,8 @@ final class Admin {
 
 		add_submenu_page(
 			self::MENU_LOG,
-			__( 'Hardening', 'wp-security-center' ),
-			__( 'Hardening', 'wp-security-center' ),
+			__( 'Hardening', 'sentinel-security-center' ),
+			__( 'Hardening', 'sentinel-security-center' ),
 			self::CAP,
 			self::MENU_HARDENING,
 			[ $this, 'render_hardening' ]
@@ -85,8 +85,8 @@ final class Admin {
 
 		add_submenu_page(
 			self::MENU_LOG,
-			__( 'Diagnostics', 'wp-security-center' ),
-			__( 'Diagnostics', 'wp-security-center' ),
+			__( 'Diagnostics', 'sentinel-security-center' ),
+			__( 'Diagnostics', 'sentinel-security-center' ),
 			self::CAP,
 			self::MENU_DIAGNOSTICS,
 			[ $this, 'render_diagnostics' ]
@@ -94,8 +94,8 @@ final class Admin {
 
 		add_submenu_page(
 			self::MENU_LOG,
-			__( 'Settings', 'wp-security-center' ),
-			__( 'Settings', 'wp-security-center' ),
+			__( 'Settings', 'sentinel-security-center' ),
+			__( 'Settings', 'sentinel-security-center' ),
 			self::CAP,
 			self::MENU_SETTINGS,
 			[ $this, 'render_settings' ]
@@ -108,7 +108,7 @@ final class Admin {
 		add_screen_option(
 			'per_page',
 			[
-				'label'   => __( 'Events per page', 'wp-security-center' ),
+				'label'   => __( 'Events per page', 'sentinel-security-center' ),
 				'default' => 50,
 				'option'  => 'wpsec_per_page',
 			]
@@ -141,7 +141,7 @@ final class Admin {
 			sprintf(
 				'<a href="%s">%s</a>',
 				esc_url( admin_url( 'admin.php?page=' . self::MENU_SETTINGS ) ),
-				esc_html__( 'Settings', 'wp-security-center' )
+				esc_html__( 'Settings', 'sentinel-security-center' )
 			)
 		);
 
@@ -168,21 +168,21 @@ final class Admin {
 		if ( ! empty( $geo['enabled'] ) && empty( $geo['countries'] ) ) {
 			$this->notice(
 				'warning',
-				__( 'No countries are on the allow list, so login location rules do nothing at all. Add at least your own country on the Settings screen.', 'wp-security-center' )
+				__( 'No countries are on the allow list, so login location rules do nothing at all. Add at least your own country on the Settings screen.', 'sentinel-security-center' )
 			);
 		}
 
 		if ( 'block' === ( $geo['mode'] ?? '' ) && ! Country_Resolver::is_healthy() ) {
 			$this->notice(
 				'error',
-				__( 'Login blocking is armed but no working country lookup is available. Blocking will stand itself down until a GeoIP database is installed.', 'wp-security-center' )
+				__( 'Login blocking is armed but no working country lookup is available. Blocking will stand itself down until a GeoIP database is installed.', 'sentinel-security-center' )
 			);
 		}
 
 		if ( Geoip_Database::exists() && Geoip_Database::is_stale() ) {
 			$this->notice(
 				'warning',
-				__( 'The GeoIP database is out of date. It is still being used, but country results may be wrong for recently reassigned addresses.', 'wp-security-center' )
+				__( 'The GeoIP database is out of date. It is still being used, but country results may be wrong for recently reassigned addresses.', 'sentinel-security-center' )
 			);
 		}
 	}
@@ -211,14 +211,14 @@ final class Admin {
 		$this->table->prepare_items();
 
 		echo '<div class="wrap">';
-		echo '<h1>' . esc_html__( 'Security Event Log', 'wp-security-center' ) . '</h1>';
+		echo '<h1>' . esc_html__( 'Security Event Log', 'sentinel-security-center' ) . '</h1>';
 
 		printf(
 			'<p>%s</p>',
 			esc_html(
 				sprintf(
 					/* translators: %d: number of matching events */
-					_n( '%d matching event.', '%d matching events.', $this->table->get_total(), 'wp-security-center' ),
+					_n( '%d matching event.', '%d matching events.', $this->table->get_total(), 'sentinel-security-center' ),
 					$this->table->get_total()
 				)
 			)
@@ -226,7 +226,7 @@ final class Admin {
 
 		echo '<form method="get">';
 		printf( '<input type="hidden" name="page" value="%s">', esc_attr( self::MENU_LOG ) );
-		$this->table->search_box( __( 'Search log', 'wp-security-center' ), 'wpsec-search' );
+		$this->table->search_box( __( 'Search log', 'sentinel-security-center' ), 'wpsec-search' );
 		$this->table->display();
 		echo '</form>';
 		echo '</div>';
@@ -284,7 +284,7 @@ final class Admin {
 		}
 
 		if ( ! current_user_can( self::CAP ) ) {
-			wp_die( esc_html__( 'You do not have permission to change these settings.', 'wp-security-center' ), '', [ 'response' => 403 ] );
+			wp_die( esc_html__( 'You do not have permission to change these settings.', 'sentinel-security-center' ), '', [ 'response' => 403 ] );
 		}
 
 		check_admin_referer( self::NONCE );
@@ -692,13 +692,13 @@ final class Admin {
 		}
 
 		$messages = [
-			'saved'         => [ 'success', __( 'Settings saved.', 'wp-security-center' ) ],
-			'geoip_ok'      => [ 'success', __( 'The GeoIP database was downloaded and installed.', 'wp-security-center' ) ],
-			'geoip_failed'  => [ 'error', __( 'The GeoIP database could not be downloaded. See the Status screen for the reason.', 'wp-security-center' ) ],
-			'mail_ok'       => [ 'success', __( 'The test alert was accepted for delivery. Check the recipient inbox.', 'wp-security-center' ) ],
+			'saved'         => [ 'success', __( 'Settings saved.', 'sentinel-security-center' ) ],
+			'geoip_ok'      => [ 'success', __( 'The GeoIP database was downloaded and installed.', 'sentinel-security-center' ) ],
+			'geoip_failed'  => [ 'error', __( 'The GeoIP database could not be downloaded. See the Status screen for the reason.', 'sentinel-security-center' ) ],
+			'mail_ok'       => [ 'success', __( 'The test alert was accepted for delivery. Check the recipient inbox.', 'sentinel-security-center' ) ],
 			'mail_failed'   => [ 'error', self::mail_failure_message() ],
-			'scanned'       => [ 'success', __( 'All scans have been run. Any findings are in the event log.', 'wp-security-center' ) ],
-			'sessions'      => [ 'success', __( 'All sessions were destroyed. Everyone, including you, must sign in again.', 'wp-security-center' ) ],
+			'scanned'       => [ 'success', __( 'All scans have been run. Any findings are in the event log.', 'sentinel-security-center' ) ],
+			'sessions'      => [ 'success', __( 'All sessions were destroyed. Everyone, including you, must sign in again.', 'sentinel-security-center' ) ],
 			'denylist_self' => [ 'warning', self::denylist_self_message() ],
 		];
 
@@ -725,12 +725,12 @@ final class Admin {
 		update_option( Installer::OPTION_NOTICES, $notices, false );
 
 		if ( '' === $entries ) {
-			return __( 'Everything else was saved.', 'wp-security-center' );
+			return __( 'Everything else was saved.', 'sentinel-security-center' );
 		}
 
 		return sprintf(
 			/* translators: %s: comma-separated list of IP addresses or CIDR blocks */
-			__( 'Saved, but these deny-list entries match the address you are working from and were not stored: %s. Denying yourself would have shut the door at your next login, with the current session hiding it until then.', 'wp-security-center' ),
+			__( 'Saved, but these deny-list entries match the address you are working from and were not stored: %s. Denying yourself would have shut the door at your next login, with the current session hiding it until then.', 'sentinel-security-center' ),
 			$entries
 		);
 	}
@@ -744,12 +744,12 @@ final class Admin {
 		$error   = trim( (string) ( $notices['last_mail_error'] ?? '' ) );
 
 		if ( '' === $error ) {
-			return __( 'The test alert could not be sent. Check that at least one recipient is configured.', 'wp-security-center' );
+			return __( 'The test alert could not be sent. Check that at least one recipient is configured.', 'sentinel-security-center' );
 		}
 
 		return sprintf(
 			/* translators: %s: error message from the mail layer */
-			__( 'The test alert could not be sent: %s', 'wp-security-center' ),
+			__( 'The test alert could not be sent: %s', 'sentinel-security-center' ),
 			$error
 		);
 	}

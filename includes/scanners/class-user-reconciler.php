@@ -174,11 +174,11 @@ final class User_Reconciler {
 		$diff = [];
 
 		$fields = [
-			'user_login'    => __( 'login name', 'wp-security-center' ),
-			'user_email'    => __( 'e-mail address', 'wp-security-center' ),
-			'user_nicename' => __( 'nicename', 'wp-security-center' ),
-			'display_name'  => __( 'display name', 'wp-security-center' ),
-			'roles'         => __( 'roles', 'wp-security-center' ),
+			'user_login'    => __( 'login name', 'sentinel-security-center' ),
+			'user_email'    => __( 'e-mail address', 'sentinel-security-center' ),
+			'user_nicename' => __( 'nicename', 'sentinel-security-center' ),
+			'display_name'  => __( 'display name', 'sentinel-security-center' ),
+			'roles'         => __( 'roles', 'sentinel-security-center' ),
 		];
 
 		foreach ( $fields as $field => $label ) {

@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class Two_Factor_Admin {
 
-	public const PAGE = 'wp-security-center-2fa';
+	public const PAGE = 'sentinel-security-center-2fa';
 
 	private const NONCE = 'wpsec_2fa';
 
@@ -38,8 +38,8 @@ final class Two_Factor_Admin {
 	public function add_page(): void {
 		$page = add_submenu_page(
 			Admin::MENU_LOG,
-			__( 'Two-factor authentication', 'wp-security-center' ),
-			__( 'Two-factor', 'wp-security-center' ),
+			__( 'Two-factor authentication', 'sentinel-security-center' ),
+			__( 'Two-factor', 'sentinel-security-center' ),
 			'read',
 			self::PAGE,
 			[ $this, 'render' ]
@@ -246,10 +246,10 @@ final class Two_Factor_Admin {
 		$notice = isset( $_GET['wpsec_2fa_notice'] ) ? sanitize_key( wp_unslash( (string) $_GET['wpsec_2fa_notice'] ) ) : '';
 
 		$messages = [
-			'enabled'  => [ 'success', __( 'Two-factor authentication is on. Save the recovery codes below.', 'wp-security-center' ) ],
-			'disabled' => [ 'warning', __( 'Two-factor authentication has been switched off for your account.', 'wp-security-center' ) ],
-			'codes'    => [ 'success', __( 'New recovery codes generated. The previous set no longer works.', 'wp-security-center' ) ],
-			'bad_code' => [ 'error', __( 'That code was not right. Make sure the phone clock is correct and try the code showing now.', 'wp-security-center' ) ],
+			'enabled'  => [ 'success', __( 'Two-factor authentication is on. Save the recovery codes below.', 'sentinel-security-center' ) ],
+			'disabled' => [ 'warning', __( 'Two-factor authentication has been switched off for your account.', 'sentinel-security-center' ) ],
+			'codes'    => [ 'success', __( 'New recovery codes generated. The previous set no longer works.', 'sentinel-security-center' ) ],
+			'bad_code' => [ 'error', __( 'That code was not right. Make sure the phone clock is correct and try the code showing now.', 'sentinel-security-center' ) ],
 		];
 
 		if ( ! isset( $messages[ $notice ] ) ) {
@@ -278,38 +278,38 @@ final class Two_Factor_Admin {
 		$own    = get_current_user_id() === (int) $user->ID;
 		$active = Two_Factor::is_active_for( (int) $user->ID );
 
-		echo '<h2>' . esc_html__( 'Two-factor authentication', 'wp-security-center' ) . '</h2>';
+		echo '<h2>' . esc_html__( 'Two-factor authentication', 'sentinel-security-center' ) . '</h2>';
 		echo '<table class="form-table" role="presentation"><tr>';
-		echo '<th scope="row">' . esc_html__( 'Status', 'wp-security-center' ) . '</th><td>';
+		echo '<th scope="row">' . esc_html__( 'Status', 'sentinel-security-center' ) . '</th><td>';
 
 		if ( $active ) {
 			printf(
 				'<p><strong>%s</strong> %s</p>',
-				esc_html__( 'On.', 'wp-security-center' ),
+				esc_html__( 'On.', 'sentinel-security-center' ),
 				esc_html(
 					sprintf(
 						/* translators: %d: number of unused recovery codes */
-						_n( '%d unused recovery code remains.', '%d unused recovery codes remain.', Two_Factor::recovery_codes_left( (int) $user->ID ), 'wp-security-center' ),
+						_n( '%d unused recovery code remains.', '%d unused recovery codes remain.', Two_Factor::recovery_codes_left( (int) $user->ID ), 'sentinel-security-center' ),
 						Two_Factor::recovery_codes_left( (int) $user->ID )
 					)
 				)
 			);
 		} else {
-			echo '<p><strong>' . esc_html__( 'Off.', 'wp-security-center' ) . '</strong> '
-				. esc_html__( 'A stolen password is enough to sign in to this account.', 'wp-security-center' ) . '</p>';
+			echo '<p><strong>' . esc_html__( 'Off.', 'sentinel-security-center' ) . '</strong> '
+				. esc_html__( 'A stolen password is enough to sign in to this account.', 'sentinel-security-center' ) . '</p>';
 		}
 
 		if ( $own ) {
 			printf(
 				'<p><a class="button" href="%s">%s</a></p>',
 				esc_url( self::url() ),
-				esc_html( $active ? __( 'Manage two-factor authentication', 'wp-security-center' ) : __( 'Set up two-factor authentication', 'wp-security-center' ) )
+				esc_html( $active ? __( 'Manage two-factor authentication', 'sentinel-security-center' ) : __( 'Set up two-factor authentication', 'sentinel-security-center' ) )
 			);
 		} elseif ( $active && current_user_can( 'edit_user', (int) $user->ID ) ) {
 			echo '<p><label><input type="checkbox" name="wpsec_2fa_reset" value="1"> '
-				. esc_html__( 'Reset two-factor authentication for this user', 'wp-security-center' ) . '</label><br>'
+				. esc_html__( 'Reset two-factor authentication for this user', 'sentinel-security-center' ) . '</label><br>'
 				. '<span class="description">'
-				. esc_html__( 'Use this when they have lost the authenticator, the recovery codes and access to their mailbox. They will have to set it up again, and the reset is recorded in the event log.', 'wp-security-center' )
+				. esc_html__( 'Use this when they have lost the authenticator, the recovery codes and access to their mailbox. They will have to set it up again, and the reset is recorded in the event log.', 'sentinel-security-center' )
 				. '</span></p>';
 		}
 
@@ -337,13 +337,13 @@ final class Two_Factor_Admin {
 						'This site requires administrators to use two-factor authentication. You have %d day left to set it up before you cannot sign in without it.',
 						'This site requires administrators to use two-factor authentication. You have %d days left to set it up before you cannot sign in without it.',
 						$days,
-						'wp-security-center'
+						'sentinel-security-center'
 					),
 					$days
 				)
 			),
 			esc_url( self::url() ),
-			esc_html__( 'Set it up now', 'wp-security-center' )
+			esc_html__( 'Set it up now', 'sentinel-security-center' )
 		);
 	}
 }

@@ -1,10 +1,10 @@
-=== WP Security Center ===
+=== Sentinel Security Center ===
 Contributors: glogger
 Tags: security, activity log, audit log, two-factor, file integrity
 Requires at least: 6.5
 Tested up to: 7.0.4
 Requires PHP: 8.1
-Stable tag: 1.3.0
+Stable tag: 1.4.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Security monitoring and alerting for WordPress: plugin and theme changes, admini
 
 == Description ==
 
-WP Security Center watches the things an attacker actually has to touch in order to keep a foothold in a WordPress site, records them in a searchable log, and e-mails you immediately when something matters.
+Sentinel Security Center watches the things an attacker actually has to touch in order to keep a foothold in a WordPress site, records them in a searchable log, and e-mails you immediately when something matters.
 
 It is built around two goals that pull against each other: miss as little as possible, and produce as few false alarms as possible. Every event type can be set individually to immediate e-mail, log only, or off. Login blocking always starts in monitor mode so you can see what a rule would have done before you arm it.
 
@@ -57,7 +57,7 @@ The plugin adds no front-end output, no REST routes and no shortcodes. Its menu,
 
 == Installation ==
 
-1. Upload the plugin to `/wp-content/plugins/wp-security-center` or install the ZIP from the Plugins screen.
+1. Upload the plugin to `/wp-content/plugins/sentinel-security-center` or install the ZIP from the Plugins screen.
 2. Activate it. WordPress Multisite is not supported and activation will stop with an explanation.
 3. Open Security Center → Settings and set your alert recipients.
 4. For country-based rules, add a MaxMind GeoLite2 licence key (free) and download the database, or configure your CDN's country header.
@@ -103,6 +103,12 @@ No. Activation on a network stops with a message rather than misbehaving quietly
 
 == Changelog ==
 
+= 1.4.0 =
+* Changed: the plugin is now called Sentinel Security Center. WordPress.org does not allow a plugin name or permalink to begin with "wp", so the name, the slug and the text domain changed from wp-security-center to sentinel-security-center, and the main plugin file was renamed to match.
+* Changed: the GitHub repository moved to sglogger/sentinel-security-center and the updater now queries it. The old URLs redirect.
+* Unchanged: your settings, the log and the file and user baselines are all preserved. The option names, database tables and the GeoIP directory under uploads keep their existing prefix and are untouched.
+* Note: this upgrade leaves the plugin deactivated, because WordPress reactivates a plugin by the file path it recorded and the main plugin file has been renamed. Activate Sentinel Security Center on the Plugins screen and monitoring resumes as before. Until you do, nothing is being monitored.
+
 = 1.3.0 =
 * Security: two-factor authentication could be bypassed by authenticating through xmlrpc.php with the account password, because XML-RPC never fires the hook the challenge hangs on. Primary-password API authentication is now refused for accounts with a second factor; application passwords are unaffected.
 * Security: the GitHub updater token could be sent to a foreign host if any WordPress HTTP request contained the asset URL as a substring, e.g. in a query string. The URL is now matched structurally by scheme, host and path.
@@ -145,6 +151,9 @@ No. Activation on a network stops with a message rather than misbehaving quietly
 * Initial scaffolding release.
 
 == Upgrade Notice ==
+
+= 1.4.0 =
+A rename, and nothing else: WP Security Center is now Sentinel Security Center, because WordPress.org does not allow a plugin name to begin with "wp". Your settings, log and baselines are all preserved. One manual step is required: WordPress cannot reactivate the plugin itself, because the main plugin file has been renamed, so it will be left switched off after the update. Activate it on the Plugins screen and monitoring resumes exactly as before. Nothing is monitored until you do.
 
 = 1.3.0 =
 Adds an IP deny list on the Login & Location tab. Nothing changes until you put an address in it. Also fixes the plugins screen offering an update that is already installed, and the details modal showing the changelog of the version you already had rather than the one on offer. Also makes the log search box find rows by event type, IP address and time, not only by description.

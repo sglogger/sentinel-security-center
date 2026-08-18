@@ -51,7 +51,7 @@ final class Logger {
 			// in production, never a silent no-op that hides a real event.
 			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 				trigger_error(
-					esc_html( 'WP Security Center: unknown event type "' . $type . '"' ),
+					esc_html( 'Sentinel Security Center: unknown event type "' . $type . '"' ),
 					E_USER_WARNING
 				);
 			}

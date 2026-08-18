@@ -1,4 +1,4 @@
-# Local development environment for WP Security Center.
+# Local development environment for Sentinel Security Center.
 #
 # Copy to docker-compose.yml (which is gitignored) and adjust ports if they
 # clash with another project. `cp .env.example .env` first if you want to
@@ -52,7 +52,7 @@ services:
         // define('WPSEC_DISABLE_BLOCKING', true);
     volumes:
       - ./local_wp_core:/var/www/html
-      - .:/var/www/html/wp-content/plugins/wp-security-center
+      - .:/var/www/html/wp-content/plugins/sentinel-security-center
       - ./dev/mu-plugins:/var/www/html/wp-content/mu-plugins
 
   # The official `wordpress` image does NOT bundle WP-CLI — only the separate
@@ -73,7 +73,7 @@ services:
       WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:-wordpress}
     volumes:
       - ./local_wp_core:/var/www/html
-      - .:/var/www/html/wp-content/plugins/wp-security-center
+      - .:/var/www/html/wp-content/plugins/sentinel-security-center
       - ./dev/mu-plugins:/var/www/html/wp-content/mu-plugins
 
   # Catches every wp_mail() so alert delivery can actually be verified.

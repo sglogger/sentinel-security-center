@@ -419,7 +419,7 @@ final class Two_Factor {
 	 */
 	public static function send_email_code( \WP_User $user ) {
 		if ( ! self::email_fallback_enabled() ) {
-			return new \WP_Error( 'wpsec_2fa_no_email', __( 'The e-mail fallback is switched off on this site.', 'wp-security-center' ) );
+			return new \WP_Error( 'wpsec_2fa_no_email', __( 'The e-mail fallback is switched off on this site.', 'sentinel-security-center' ) );
 		}
 
 		$user_id = (int) $user->ID;
@@ -428,7 +428,7 @@ final class Two_Factor {
 		// One code per minute, so the endpoint cannot be used to flood an
 		// inbox or to fish for whether an account exists.
 		if ( ! empty( $state['sent'] ) && ( time() - (int) $state['sent'] ) < MINUTE_IN_SECONDS ) {
-			return new \WP_Error( 'wpsec_2fa_email_throttled', __( 'A code was just sent. Check your inbox before requesting another.', 'wp-security-center' ) );
+			return new \WP_Error( 'wpsec_2fa_email_throttled', __( 'A code was just sent. Check your inbox before requesting another.', 'sentinel-security-center' ) );
 		}
 
 		$settings = self::settings();
@@ -452,7 +452,7 @@ final class Two_Factor {
 			/* translators: 1: site name, 2: the one-time code, 3: minutes until it expires, 4: client IP address */
 			__(
 				"Someone is signing in to %1\$s as you and asked for a one-time code because their authenticator app was unavailable.\n\nYour code is: %2\$s\n\nIt expires in %3\$d minutes and can be used once.\n\nThe request came from %4\$s.\n\nIf this was not you, someone knows your password. Change it now and tell an administrator.",
-				'wp-security-center'
+				'sentinel-security-center'
 			),
 			$site,
 			$code,
@@ -463,7 +463,7 @@ final class Two_Factor {
 		$sent = Mailer::send_to(
 			(string) $user->user_email,
 			/* translators: %s: site name */
-			sprintf( __( 'Your sign-in code for %s', 'wp-security-center' ), $site ),
+			sprintf( __( 'Your sign-in code for %s', 'sentinel-security-center' ), $site ),
 			$body
 		);
 
@@ -488,7 +488,7 @@ final class Two_Factor {
 			// otherwise punish the user for the mail server's failure.
 			delete_user_meta( $user_id, self::META_EMAIL_CODE );
 
-			return new \WP_Error( 'wpsec_2fa_email_failed', __( 'The code could not be sent. Check the site\'s mail configuration.', 'wp-security-center' ) );
+			return new \WP_Error( 'wpsec_2fa_email_failed', __( 'The code could not be sent. Check the site\'s mail configuration.', 'sentinel-security-center' ) );
 		}
 
 		return true;

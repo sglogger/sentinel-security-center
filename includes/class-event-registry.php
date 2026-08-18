@@ -235,15 +235,15 @@ final class Event_Registry {
 	public static function severity_label( int $severity ): string {
 		switch ( true ) {
 			case $severity >= self::CRITICAL:
-				return __( 'Critical', 'wp-security-center' );
+				return __( 'Critical', 'sentinel-security-center' );
 			case $severity >= self::HIGH:
-				return __( 'High', 'wp-security-center' );
+				return __( 'High', 'sentinel-security-center' );
 			case $severity >= self::WARNING:
-				return __( 'Warning', 'wp-security-center' );
+				return __( 'Warning', 'sentinel-security-center' );
 			case $severity >= self::NOTICE:
-				return __( 'Notice', 'wp-security-center' );
+				return __( 'Notice', 'sentinel-security-center' );
 			default:
-				return __( 'Info', 'wp-security-center' );
+				return __( 'Info', 'sentinel-security-center' );
 		}
 	}
 
@@ -254,15 +254,15 @@ final class Event_Registry {
 	 */
 	public static function groups(): array {
 		return [
-			'plugins'   => __( 'Plugins', 'wp-security-center' ),
-			'themes'    => __( 'Themes', 'wp-security-center' ),
-			'users'     => __( 'Users & administrators', 'wp-security-center' ),
-			'apppass'   => __( 'Application passwords', 'wp-security-center' ),
-			'login'     => __( 'Logins', 'wp-security-center' ),
-			'twofactor' => __( 'Two-factor authentication', 'wp-security-center' ),
-			'config'    => __( 'Configuration', 'wp-security-center' ),
-			'files'     => __( 'Files & integrity', 'wp-security-center' ),
-			'system'    => __( 'Plugin status', 'wp-security-center' ),
+			'plugins'   => __( 'Plugins', 'sentinel-security-center' ),
+			'themes'    => __( 'Themes', 'sentinel-security-center' ),
+			'users'     => __( 'Users & administrators', 'sentinel-security-center' ),
+			'apppass'   => __( 'Application passwords', 'sentinel-security-center' ),
+			'login'     => __( 'Logins', 'sentinel-security-center' ),
+			'twofactor' => __( 'Two-factor authentication', 'sentinel-security-center' ),
+			'config'    => __( 'Configuration', 'sentinel-security-center' ),
+			'files'     => __( 'Files & integrity', 'sentinel-security-center' ),
+			'system'    => __( 'Plugin status', 'sentinel-security-center' ),
 		];
 	}
 }

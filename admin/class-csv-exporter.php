@@ -52,7 +52,7 @@ final class Csv_Exporter {
 
 	public function handle(): void {
 		if ( ! current_user_can( Admin::CAP ) ) {
-			wp_die( esc_html__( 'You do not have permission to export the security log.', 'wp-security-center' ), '', [ 'response' => 403 ] );
+			wp_die( esc_html__( 'You do not have permission to export the security log.', 'sentinel-security-center' ), '', [ 'response' => 403 ] );
 		}
 
 		check_admin_referer( self::ACTION );
@@ -71,7 +71,7 @@ final class Csv_Exporter {
 		$out = fopen( 'php://output', 'w' );
 
 		if ( false === $out ) {
-			wp_die( esc_html__( 'The export could not be started.', 'wp-security-center' ) );
+			wp_die( esc_html__( 'The export could not be started.', 'sentinel-security-center' ) );
 		}
 
 		// UTF-8 BOM so Excel opens the file with the right encoding instead of

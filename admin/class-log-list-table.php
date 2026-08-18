@@ -42,12 +42,12 @@ final class Log_List_Table extends \WP_List_Table {
 	 */
 	public function get_columns(): array {
 		return [
-			'event_time'  => __( 'Time (UTC)', 'wp-security-center' ),
-			'severity'    => __( 'Severity', 'wp-security-center' ),
-			'event_type'  => __( 'Event', 'wp-security-center' ),
-			'description' => __( 'Description', 'wp-security-center' ),
-			'actor_login' => __( 'Performed by', 'wp-security-center' ),
-			'ip_text'     => __( 'IP address', 'wp-security-center' ),
+			'event_time'  => __( 'Time (UTC)', 'sentinel-security-center' ),
+			'severity'    => __( 'Severity', 'sentinel-security-center' ),
+			'event_type'  => __( 'Event', 'sentinel-security-center' ),
+			'description' => __( 'Description', 'sentinel-security-center' ),
+			'actor_login' => __( 'Performed by', 'sentinel-security-center' ),
+			'ip_text'     => __( 'IP address', 'sentinel-security-center' ),
 		];
 	}
 
@@ -102,7 +102,7 @@ final class Log_List_Table extends \WP_List_Table {
 	}
 
 	public function no_items(): void {
-		esc_html_e( 'No events recorded yet.', 'wp-security-center' );
+		esc_html_e( 'No events recorded yet.', 'sentinel-security-center' );
 	}
 
 	/**
@@ -132,7 +132,7 @@ final class Log_List_Table extends \WP_List_Table {
 			esc_html(
 				sprintf(
 					/* translators: %s: human-readable time difference */
-					__( '%s ago', 'wp-security-center' ),
+					__( '%s ago', 'sentinel-security-center' ),
 					human_time_diff( (int) $stamp, time() )
 				)
 			)
@@ -202,7 +202,7 @@ final class Log_List_Table extends \WP_List_Table {
 		if ( is_array( $data ) && ! empty( $data ) ) {
 			$out .= sprintf(
 				'<details style="margin-top:4px;"><summary style="cursor:pointer;color:#2271b1;">%s</summary><pre style="white-space:pre-wrap;word-break:break-word;background:#f6f7f7;padding:8px;margin-top:4px;font-size:11px;">%s</pre></details>',
-				esc_html__( 'Details', 'wp-security-center' ),
+				esc_html__( 'Details', 'sentinel-security-center' ),
 				esc_html( (string) wp_json_encode( $data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) )
 			);
 		}
@@ -210,11 +210,11 @@ final class Log_List_Table extends \WP_List_Table {
 		$alert = (int) ( $item['alert_state'] ?? 0 );
 
 		if ( Logger::ALERT_SENT === $alert ) {
-			$out .= '<br><small style="color:#646970;">' . esc_html__( 'Alert e-mail sent', 'wp-security-center' ) . '</small>';
+			$out .= '<br><small style="color:#646970;">' . esc_html__( 'Alert e-mail sent', 'sentinel-security-center' ) . '</small>';
 		} elseif ( Logger::ALERT_FAILED === $alert ) {
-			$out .= '<br><small style="color:#d63638;">' . esc_html__( 'Alert e-mail FAILED to send', 'wp-security-center' ) . '</small>';
+			$out .= '<br><small style="color:#d63638;">' . esc_html__( 'Alert e-mail FAILED to send', 'sentinel-security-center' ) . '</small>';
 		} elseif ( Logger::ALERT_SUPPRESSED === $alert ) {
-			$out .= '<br><small style="color:#dba617;">' . esc_html__( 'Alert e-mail suppressed (hourly budget)', 'wp-security-center' ) . '</small>';
+			$out .= '<br><small style="color:#dba617;">' . esc_html__( 'Alert e-mail suppressed (hourly budget)', 'sentinel-security-center' ) . '</small>';
 		}
 
 		return $out;
@@ -229,7 +229,7 @@ final class Log_List_Table extends \WP_List_Table {
 		$roles = (string) ( $item['actor_roles'] ?? '' );
 
 		if ( '' === $login ) {
-			return '<em>' . esc_html__( 'anonymous', 'wp-security-center' ) . '</em>';
+			return '<em>' . esc_html__( 'anonymous', 'sentinel-security-center' ) . '</em>';
 		}
 
 		$out = $id > 0
@@ -258,7 +258,7 @@ final class Log_List_Table extends \WP_List_Table {
 			$out .= '<br><small style="color:#2271b1;">' . esc_html(
 				sprintf(
 					/* translators: %s: affected user login */
-					__( 'affected: %s', 'wp-security-center' ),
+					__( 'affected: %s', 'sentinel-security-center' ),
 					$target
 				)
 			) . '</small>';
@@ -327,7 +327,7 @@ final class Log_List_Table extends \WP_List_Table {
 		echo '<div class="alignleft actions">';
 
 		echo '<select name="group">';
-		printf( '<option value="">%s</option>', esc_html__( 'All categories', 'wp-security-center' ) );
+		printf( '<option value="">%s</option>', esc_html__( 'All categories', 'sentinel-security-center' ) );
 		foreach ( Event_Registry::groups() as $key => $label ) {
 			printf(
 				'<option value="%s"%s>%s</option>',
@@ -339,7 +339,7 @@ final class Log_List_Table extends \WP_List_Table {
 		echo '</select>';
 
 		echo '<select name="severity">';
-		printf( '<option value="">%s</option>', esc_html__( 'Any severity', 'wp-security-center' ) );
+		printf( '<option value="">%s</option>', esc_html__( 'Any severity', 'sentinel-security-center' ) );
 		foreach ( [ Event_Registry::CRITICAL, Event_Registry::HIGH, Event_Registry::WARNING, Event_Registry::NOTICE ] as $level ) {
 			printf(
 				'<option value="%d"%s>%s</option>',
@@ -348,7 +348,7 @@ final class Log_List_Table extends \WP_List_Table {
 				esc_html(
 					sprintf(
 						/* translators: %s: severity name */
-						__( '%s and above', 'wp-security-center' ),
+						__( '%s and above', 'sentinel-security-center' ),
 						Event_Registry::severity_label( $level )
 					)
 				)
@@ -357,12 +357,12 @@ final class Log_List_Table extends \WP_List_Table {
 		echo '</select>';
 
 		echo '<select name="days">';
-		printf( '<option value="">%s</option>', esc_html__( 'All time', 'wp-security-center' ) );
+		printf( '<option value="">%s</option>', esc_html__( 'All time', 'sentinel-security-center' ) );
 		foreach ( [
-			1  => __( 'Last 24 hours', 'wp-security-center' ),
-			7  => __( 'Last 7 days', 'wp-security-center' ),
-			30 => __( 'Last 30 days', 'wp-security-center' ),
-			90 => __( 'Last 90 days', 'wp-security-center' ),
+			1  => __( 'Last 24 hours', 'sentinel-security-center' ),
+			7  => __( 'Last 7 days', 'sentinel-security-center' ),
+			30 => __( 'Last 30 days', 'sentinel-security-center' ),
+			90 => __( 'Last 90 days', 'sentinel-security-center' ),
 		] as $value => $label ) {
 			printf( '<option value="%d"%s>%s</option>', (int) $value, selected( $days, $value, false ), esc_html( $label ) );
 		}
@@ -371,13 +371,13 @@ final class Log_List_Table extends \WP_List_Table {
 		printf(
 			'<input type="search" name="ip" value="%s" placeholder="%s" style="width:150px;">',
 			esc_attr( $ip ),
-			esc_attr__( 'IP address', 'wp-security-center' )
+			esc_attr__( 'IP address', 'sentinel-security-center' )
 		);
 
-		submit_button( __( 'Filter', 'wp-security-center' ), '', 'filter_action', false );
+		submit_button( __( 'Filter', 'sentinel-security-center' ), '', 'filter_action', false );
 
 		echo ' <a href="' . esc_url( $this->export_url() ) . '" class="button">'
-			. esc_html__( 'Export CSV', 'wp-security-center' ) . '</a>';
+			. esc_html__( 'Export CSV', 'sentinel-security-center' ) . '</a>';
 
 		echo '</div>';
 	}

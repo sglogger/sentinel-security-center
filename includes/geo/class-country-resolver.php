@@ -261,11 +261,11 @@ final class Country_Resolver {
 		$code = strtoupper( trim( $code ) );
 
 		if ( 'LO' === $code ) {
-			return __( 'Local network', 'wp-security-center' );
+			return __( 'Local network', 'sentinel-security-center' );
 		}
 
 		if ( self::UNKNOWN === $code || '' === $code ) {
-			return __( 'Unknown', 'wp-security-center' );
+			return __( 'Unknown', 'sentinel-security-center' );
 		}
 
 		if ( class_exists( '\Locale' ) && function_exists( 'locale_get_display_region' ) ) {

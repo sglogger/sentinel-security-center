@@ -1,4 +1,4 @@
-# WP Security Center
+# Sentinel Security Center
 
 Security monitoring and alerting for WordPress. It watches what an attacker has
 to touch in order to keep a foothold — plugins, themes, administrators, roles,
@@ -219,14 +219,14 @@ edits are live with no build step.
 docker compose exec wpcli wp core install --url=http://localhost:9090 \
   --title="WPSec Dev" --admin_user=admin --admin_password=admin123 \
   --admin_email=admin@example.test --skip-email
-docker compose exec wpcli wp plugin activate wp-security-center
+docker compose exec wpcli wp plugin activate sentinel-security-center
 
 # Useful during development
 docker compose exec wpcli wp user create eve eve@example.test --role=subscriber
 docker compose exec wpcli wp user set-role eve administrator
 docker compose exec wpcli wp cron event run wpsec_user_scan
 docker compose exec wpcli wp db tables --all-tables-with-prefix | grep wpsec
-docker compose exec wordpress php -l wp-content/plugins/wp-security-center/includes/class-logger.php
+docker compose exec wordpress php -l wp-content/plugins/sentinel-security-center/includes/class-logger.php
 ```
 
 Note that `wp db tables` **without** `--all-tables-with-prefix` lists only
@@ -266,11 +266,11 @@ exactly that reason.
 - `declare( strict_types = 1 );` in every file, then the namespace, then the
   `ABSPATH` guard.
 - Namespace `WPSecurityCenter`. Constants `WPSEC_*`, options, hooks and tables
-  `wpsec_*`. Text domain `wp-security-center`.
+  `wpsec_*`. Text domain `sentinel-security-center`.
 - `final class Under_Score` in `class-kebab-case.php`, WordPress core style.
 - Every component exposes `register(): void` that does nothing but add hooks.
   Nothing happens at file-load time.
-- **No autoloader in production.** `wp-security-center.php` holds an explicit
+- **No autoloader in production.** `sentinel-security-center.php` holds an explicit
   `require_once` list in dependency order. Composer's autoloader is pulled in
   lazily, only for the MaxMind reader, and a missing `vendor/` must degrade
   gracefully rather than fatal.
@@ -281,8 +281,8 @@ exactly that reason.
 
 The version lives in three places and CI fails the build if they disagree:
 
-1. `wp-security-center.php` — the `Version:` header
-2. `wp-security-center.php` — `define( 'WPSEC_VERSION', ... )`
+1. `sentinel-security-center.php` — the `Version:` header
+2. `sentinel-security-center.php` — `define( 'WPSEC_VERSION', ... )`
 3. `readme.txt` — `Stable tag:`
 
 Add the release notes to both [CHANGELOG.md](CHANGELOG.md) and the
@@ -306,10 +306,10 @@ Source strings are English. A complete German translation ships in
 `languages/`. To regenerate after changing strings:
 
 ```sh
-docker compose exec wpcli wp i18n make-pot wp-content/plugins/wp-security-center \
-  wp-content/plugins/wp-security-center/languages/wp-security-center.pot \
-  --exclude=vendor,tests,dev,local_wp_core --slug=wp-security-center
-docker compose exec wpcli sh -c 'cd /var/www/html/wp-content/plugins/wp-security-center \
+docker compose exec wpcli wp i18n make-pot wp-content/plugins/sentinel-security-center \
+  wp-content/plugins/sentinel-security-center/languages/sentinel-security-center.pot \
+  --exclude=vendor,tests,dev,local_wp_core --slug=sentinel-security-center
+docker compose exec wpcli sh -c 'cd /var/www/html/wp-content/plugins/sentinel-security-center \
   && wp i18n make-mo languages/ languages/'
 ```
 

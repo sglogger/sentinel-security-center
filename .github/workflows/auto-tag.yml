@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - wp-security-center.php
+      - sentinel-security-center.php
       - composer.lock
   workflow_dispatch:
 
@@ -26,11 +26,11 @@ jobs:
       - name: Read and cross-check version
         id: ver
         run: |
-          HEADER=$(grep -E '^\s*\*\s*Version:' wp-security-center.php | head -n1 | awk -F: '{print $2}' | xargs)
-          CONST=$(grep -E "define\(\s*'WPSEC_VERSION'" wp-security-center.php | sed -E "s/.*'([0-9.]+)'.*/\1/")
+          HEADER=$(grep -E '^\s*\*\s*Version:' sentinel-security-center.php | head -n1 | awk -F: '{print $2}' | xargs)
+          CONST=$(grep -E "define\(\s*'WPSEC_VERSION'" sentinel-security-center.php | sed -E "s/.*'([0-9.]+)'.*/\1/")
           STABLE=$(grep -E '^Stable tag:' readme.txt | awk -F: '{print $2}' | xargs)
           if [ -z "$HEADER" ]; then
-            echo "::error::Could not find Version header in wp-security-center.php"
+            echo "::error::Could not find Version header in sentinel-security-center.php"
             exit 1
           fi
           if [ "$HEADER" != "$CONST" ]; then
@@ -105,13 +105,13 @@ jobs:
       # distribution). Nothing else is needed at runtime.
       - name: Stage plugin files
         run: |
-          SLUG=wp-security-center
+          SLUG=sentinel-security-center
           STAGE="$RUNNER_TEMP/$SLUG"
           rm -rf "$STAGE"
           mkdir -p "$STAGE"
 
           for path in \
-            wp-security-center.php \
+            sentinel-security-center.php \
             uninstall.php \
             index.php \
             readme.txt \
@@ -141,7 +141,7 @@ jobs:
       # release rather than publish it.
       - name: Verify nothing unwanted was staged
         run: |
-          SLUG=wp-security-center
+          SLUG=sentinel-security-center
           STAGE="$RUNNER_TEMP/$SLUG"
 
           echo "--- staged tree (excluding vendor internals) ---"
@@ -173,7 +173,7 @@ jobs:
 
           # A WordPress plugin is identified by its header; without this the
           # ZIP is not installable at all.
-          grep -q '^\s*\*\s*Plugin Name:' "$STAGE/wp-security-center.php" \
+          grep -q '^\s*\*\s*Plugin Name:' "$STAGE/sentinel-security-center.php" \
             || { echo "::error::plugin header missing from the staged bootstrap"; exit 1; }
 
           test -f "$STAGE/vendor/autoload.php" || { echo "::error::vendor/autoload.php missing from the staged plugin"; exit 1; }
@@ -183,7 +183,7 @@ jobs:
 
       - name: Build plugin ZIP
         run: |
-          SLUG=wp-security-center
+          SLUG=sentinel-security-center
           cd "$RUNNER_TEMP"
           zip -rq "$GITHUB_WORKSPACE/$SLUG.zip" "$SLUG"
           unzip -l "$GITHUB_WORKSPACE/$SLUG.zip" | tail -1
@@ -214,7 +214,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.ver.outputs.tag }}
-          files: wp-security-center.zip
+          files: sentinel-security-center.zip
           body_path: release-notes.md
           generate_release_notes: true
           fail_on_unmatched_files: true

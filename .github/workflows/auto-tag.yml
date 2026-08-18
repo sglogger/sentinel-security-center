@@ -22,7 +22,7 @@ jobs:
 
       # The version lives in three places that must never drift apart: the
       # plugin header, the runtime constant, and readme.txt's Stable tag
-      # (which the updater parses for the "View details" modal).
+      # (which is what WordPress.org serves as the current release).
       - name: Read and cross-check version
         id: ver
         run: |
@@ -146,7 +146,7 @@ jobs:
           # The 1024px master is a source asset for store listings, not a
           # runtime one: nothing in the plugin references it, and at ~730 KB it
           # is twice the weight of the entire rest of the ZIP. The SVG and the
-          # 256px PNG are the two the updater actually points WordPress at.
+          # 256px PNG are the two that ship.
           rm -f "$STAGE/assets/logos/"*-1024x1024.png
 
       # A ZIP that carries dev scaffolding is a packaging bug, so fail the

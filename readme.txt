@@ -4,7 +4,7 @@ Tags: security, activity log, audit log, two-factor, file integrity
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 1.5.2
+Stable tag: 1.6.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,6 +103,10 @@ No. Activation on a network stops with a message rather than misbehaving quietly
 
 == Changelog ==
 
+= 1.6.0 =
+* Removed: the built-in updater that installed updates from GitHub Releases, along with the Update URI header. Plugins hosted on WordPress.org may not install or serve updates from an external source; updates now reach your site the ordinary way, through WordPress.
+* Note: the WPSEC_GITHUB_TOKEN constant no longer does anything and can be deleted from wp-config.php.
+
 = 1.5.2 =
 * Fixed: "Check again" on the Updates screen could report no update for up to six hours after one had been released. The plugin caches its release lookup to stay under the GitHub rate limit, and was reading that cache back even when you had explicitly asked WordPress to check again. A forced check now re-queries GitHub.
 * Added: the plugin's own icon, wherever WordPress previously drew the generic puzzle piece — the Updates screen and the plugin details modal. The admin menu keeps its shield.
@@ -162,6 +166,9 @@ No. Activation on a network stops with a message rather than misbehaving quietly
 * Initial scaffolding release.
 
 == Upgrade Notice ==
+
+= 1.6.0 =
+The plugin no longer updates itself from GitHub; updates come through WordPress.org from this version on. Install this one through the update offer as it stands, or by uploading the ZIP. WPSEC_GITHUB_TOKEN, if you set it, can be removed from wp-config.php.
 
 = 1.5.2 =
 Fixes "Check again" reporting no update for hours after one was published. Worth taking if you have ever wondered why the Updates screen was quiet. Note that the fix only takes effect once this version is installed: to see it now, use the plugin's update offer as it stands, or clear the wpsec_gh_release transient.

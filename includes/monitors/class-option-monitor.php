@@ -35,6 +35,11 @@ final class Option_Monitor {
 			'users_can_register'     => 'option.users_can_register_changed',
 			'default_role'           => 'option.default_role_changed',
 			'blog_public'            => 'option.blog_public_changed',
+
+			// Read-only: these five are watched so that switching automatic
+			// updates off is recorded, which is one of the first things done to
+			// a site an attacker wants to keep. Nothing here writes them, and
+			// the plugin does not take part in updating anything.
 			'auto_update_plugins'    => 'option.auto_update_changed',
 			'auto_update_themes'     => 'option.auto_update_changed',
 			'auto_update_core_dev'   => 'option.auto_update_changed',

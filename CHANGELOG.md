@@ -9,6 +9,18 @@ When a release goes out, the same summary must also be added to the
 `== Changelog ==` section of `readme.txt` — that is what WordPress shows in the
 plugin details modal.
 
+## [1.6.0] - 2026-08-18
+
+### Removed
+
+- **The GitHub Releases self-updater.** The `Update URI` header, the
+  `pre_set_site_transient_update_plugins` / `site_transient_update_plugins` /
+  `plugins_api` / `upgrader_source_selection` filters and the cached release
+  lookup are gone, along with `includes/class-updater.php` and the
+  `WPSEC_GITHUB_TOKEN` constant. A plugin hosted on wordpress.org may not
+  install or serve updates from an external source; updates are distributed
+  through wordpress.org.
+
 ## [1.5.2] - 2026-08-18
 
 ### Fixed

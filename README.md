@@ -5,8 +5,8 @@ to touch in order to keep a foothold — plugins, themes, administrators, roles,
 configuration, files, and where logins come from — records it in a searchable
 log, and e-mails you immediately when it matters.
 
-Distributed from GitHub Releases, not wordpress.org. The plugin updates itself
-in place; no helper plugin is required.
+Distributed through wordpress.org. The plugin ships no updater of its own —
+updates arrive the ordinary way, through WordPress.
 
 **Status:** feature complete as of 1.1.0. See [CHANGELOG.md](CHANGELOG.md).
 
@@ -192,7 +192,6 @@ All optional, all set in `wp-config.php`.
 | `WPSEC_DISABLE_BLOCKING` | Emergency kill switch; disables login blocking outright |
 | `WPSEC_MAXMIND_LICENSE_KEY` | MaxMind licence key; takes precedence over the stored option, and keeps the key out of the database |
 | `WPSEC_GEOIP_PATH` | Absolute path to a GeoLite2 `.mmdb`, for putting it outside the webroot |
-| `WPSEC_GITHUB_TOKEN` | GitHub token for update checks against a private repository or to lift the rate limit |
 
 ## Local development
 
@@ -297,8 +296,8 @@ git push origin main
 `.github/workflows/auto-tag.yml` takes it from there: it cross-checks the three
 versions, tags, installs runtime dependencies with `--no-dev`, asserts no dev
 package leaked into `vendor/`, compiles the `.po` files, builds the ZIP and
-publishes the GitHub release. Sites running an older version pick it up through
-the built-in updater.
+publishes the GitHub release. The plugin carries no updater of its own: updates
+reach sites through WordPress.org once the release is published there.
 
 ## Translations
 

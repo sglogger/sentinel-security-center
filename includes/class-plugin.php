@@ -51,7 +51,7 @@ final class Plugin {
 		);
 
 		// Converge the schema and options even when the plugin was updated by
-		// uploading files rather than through the updater.
+		// uploading files rather than through the WordPress.org updater.
 		Installer::maybe_migrate();
 
 		// Monitors and the login guard must run on every request: a plugin can
@@ -83,13 +83,6 @@ final class Plugin {
 			// Enrolment belongs to the account holder, not to administrators,
 			// so this one registers for every signed-in user.
 			$this->add( 'two_factor_admin', new Two_Factor_Admin() );
-		}
-
-		// GitHub Releases self-updater. Only ever needed in the admin, during
-		// cron, or under WP-CLI; loading it on front-end requests would add an
-		// HTTP lookup to page loads for no reason.
-		if ( is_admin() || wp_doing_cron() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
-			$this->add( 'updater', new Updater() );
 		}
 
 		do_action( 'wpsec_loaded', $this );

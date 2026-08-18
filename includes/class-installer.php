@@ -190,7 +190,7 @@ final class Installer {
 
 	/**
 	 * Runs on every boot, not only on activation, so a site updated by
-	 * uploading files (rather than through the updater) still converges.
+	 * uploading files (rather than through WordPress) still converges.
 	 */
 	public static function maybe_migrate(): void {
 		self::notice_version_change();
@@ -233,14 +233,10 @@ final class Installer {
 	}
 
 	/**
-	 * Notice that the files on disk are a different version than last time.
-	 *
-	 * An update applied through the updater ends in upgrader_process_complete,
-	 * which clears the cached release lookup. An update applied any other way —
-	 * git pull, rsync, an unzipped upload — ends in nothing at all, and both
-	 * WordPress's twice-daily update check and our own six-hour release cache
-	 * go on describing the copy that used to be here. The visible symptom is a
-	 * plugins screen offering an update to the version already installed.
+	 * Keep the recorded version in step with the files on disk, however they
+	 * got there — an update through WordPress, a git pull, rsync, an unzipped
+	 * upload. The data version has its own option and its own migration path;
+	 * this one is the plain "what is installed right now" record.
 	 */
 	private static function notice_version_change(): void {
 		if ( (string) get_option( self::OPTION_VERSION, '' ) === WPSEC_VERSION ) {
@@ -248,9 +244,6 @@ final class Installer {
 		}
 
 		update_option( self::OPTION_VERSION, WPSEC_VERSION );
-
-		Updater::forget_release();
-		delete_site_transient( 'update_plugins' );
 	}
 
 	/**

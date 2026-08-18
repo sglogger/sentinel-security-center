@@ -3,7 +3,7 @@
  * Plugin Name:       Sentinel Security Center
  * Plugin URI:        https://github.com/sglogger/sentinel-security-center
  * Description:       Security monitoring and alerting for WordPress. Logs and alerts on plugin/theme changes, administrator and role changes, configuration changes, filesystem integrity and logins from countries outside your allow list — with optional login blocking and two-factor authentication. Administrator-only, with immediate e-mail alerts.
- * Version:           1.5.2
+ * Version:           1.6.0
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Author:            Steven Glogger
@@ -12,10 +12,6 @@
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       sentinel-security-center
  * Domain Path:       /languages
- * Update URI:        https://github.com/sglogger/sentinel-security-center
- *
- * Updates are served directly from GitHub Releases by includes/class-updater.php
- * (no helper plugin required). Repo: https://github.com/sglogger/sentinel-security-center
  *
  * @package WPSecurityCenter
  */
@@ -30,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // -----------------------------------------------------------------------------
 // Plugin constants
 // -----------------------------------------------------------------------------
-define( 'WPSEC_VERSION', '1.5.2' );
+define( 'WPSEC_VERSION', '1.6.0' );
 define( 'WPSEC_FILE', __FILE__ );
 define( 'WPSEC_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WPSEC_URL', plugin_dir_url( __FILE__ ) );
@@ -95,7 +91,6 @@ if ( version_compare( (string) get_bloginfo( 'version' ), WPSEC_MIN_WP, '<' ) ) 
 // -----------------------------------------------------------------------------
 require_once WPSEC_DIR . 'includes/class-plugin.php';
 require_once WPSEC_DIR . 'includes/class-installer.php';
-require_once WPSEC_DIR . 'includes/class-updater.php';
 
 // Core: the event catalogue, request context, and the write path.
 require_once WPSEC_DIR . 'includes/class-event-registry.php';

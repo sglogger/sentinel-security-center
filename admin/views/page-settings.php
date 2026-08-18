@@ -329,6 +329,27 @@ $wpsec_tabs = [
 				</td>
 			</tr>
 			<tr>
+				<th scope="row"><label for="wpsec-deny-ips"><?php esc_html_e( 'Denied addresses', 'wp-security-center' ); ?></label></th>
+				<td>
+					<textarea id="wpsec-deny-ips" name="deny_ips" rows="4" class="large-text code"><?php echo esc_textarea( implode( "\n", (array) ( $wpsec_geo['deny_ips'] ?? [] ) ) ); ?></textarea>
+					<p class="description">
+						<?php esc_html_e( 'One IP address or CIDR block per line, IPv4 or IPv6. These can never sign in — the deny list is checked before everything else, so it overrides the allow list, an allowed country, and even the private-network exemption. It applies whether or not country checking is switched on.', 'wp-security-center' ); ?>
+					</p>
+					<p class="description">
+						<?php esc_html_e( 'The check runs after the password has been verified, so the log records who tried and with which account — a blocked entry here means someone at that address had working credentials. It stops the login, not the traffic: for that, deny the address in your firewall or CDN, where it costs nothing to refuse.', 'wp-security-center' ); ?>
+					</p>
+					<p class="description">
+						<?php
+						printf(
+							/* translators: %s: the administrator's current IP address */
+							esc_html__( 'Your current address is %s. An entry matching it is refused on save, so this list cannot lock you out of your own site.', 'wp-security-center' ),
+							'<code>' . esc_html( (string) Context::client_ip() ) . '</code>'
+						);
+						?>
+					</p>
+				</td>
+			</tr>
+			<tr>
 				<th scope="row"><label for="wpsec-proxies"><?php esc_html_e( 'Trusted proxies', 'wp-security-center' ); ?></label></th>
 				<td>
 					<textarea id="wpsec-proxies" name="trusted_proxies" rows="4" class="large-text code"><?php echo esc_textarea( implode( "\n", (array) ( $wpsec_geo['trusted_proxies'] ?? [] ) ) ); ?></textarea>

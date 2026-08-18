@@ -32,6 +32,7 @@ final class AccessPolicyTest extends TestCase {
 				'enabled'           => true,
 				'mode'              => 'block',
 				'countries'         => [ 'CH' ],
+				'deny_ips'          => [],
 				'allow_ips'         => [],
 				'temp_allow_ips'    => [],
 				'kill_switch'       => false,
@@ -214,6 +215,148 @@ final class AccessPolicyTest extends TestCase {
 
 		$this->assertSame( Access_Policy::ALLOW, $decision['action'] );
 		$this->assertSame( '', $decision['event'] );
+	}
+
+	// -------------------------------------------------------------------------
+	// The deny list. It is the only rule that outranks every other, so each
+	// thing it has to beat gets its own assertion.
+	// -------------------------------------------------------------------------
+
+	public function test_denied_address_is_blocked(): void {
+		$decision = Access_Policy::decide( $this->armed( [ 'deny_ips' => [ '203.0.113.9' ] ] ) );
+
+		$this->assertSame( Access_Policy::BLOCK, $decision['action'] );
+		$this->assertSame( 'login.blocked_denylist', $decision['event'] );
+		$this->assertSame( 'rail-0-denylist', $decision['rail'] );
+	}
+
+	public function test_deny_list_beats_the_allow_list(): void {
+		$decision = Access_Policy::decide(
+			$this->armed(
+				[
+					'deny_ips'  => [ '203.0.113.0/24' ],
+					'allow_ips' => [ '203.0.113.9' ],
+				]
+			)
+		);
+
+		$this->assertSame( Access_Policy::BLOCK, $decision['action'], 'an explicit deny must win over an explicit allow' );
+	}
+
+	public function test_deny_list_beats_an_allowed_country(): void {
+		$decision = Access_Policy::decide(
+			$this->armed(
+				[
+					'deny_ips' => [ '203.0.113.9' ],
+					'country'  => 'CH',
+				]
+			)
+		);
+
+		$this->assertSame( Access_Policy::BLOCK, $decision['action'] );
+	}
+
+	public function test_deny_list_beats_the_private_network_rail(): void {
+		$decision = Access_Policy::decide(
+			$this->armed(
+				[
+					'ip'       => '192.168.1.50',
+					'deny_ips' => [ '192.168.1.0/24' ],
+				]
+			)
+		);
+
+		$this->assertSame( Access_Policy::BLOCK, $decision['action'], 'a denied LAN address must not be rescued by rail A' );
+	}
+
+	public function test_deny_list_applies_even_when_location_checking_is_off(): void {
+		$decision = Access_Policy::decide(
+			$this->armed(
+				[
+					'enabled'  => false,
+					'deny_ips' => [ '203.0.113.9' ],
+				]
+			)
+		);
+
+		$this->assertSame( Access_Policy::BLOCK, $decision['action'], 'the deny list is its own control, not part of the country feature' );
+	}
+
+	public function test_deny_list_applies_to_api_authentication_without_opting_in(): void {
+		$decision = Access_Policy::decide(
+			$this->armed(
+				[
+					'is_api_auth' => true,
+					'deny_ips'    => [ '203.0.113.9' ],
+				]
+			)
+		);
+
+		$this->assertSame( Access_Policy::BLOCK, $decision['action'] );
+	}
+
+	public function test_kill_switch_stands_the_deny_list_down(): void {
+		$decision = Access_Policy::decide(
+			$this->armed(
+				[
+					'deny_ips'    => [ '203.0.113.9' ],
+					'kill_switch' => true,
+				]
+			)
+		);
+
+		$this->assertSame( Access_Policy::MONITOR, $decision['action'], 'the wp-config escape hatch has to cover the deny list too' );
+		$this->assertSame( 'kill-switch-denylist', $decision['rail'] );
+	}
+
+	/**
+	 * @dataProvider deny_range_provider
+	 */
+	public function test_deny_list_matches_ranges( string $ip, string $entry, bool $blocked ): void {
+		$decision = Access_Policy::decide(
+			$this->armed(
+				[
+					'ip'       => $ip,
+					'deny_ips' => [ $entry ],
+					'country'  => 'CH',
+				]
+			)
+		);
+
+		$this->assertSame(
+			$blocked ? Access_Policy::BLOCK : Access_Policy::ALLOW,
+			$decision['action'],
+			"{$ip} against {$entry}"
+		);
+	}
+
+	/**
+	 * @return array<string, array{0:string, 1:string, 2:bool}>
+	 */
+	public static function deny_range_provider(): array {
+		return [
+			'v4 exact match'             => [ '203.0.113.9', '203.0.113.9', true ],
+			'v4 inside the block'        => [ '203.0.113.9', '203.0.113.0/24', true ],
+			'v4 next block over'         => [ '203.0.114.9', '203.0.113.0/24', false ],
+			'v6 exact match'             => [ '2001:db8::1', '2001:db8::1', true ],
+			'v6 inside the block'        => [ '2001:db8::1', '2001:db8::/32', true ],
+			'v6 outside'                 => [ '2001:dbf::1', '2001:db8::/32', false ],
+			'v6 does not match v4 entry' => [ '2001:db8::1', '203.0.113.0/24', false ],
+		];
+	}
+
+	public function test_an_address_not_on_the_list_is_unaffected(): void {
+		$decision = Access_Policy::decide(
+			$this->armed(
+				[
+					'country'  => 'CH',
+					'deny_ips' => [ '198.51.100.0/24', '2001:db8::/32' ],
+				]
+			)
+		);
+
+		$this->assertSame( Access_Policy::ALLOW, $decision['action'] );
+		$this->assertSame( 'country-allowed', $decision['rail'] );
 	}
 
 	public function test_the_trace_names_the_rule_that_decided(): void {

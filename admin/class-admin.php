@@ -305,7 +305,7 @@ final class Admin {
 
 			case 'save_geo':
 				$this->save_geo( $post );
-				$this->redirect( 'geo', 'saved' );
+				$this->redirect( 'geo', $this->took_self_off_denylist() ? 'denylist_self' : 'saved' );
 				break;
 
 			case 'save_two_factor':
@@ -422,7 +422,32 @@ final class Admin {
 		}
 		$geo['countries'] = array_values( array_unique( $countries ) );
 
-		$geo['allow_ips']       = Ip_Matcher::sanitize_list( preg_split( '/[\r\n,]+/', (string) ( $post['allow_ips'] ?? '' ) ) ?: [] );
+		$geo['allow_ips'] = Ip_Matcher::sanitize_list( preg_split( '/[\r\n,]+/', (string) ( $post['allow_ips'] ?? '' ) ) ?: [] );
+
+		// A deny list that catches the administrator saving it is a lockout in
+		// slow motion: the setting saves, the session survives, and the door is
+		// shut at the next login. Entries matching the current address are
+		// dropped and reported rather than stored.
+		$deny = Ip_Matcher::sanitize_list( preg_split( '/[\r\n,]+/', (string) ( $post['deny_ips'] ?? '' ) ) ?: [] );
+		$here = (string) Context::client_ip();
+		$self = [];
+
+		if ( '' !== $here ) {
+			foreach ( $deny as $entry ) {
+				if ( Ip_Matcher::in_any( $here, [ $entry ] ) ) {
+					$self[] = $entry;
+				}
+			}
+		}
+
+		$geo['deny_ips'] = array_values( array_diff( $deny, $self ) );
+
+		if ( ! empty( $self ) ) {
+			$notices                  = (array) get_option( Installer::OPTION_NOTICES, [] );
+			$notices['denylist_self'] = implode( ', ', $self );
+			update_option( Installer::OPTION_NOTICES, $notices, false );
+		}
+
 		$geo['trusted_proxies'] = Ip_Matcher::sanitize_list( preg_split( '/[\r\n,]+/', (string) ( $post['trusted_proxies'] ?? '' ) ) ?: [] );
 
 		$geo['use_country_header']   = ! empty( $post['use_country_header'] );
@@ -452,6 +477,15 @@ final class Admin {
 		update_option( Installer::OPTION_GEO, $geo );
 
 		Country_Resolver::flush();
+	}
+
+	/**
+	 * Did the last save drop deny-list entries that matched this administrator?
+	 */
+	private function took_self_off_denylist(): bool {
+		$notices = (array) get_option( Installer::OPTION_NOTICES, [] );
+
+		return ! empty( $notices['denylist_self'] );
 	}
 
 	/**
@@ -658,13 +692,14 @@ final class Admin {
 		}
 
 		$messages = [
-			'saved'        => [ 'success', __( 'Settings saved.', 'wp-security-center' ) ],
-			'geoip_ok'     => [ 'success', __( 'The GeoIP database was downloaded and installed.', 'wp-security-center' ) ],
-			'geoip_failed' => [ 'error', __( 'The GeoIP database could not be downloaded. See the Status screen for the reason.', 'wp-security-center' ) ],
-			'mail_ok'      => [ 'success', __( 'The test alert was accepted for delivery. Check the recipient inbox.', 'wp-security-center' ) ],
-			'mail_failed'  => [ 'error', self::mail_failure_message() ],
-			'scanned'      => [ 'success', __( 'All scans have been run. Any findings are in the event log.', 'wp-security-center' ) ],
-			'sessions'     => [ 'success', __( 'All sessions were destroyed. Everyone, including you, must sign in again.', 'wp-security-center' ) ],
+			'saved'         => [ 'success', __( 'Settings saved.', 'wp-security-center' ) ],
+			'geoip_ok'      => [ 'success', __( 'The GeoIP database was downloaded and installed.', 'wp-security-center' ) ],
+			'geoip_failed'  => [ 'error', __( 'The GeoIP database could not be downloaded. See the Status screen for the reason.', 'wp-security-center' ) ],
+			'mail_ok'       => [ 'success', __( 'The test alert was accepted for delivery. Check the recipient inbox.', 'wp-security-center' ) ],
+			'mail_failed'   => [ 'error', self::mail_failure_message() ],
+			'scanned'       => [ 'success', __( 'All scans have been run. Any findings are in the event log.', 'wp-security-center' ) ],
+			'sessions'      => [ 'success', __( 'All sessions were destroyed. Everyone, including you, must sign in again.', 'wp-security-center' ) ],
+			'denylist_self' => [ 'warning', self::denylist_self_message() ],
 		];
 
 		if ( ! isset( $messages[ $notice ] ) ) {
@@ -675,6 +710,28 @@ final class Admin {
 			'<div class="notice notice-%s is-dismissible"><p>%s</p></div>',
 			esc_attr( $messages[ $notice ][0] ),
 			esc_html( $messages[ $notice ][1] )
+		);
+	}
+
+	/**
+	 * Report the deny-list entries that were refused because they matched the
+	 * address the administrator was saving from.
+	 */
+	private static function denylist_self_message(): string {
+		$notices = (array) get_option( Installer::OPTION_NOTICES, [] );
+		$entries = trim( (string) ( $notices['denylist_self'] ?? '' ) );
+
+		unset( $notices['denylist_self'] );
+		update_option( Installer::OPTION_NOTICES, $notices, false );
+
+		if ( '' === $entries ) {
+			return __( 'Everything else was saved.', 'wp-security-center' );
+		}
+
+		return sprintf(
+			/* translators: %s: comma-separated list of IP addresses or CIDR blocks */
+			__( 'Saved, but these deny-list entries match the address you are working from and were not stored: %s. Denying yourself would have shut the door at your next login, with the current session hiding it until then.', 'wp-security-center' ),
+			$entries
 		);
 	}
 

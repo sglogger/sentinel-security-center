@@ -37,6 +37,9 @@ final class Updater {
 	/** How long to cache the GitHub release lookup, in seconds. */
 	private const CACHE_TTL = 6 * HOUR_IN_SECONDS;
 
+	/** Transient holding the cached GitHub release payload. */
+	private const CACHE_KEY = 'wpsec_gh_release';
+
 	/** Plugin basename, e.g. "wp-security-center/wp-security-center.php". */
 	private string $basename;
 
@@ -53,11 +56,12 @@ final class Updater {
 		$this->basename  = WPSEC_BASENAME;
 		$this->slug      = dirname( $this->basename );
 		$this->version   = WPSEC_VERSION;
-		$this->cache_key = 'wpsec_gh_release';
+		$this->cache_key = self::CACHE_KEY;
 	}
 
 	public function register(): void {
 		add_filter( 'pre_set_site_transient_update_plugins', [ $this, 'inject_update' ] );
+		add_filter( 'site_transient_update_plugins', [ $this, 'drop_stale_offer' ] );
 		add_filter( 'plugins_api', [ $this, 'plugin_info' ], 10, 3 );
 		add_filter( 'upgrader_source_selection', [ $this, 'rename_source' ], 10, 4 );
 		add_action( 'upgrader_process_complete', [ $this, 'flush_cache' ], 10, 0 );
@@ -78,7 +82,7 @@ final class Updater {
 	 * @return array<string, mixed>
 	 */
 	public function authorise_download( $args, $url ) {
-		if ( ! is_string( $url ) || ! str_contains( $url, 'api.github.com/repos/' . self::REPO . '/releases/assets/' ) ) {
+		if ( ! is_string( $url ) || ! $this->is_our_asset_url( $url ) ) {
 			return $args;
 		}
 
@@ -98,6 +102,33 @@ final class Updater {
 		);
 
 		return $args;
+	}
+
+	/**
+	 * Is this exactly our release-asset endpoint on api.github.com?
+	 *
+	 * This filter sees every HTTP request WordPress makes, and it attaches a
+	 * repository token. Matching by substring would hand that token to any
+	 * host whose URL merely *contains* the expected text — e.g.
+	 * https://evil.example/?u=api.github.com/repos/<repo>/releases/assets/1 —
+	 * so the host and path are checked structurally instead.
+	 */
+	private function is_our_asset_url( string $url ): bool {
+		$parts = wp_parse_url( $url );
+
+		if ( ! is_array( $parts ) ) {
+			return false;
+		}
+
+		if ( 'https' !== strtolower( (string) ( $parts['scheme'] ?? '' ) ) ) {
+			return false;
+		}
+
+		if ( 'api.github.com' !== strtolower( (string) ( $parts['host'] ?? '' ) ) ) {
+			return false;
+		}
+
+		return str_starts_with( (string) ( $parts['path'] ?? '' ), '/repos/' . self::REPO . '/releases/assets/' );
 	}
 
 	// -------------------------------------------------------------------------
@@ -122,16 +153,65 @@ final class Updater {
 		// has no release yet.
 		$release = $this->get_release() ?? $this->local_release();
 
-		$item = $this->build_response( $release );
-
 		if ( version_compare( $release['version'], $this->version, '>' ) ) {
-			$transient->response[ $this->basename ] = $item;
-		} else {
-			// Reported so WordPress shows "up to date" rather than nothing.
-			$transient->no_update[ $this->basename ] = $item;
+			$transient->response[ $this->basename ] = $this->build_response( $release );
+
+			return $transient;
 		}
 
+		// Nothing newer exists. Report the version that is actually installed
+		// rather than the last release: on a copy ahead of the last tag — every
+		// development checkout, and any site updated by hand — the release
+		// number understates what is running.
+		$release['version'] = $this->version;
+
+		// Reported so WordPress shows "up to date" rather than nothing.
+		$transient->no_update[ $this->basename ] = $this->build_response( $release );
+
 		return $transient;
+	}
+
+	/**
+	 * Correct a cached offer of a version that is already installed.
+	 *
+	 * WordPress checks for updates roughly twice a day and reads the cached
+	 * answer in between, so an update applied any other way — git pull, rsync,
+	 * an unzipped upload — leaves the plugins screen advertising an update to
+	 * the version already on disk, for hours. This runs on the read side and
+	 * moves such an entry to no_update, where "up to date" comes from.
+	 *
+	 * Deliberately does no lookup of its own: this fires on every read of the
+	 * transient, including on the front end, and must stay free of HTTP
+	 * requests and writes.
+	 *
+	 * @param mixed $transient The cached `update_plugins` transient.
+	 * @return mixed
+	 */
+	public function drop_stale_offer( $transient ) {
+		if ( ! is_object( $transient ) || empty( $transient->response[ $this->basename ] ) ) {
+			return $transient;
+		}
+
+		$offer = $transient->response[ $this->basename ];
+
+		if ( version_compare( (string) ( $offer->new_version ?? '0' ), $this->version, '>' ) ) {
+			return $transient;
+		}
+
+		unset( $transient->response[ $this->basename ] );
+
+		// Kept rather than dropped: no_update is what makes WordPress say the
+		// plugin is current, and it is where the "View details" link comes from.
+		$transient->no_update[ $this->basename ] = $offer;
+
+		return $transient;
+	}
+
+	/**
+	 * Forget the cached GitHub lookup.
+	 */
+	public static function forget_release(): void {
+		delete_transient( self::CACHE_KEY );
 	}
 
 	/**
@@ -157,12 +237,27 @@ final class Updater {
 		$readme  = $this->readme();
 		$release = $this->get_release();
 
+		// Whose version is this modal describing? WordPress opens it from a
+		// "View version X details" link, so it has to be the newer of the two:
+		// the release being offered, or — on a copy that is ahead of the last
+		// release, which is every development checkout — what is installed.
+		$newer   = null !== $release && version_compare( (string) $release['version'], $this->version, '>' );
+		$version = $newer ? (string) $release['version'] : $this->version;
+
 		$sections = $readme['sections'];
-		// Prefer the latest GitHub release notes for the changelog tab when the
-		// readme doesn't carry one.
-		if ( empty( $sections['changelog'] ) && null !== $release ) {
+
+		// The bundled readme.txt describes the copy on disk. When a newer
+		// release exists, that is the one release notes the reader is asking
+		// about, so they go on top and the bundled history stays underneath.
+		// Getting this the wrong way round is why the modal used to answer
+		// "what is new in the update?" with the changelog of the version you
+		// already had.
+		if ( $newer && '' !== (string) $release['changelog'] ) {
+			$sections['changelog'] = $release['changelog'] . $sections['changelog'];
+		} elseif ( empty( $sections['changelog'] ) && null !== $release ) {
 			$sections['changelog'] = $release['changelog'];
 		}
+
 		if ( empty( $sections['changelog'] ) ) {
 			$sections['changelog'] = '<p>' . esc_html__( 'See the GitHub release notes for details.', 'wp-security-center' ) . '</p>';
 		}
@@ -173,7 +268,7 @@ final class Updater {
 			// Without this WordPress offers a "WordPress.org Plugin Page" link
 			// built from the slug, and this plugin has no page there.
 			'external'          => true,
-			'version'           => $release['version'] ?? $this->version,
+			'version'           => $version,
 			'author'            => '<a href="https://www.glogger.ch">Steven Glogger</a>',
 			'author_profile'    => 'https://www.glogger.ch',
 			'homepage'          => 'https://github.com/' . self::REPO,
@@ -181,8 +276,11 @@ final class Updater {
 			'requires'          => $readme['requires'],
 			'requires_php'      => $readme['requires_php'],
 			'tested'            => $readme['tested'],
-			'last_updated'      => $release['published_at'] ?? '',
-			'added'             => $release['published_at'] ?? '',
+			// Only meaningful when the release really is the version on show;
+			// dating a development build by an older release is worse than
+			// leaving it blank.
+			'last_updated'      => $newer ? (string) $release['published_at'] : '',
+			'added'             => $newer ? (string) $release['published_at'] : '',
 			'short_description' => $readme['short_description'],
 			'sections'          => $this->order_sections( $sections ),
 			'contributors'      => $readme['contributors'],

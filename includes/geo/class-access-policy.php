@@ -36,6 +36,7 @@ final class Access_Policy {
 	 *     enabled: bool,
 	 *     mode: string,
 	 *     countries: string[],
+	 *     deny_ips: string[],
 	 *     allow_ips: string[],
 	 *     temp_allow_ips: string[],
 	 *     kill_switch: bool,
@@ -64,24 +65,48 @@ final class Access_Policy {
 			];
 		};
 
-		// 1. Feature switched off entirely.
+		// 1. No connecting address: WP-CLI, cron, a unit test. Never blocked —
+		//    blocking here could lock an operator out of their own recovery
+		//    tooling. Nothing below can match without an address anyway.
+		if ( null === $ip || '' === $ip ) {
+			return $verdict( self::ALLOW, '', 'no-remote-addr' );
+		}
+
+		// 2. The deny list, and it comes first for a reason.
+		//
+		//    Firewall semantics: an address the administrator named explicitly
+		//    is refused whatever else would have said yes — the allow list, an
+		//    allowed country, even the private-network rail. Anything weaker
+		//    would mean a deny list that silently does nothing whenever it
+		//    overlaps with a rule the site already had.
+		//
+		//    It is also independent of the country feature: a deny list still
+		//    applies when location checking is switched off entirely, because
+		//    typing an address into it is an instruction in its own right.
+		//
+		//    The one thing that stands it down is the wp-config kill switch,
+		//    which exists precisely for the case where this list is what locked
+		//    the administrator out.
+		if ( ! empty( $ctx['deny_ips'] ) && Ip_Matcher::in_any( $ip, (array) $ctx['deny_ips'] ) ) {
+			if ( ! empty( $ctx['kill_switch'] ) ) {
+				return $verdict( self::MONITOR, 'login.blocking_kill_switch', 'kill-switch-denylist' );
+			}
+
+			return $verdict( self::BLOCK, 'login.blocked_denylist', 'rail-0-denylist' );
+		}
+
+		// 3. Feature switched off entirely.
 		if ( empty( $ctx['enabled'] ) ) {
 			return $verdict( self::ALLOW, '', 'disabled' );
 		}
 
-		// 2. Application passwords and XML-RPC authenticate through the same
+		// 4. Application passwords and XML-RPC authenticate through the same
 		//    hook as an interactive login. Blocking them by default would
 		//    silently break integrations hosted abroad, so they are exempt
-		//    unless the admin opted in.
+		//    unless the admin opted in. A denied address is already gone by
+		//    this point: an explicit deny covers API authentication too.
 		if ( ! empty( $ctx['is_api_auth'] ) && empty( $ctx['apply_to_api_auth'] ) ) {
 			return $verdict( self::ALLOW, '', 'api-auth-exempt' );
-		}
-
-		// 3. No connecting address: WP-CLI, cron, a unit test. Never blocked —
-		//    blocking here could lock an operator out of their own recovery
-		//    tooling.
-		if ( null === $ip || '' === $ip ) {
-			return $verdict( self::ALLOW, '', 'no-remote-addr' );
 		}
 
 		// ---------------------------------------------------------------------

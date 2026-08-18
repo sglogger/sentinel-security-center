@@ -193,6 +193,8 @@ final class Installer {
 	 * uploading files (rather than through the updater) still converges.
 	 */
 	public static function maybe_migrate(): void {
+		self::notice_version_change();
+
 		$stored = (string) get_option( self::OPTION_DATA_VERSION, '0' );
 
 		if ( version_compare( $stored, WPSEC_DATA_VERSION, '>=' ) ) {
@@ -228,6 +230,27 @@ final class Installer {
 
 		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- table name from $wpdb->prefix; the pattern IS bound through prepare().
 		$wpdb->query( $wpdb->prepare( "DELETE FROM `{$table}` WHERE path LIKE %s", $like ) );
+	}
+
+	/**
+	 * Notice that the files on disk are a different version than last time.
+	 *
+	 * An update applied through the updater ends in upgrader_process_complete,
+	 * which clears the cached release lookup. An update applied any other way —
+	 * git pull, rsync, an unzipped upload — ends in nothing at all, and both
+	 * WordPress's twice-daily update check and our own six-hour release cache
+	 * go on describing the copy that used to be here. The visible symptom is a
+	 * plugins screen offering an update to the version already installed.
+	 */
+	private static function notice_version_change(): void {
+		if ( (string) get_option( self::OPTION_VERSION, '' ) === WPSEC_VERSION ) {
+			return;
+		}
+
+		update_option( self::OPTION_VERSION, WPSEC_VERSION );
+
+		Updater::forget_release();
+		delete_site_transient( 'update_plugins' );
 	}
 
 	/**
@@ -460,6 +483,7 @@ final class Installer {
 			'bypass_enabled'       => true,
 			'bypass_token_ttl_min' => 60,
 			'bypass_grant_hours'   => 8,
+			'deny_ips'             => [],
 			'maxmind_license_key'  => '',
 			'maxmind_account_id'   => '',
 			'db_stale_days'        => 45,

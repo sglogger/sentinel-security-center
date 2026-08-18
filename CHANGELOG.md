@@ -9,6 +9,102 @@ When a release goes out, the same summary must also be added to the
 `== Changelog ==` section of `readme.txt` — that is what WordPress shows in the
 plugin details modal.
 
+## [1.3.0] - 2026-08-18
+
+### Security
+
+- **Two-factor authentication could be bypassed entirely through xmlrpc.php.**
+  The challenge hangs off `wp_login`, which only `wp_signon()` fires — but
+  XML-RPC calls `wp_authenticate()` directly, so a stolen password typed into
+  xmlrpc.php walked straight past the second factor it was set up to survive.
+  Primary-password API authentication is now refused for any account with a
+  second factor (event: `2fa.api_auth_refused`, wearing the ordinary
+  wrong-password message so the endpoint does not reveal which accounts have
+  2FA). Application passwords are unaffected — they are the documented,
+  revocable credential for integrations.
+
+- **The GitHub token could leak to an arbitrary host.** The updater attaches
+  its token on the `http_request_args` filter, which sees every HTTP request
+  WordPress makes, and matched its own asset URL by substring — so any request
+  to a URL merely *containing* `api.github.com/repos/…/releases/assets/`
+  (for example in a query string) got the `Authorization` header attached and
+  sent to whatever host it was really for. The URL is now parsed and matched
+  structurally: HTTPS, host exactly `api.github.com`, path prefix exact.
+
+- **CSV export was a formula-injection carrier.** The log records hostile input
+  by design — a user name typed into the login form, a request path, a user
+  agent — and Excel executes exported cells starting with `=`, `+`, `-` or `@`
+  as formulas. Text cells with such a first character are now prefixed with a
+  quote, which spreadsheets render as plain text.
+
+- **The two-factor attempt limit is now also enforced per user**, not only per
+  user-and-address (25 vs 10 per 15 minutes). Rotating addresses no longer
+  multiplies the guess budget for a six-digit code by the size of the botnet.
+
+### Added
+
+- **IP deny list.** A list of addresses and CIDR blocks — IPv4 and IPv6 — that
+  can never sign in, on the *Login & Location* settings tab beside the allow
+  list. It is the strongest rule in the decision table and sits ahead of every
+  other rail: it overrides the allow list, an allowed country, and the
+  private-network exemption, and it applies whether or not country checking is
+  switched on, because typing an address into it is an instruction in its own
+  right. Only the `WPSEC_DISABLE_BLOCKING` constant stands it down — the escape
+  hatch exists for exactly the case where this list is what locked the
+  administrator out.
+
+  Two deliberate refusals. A denied address gets **no bypass link**: that token
+  exists to rescue someone a country rule caught by accident, and mailing a way
+  around an explicit deny would undo the instruction. And the settings screen
+  **refuses to store an entry matching the address you are saving from**,
+  reporting which entries it dropped — otherwise the setting would save, the
+  current session would survive, and the door would shut at the next login.
+
+  The check runs after the password is verified, so a `login.blocked_denylist`
+  entry means someone at that address had working credentials — high signal,
+  and worth reading as such. The event defaults to **Info level action: log
+  only**, configurable per event like every other, because a deny list doing its
+  job on a hostile address is a working control rather than an incident.
+
+  This blocks the login, not the traffic. Refusing the address at the firewall
+  or CDN is still cheaper and still the right place for volume.
+
+### Changed
+
+- **The log search box now covers every column the log shows.** It searched the
+  description, the object and the user; it now also searches the event type, the
+  IP address and the timestamp. Time is both stored and displayed as UTC in the
+  same format, so `2026-08-18`, `14:32` or `08-18 14` match what is on screen
+  with no timezone arithmetic in between — which is the point, since a search
+  box that cannot find a row you are looking straight at is worse than none.
+
+- **readme.txt now declares WordPress 7.0.4** rather than 6.9 under *Tested up
+  to*, so the details modal stops reporting the plugin as untested on a current
+  install. Note that this value is compared with `version_compare`, so it has to
+  be the full `7.0.4` — `7.0` would still read as untested against 7.0.4.
+
+### Fixed
+
+- **The plugins screen went on offering an update that was already installed.**
+  WordPress checks for updates about twice a day and reads the cached answer in
+  between, and only an update applied *through the updater* clears that cache.
+  Update the files any other way — git pull, rsync, an unzipped upload — and the
+  screen keeps saying "version 1.2.0 is available" for hours after 1.2.0 is
+  running. Two changes: the cached transient is now corrected on read, so an
+  offer of a version at or below the installed one is moved to "up to date"
+  immediately; and the plugin notices when its own version on disk has changed
+  since the last request and throws away both cached checks. A genuinely newer
+  release is untouched.
+
+- **The details modal showed the changelog of the version you already had.** The
+  bundled readme.txt was preferred over the release notes unconditionally, so
+  "View version 1.2.0 details" answered with 1.1.1's changelog — the one thing
+  the reader is certainly not asking about. The notes for the offered release
+  now go on top, with the bundled history underneath, and the version shown is
+  the newer of the release and the installed copy instead of always the release
+  (a development checkout ahead of the last tag used to describe itself with an
+  older version number).
+
 ## [1.2.0] - 2026-08-18
 
 ### Added

@@ -54,6 +54,7 @@ final class Login_Guard {
 				'enabled'           => ! empty( $geo['enabled'] ),
 				'mode'              => (string) ( $geo['mode'] ?? 'monitor' ),
 				'countries'         => (array) ( $geo['countries'] ?? [] ),
+				'deny_ips'          => Denylist::entries(),
 				'allow_ips'         => Allowlist::stat(),
 				'temp_allow_ips'    => Allowlist::temporary(),
 				'kill_switch'       => self::kill_switch_active(),
@@ -90,9 +91,17 @@ final class Login_Guard {
 	 * @param array<string, mixed> $decision Policy verdict.
 	 */
 	private function block( \WP_User $user, ?string $ip, array $decision ): \WP_Error {
-		$token = Bypass_Token::issue( (int) $user->ID, (string) $ip, (string) $decision['country'] );
+		$event = '' !== (string) $decision['event'] ? (string) $decision['event'] : 'login.blocked_geo';
 
-		$log_id = $this->record( 'login.blocked_geo', $user, $ip, $decision, 'policy', $token );
+		// No bypass link for a denied address. The token exists to rescue an
+		// administrator from a country rule that caught them by accident; an
+		// address on the deny list is there because someone typed it in, and
+		// mailing out a way around it would undo the instruction.
+		$token = 'login.blocked_geo' === $event
+			? Bypass_Token::issue( (int) $user->ID, (string) $ip, (string) $decision['country'] )
+			: null;
+
+		$log_id = $this->record( $event, $user, $ip, $decision, 'policy', $token );
 
 		if ( null !== $token ) {
 			Logger::log(
@@ -128,6 +137,7 @@ final class Login_Guard {
 
 		$messages = [
 			'login.blocked_geo'            => 'Login by "%1$s" from %2$s (%3$s) was BLOCKED: the country is not on the allow list.',
+			'login.blocked_denylist'       => 'Login by "%1$s" from %2$s (%3$s) was BLOCKED: the address is on the deny list. The password was correct, so these credentials are known to whoever is at that address.',
 			'login.would_block_geo'        => 'Login by "%1$s" from %2$s (%3$s) would have been blocked, but blocking is in monitor mode.',
 			'login.foreign_allowed'        => 'Login by "%1$s" from %2$s (%3$s), which is not on the country allow list.',
 			'login.allowed_private_ip'     => 'Login by "%1$s" from the local network (%2$s).',

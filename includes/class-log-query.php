@@ -85,9 +85,29 @@ final class Log_Query {
 		}
 
 		if ( ! empty( $filters['search'] ) ) {
-			$like   = '%' . $GLOBALS['wpdb']->esc_like( (string) $filters['search'] ) . '%';
-			$sql[]  = '(message LIKE %s OR object_label LIKE %s OR object_id LIKE %s OR actor_login LIKE %s OR target_login LIKE %s)';
-			$values = array_merge( $values, [ $like, $like, $like, $like, $like ] );
+			$like = '%' . $GLOBALS['wpdb']->esc_like( (string) $filters['search'] ) . '%';
+
+			// One entry per column the log actually puts on screen, so that
+			// anything visible in a row is also findable from the search box.
+			// event_time is both stored and displayed as UTC in this exact
+			// format, so "2026-08-18", "14:32" or "08-18 14" match what the
+			// Time column shows with no timezone arithmetic in between.
+			$columns = [
+				'event_type',    // Event
+				'message',       // Description
+				'object_label',  // …and what the description is about
+				'object_id',
+				'actor_login',   // Performed by
+				'target_login',
+				'ip_text',       // IP address
+				'event_time',    // Time (UTC)
+			];
+
+			$sql[]  = '(' . implode(
+				' OR ',
+				array_map( static fn( string $column ): string => $column . ' LIKE %s', $columns )
+			) . ')';
+			$values = array_merge( $values, array_fill( 0, count( $columns ), $like ) );
 		}
 
 		return [

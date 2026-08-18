@@ -3,7 +3,7 @@
  * Plugin Name:       WP Security Center
  * Plugin URI:        https://github.com/sglogger/wp-security-center
  * Description:       Security monitoring and alerting for WordPress. Logs and alerts on plugin/theme changes, administrator and role changes, configuration changes, filesystem integrity and logins from countries outside your allow list — with optional login blocking and two-factor authentication. Administrator-only, with immediate e-mail alerts.
- * Version:           1.2.0
+ * Version:           1.3.0
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Author:            Steven Glogger
@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // -----------------------------------------------------------------------------
 // Plugin constants
 // -----------------------------------------------------------------------------
-define( 'WPSEC_VERSION', '1.2.0' );
+define( 'WPSEC_VERSION', '1.3.0' );
 define( 'WPSEC_FILE', __FILE__ );
 define( 'WPSEC_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WPSEC_URL', plugin_dir_url( __FILE__ ) );
@@ -116,6 +116,7 @@ require_once WPSEC_DIR . 'includes/geo/class-geoip-database.php';
 require_once WPSEC_DIR . 'includes/geo/class-country-resolver.php';
 require_once WPSEC_DIR . 'includes/geo/class-cloudflare-ranges.php';
 require_once WPSEC_DIR . 'includes/geo/class-allowlist.php';
+require_once WPSEC_DIR . 'includes/geo/class-denylist.php';
 require_once WPSEC_DIR . 'includes/geo/class-bypass-token.php';
 require_once WPSEC_DIR . 'includes/geo/class-login-guard.php';
 

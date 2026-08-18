@@ -34,7 +34,11 @@ final class Two_Factor_Login {
 	/** How long a half-finished login may sit on the interstitial. */
 	private const NONCE_TTL = 15 * MINUTE_IN_SECONDS;
 
-	private const MAX_ATTEMPTS   = 10;
+	private const MAX_ATTEMPTS = 10;
+
+	/** Failures tolerated per user across all addresses in the same window. */
+	private const MAX_USER_ATTEMPTS = 25;
+
 	private const ATTEMPT_WINDOW = 15 * MINUTE_IN_SECONDS;
 
 	/** The session token wp_set_auth_cookie() just created, if it did. */
@@ -44,6 +48,67 @@ final class Two_Factor_Login {
 		add_action( 'set_logged_in_cookie', [ $this, 'remember_token' ], 10, 6 );
 		add_action( 'wp_login', [ $this, 'maybe_challenge' ], 20, 2 );
 		add_action( 'login_form_' . self::ACTION, [ $this, 'handle' ] );
+
+		// After core's password checks (20), application passwords (20) and
+		// the geo guard (50), so a WP_User here has really authenticated.
+		add_filter( 'authenticate', [ $this, 'guard_api_auth' ], 60, 1 );
+	}
+
+	/**
+	 * Refuse primary-password API authentication for a user with a second factor.
+	 *
+	 * The interstitial hangs off `wp_login`, which only `wp_signon()` fires.
+	 * XML-RPC calls `wp_authenticate()` directly, so without this filter a
+	 * stolen password typed into xmlrpc.php would walk straight past the second
+	 * factor the user set up specifically to survive that theft.
+	 *
+	 * Application passwords still work: they are a separate, revocable
+	 * credential and the documented way to authenticate an integration. What
+	 * gets refused is exactly the credential the second factor protects — the
+	 * primary password — on the endpoints where nobody can type a code.
+	 *
+	 * @param \WP_User|\WP_Error|null $user Result of the checks so far.
+	 * @return \WP_User|\WP_Error|null
+	 */
+	public function guard_api_auth( $user ) {
+		if ( ! $user instanceof \WP_User || ! Login_Guard::is_api_auth() ) {
+			return $user;
+		}
+
+		// An application password identified itself during this request; that
+		// credential is deliberately outside the second factor's scope.
+		if ( did_action( 'application_password_did_authenticate' ) ) {
+			return $user;
+		}
+
+		if ( ! Two_Factor::is_active_for( (int) $user->ID ) ) {
+			return $user;
+		}
+
+		Logger::log(
+			'2fa.api_auth_refused',
+			[
+				'object_id'    => (string) $user->ID,
+				'object_label' => (string) $user->user_login,
+				'target_user'  => (int) $user->ID,
+				'ip'           => (string) Context::client_ip(),
+				'message'      => sprintf(
+					'API authentication for "%s" with the account password was refused because the account has two-factor authentication. The password was correct — use an application password for integrations.',
+					$user->user_login
+				),
+				'data'         => [
+					'xmlrpc' => defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST,
+					'rest'   => defined( 'REST_REQUEST' ) && REST_REQUEST,
+				],
+			]
+		);
+
+		// Same wording as a wrong password, so the endpoint does not reveal
+		// which accounts carry a second factor.
+		return new \WP_Error(
+			'wpsec_2fa_api_refused',
+			__( '<strong>Error:</strong> The username or password you entered is incorrect.' ) // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- deliberately reuses the core string so the wording matches exactly.
+		);
 	}
 
 	/**
@@ -200,6 +265,7 @@ final class Two_Factor_Login {
 	private function complete( \WP_User $user, bool $remember, string $redirect, ?array $recovery_codes = null, string $method = 'totp' ): void {
 		delete_user_meta( (int) $user->ID, self::META_NONCE );
 		delete_transient( $this->attempt_key( (int) $user->ID ) );
+		delete_transient( $this->user_attempt_key( (int) $user->ID ) );
 
 		wp_set_current_user( (int) $user->ID );
 		wp_set_auth_cookie( (int) $user->ID, $remember );
@@ -285,8 +351,19 @@ final class Two_Factor_Login {
 		return 'wpsec_2fa_att_' . hash( 'sha256', $user_id . '|' . (string) Context::client_ip() );
 	}
 
+	/**
+	 * A second counter across every address, so rotating IPs does not turn the
+	 * per-address limit into "ten guesses times the size of the botnet". A
+	 * six-digit code with a ±1-step window has roughly three valid values per
+	 * moment; the arithmetic only holds if the attempt budget is global.
+	 */
+	private function user_attempt_key( int $user_id ): string {
+		return 'wpsec_2fa_uatt_' . $user_id;
+	}
+
 	private function attempt_allowed( int $user_id ): bool {
-		return (int) get_transient( $this->attempt_key( $user_id ) ) < self::MAX_ATTEMPTS;
+		return (int) get_transient( $this->attempt_key( $user_id ) ) < self::MAX_ATTEMPTS
+			&& (int) get_transient( $this->user_attempt_key( $user_id ) ) < self::MAX_USER_ATTEMPTS;
 	}
 
 	private function count_failure( \WP_User $user, string $stage ): void {
@@ -294,6 +371,9 @@ final class Two_Factor_Login {
 		$count = (int) get_transient( $key ) + 1;
 
 		set_transient( $key, $count, self::ATTEMPT_WINDOW );
+
+		$user_key = $this->user_attempt_key( (int) $user->ID );
+		set_transient( $user_key, (int) get_transient( $user_key ) + 1, self::ATTEMPT_WINDOW );
 
 		Logger::log(
 			'2fa.challenge_failed',

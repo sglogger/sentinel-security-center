@@ -20,6 +20,32 @@ final class Csv_Exporter {
 
 	public const ACTION = 'wpsec_export_csv';
 
+	/**
+	 * Neutralise spreadsheet formula injection in one cell.
+	 *
+	 * This log exists to record hostile input — a user name typed into the
+	 * login form, a request path, a user agent — which makes its export the
+	 * textbook carrier for CSV injection: Excel and LibreOffice execute cells
+	 * beginning with =, +, - or @ as formulas, and DDE payloads have been
+	 * delivered exactly this way. Such cells are prefixed with a single quote,
+	 * which spreadsheets treat as "display as text" and drop on render.
+	 */
+	public static function guard_cell( string $value ): string {
+		if ( '' === $value ) {
+			return $value;
+		}
+
+		// Also guard after a leading tab/CR/LF, which Excel strips before
+		// deciding whether the cell is a formula.
+		$first = substr( ltrim( $value, "\t\r\n " ), 0, 1 );
+
+		if ( in_array( $first, [ '=', '+', '-', '@' ], true ) ) {
+			return "'" . $value;
+		}
+
+		return $value;
+	}
+
 	public function register(): void {
 		add_action( 'admin_post_' . self::ACTION, [ $this, 'handle' ] );
 	}
@@ -90,22 +116,22 @@ final class Csv_Exporter {
 						(string) $row['event_type'],
 						(int) $row['severity'],
 						Event_Registry::severity_label( (int) $row['severity'] ),
-						(string) $row['message'],
+						self::guard_cell( (string) $row['message'] ),
 						(string) $row['object_type'],
-						(string) $row['object_id'],
-						(string) $row['object_label'],
+						self::guard_cell( (string) $row['object_id'] ),
+						self::guard_cell( (string) $row['object_label'] ),
 						(int) $row['actor_user_id'],
-						(string) $row['actor_login'],
-						(string) $row['actor_roles'],
+						self::guard_cell( (string) $row['actor_login'] ),
+						self::guard_cell( (string) $row['actor_roles'] ),
 						(int) $row['target_user_id'],
-						(string) $row['target_login'],
+						self::guard_cell( (string) $row['target_login'] ),
 						(string) $row['ip_text'],
 						(string) $row['country'],
 						(string) $row['context'],
-						(string) $row['request_uri'],
-						(string) $row['user_agent'],
+						self::guard_cell( (string) $row['request_uri'] ),
+						self::guard_cell( (string) $row['user_agent'] ),
 						(int) $row['alert_state'],
-						(string) $row['data'],
+						self::guard_cell( (string) $row['data'] ),
 					]
 				);
 			}

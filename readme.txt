@@ -2,9 +2,9 @@
 Contributors: glogger
 Tags: security, activity log, audit log, two-factor, file integrity
 Requires at least: 6.5
-Tested up to: 6.9
+Tested up to: 7.0.4
 Requires PHP: 8.1
-Stable tag: 1.2.0
+Stable tag: 1.3.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,7 +24,7 @@ It is built around two goals that pull against each other: miss as little as pos
 * User records altered directly in the database, outside WordPress, detected by a periodic reconciliation scan.
 * Configuration: critical options such as siteurl, home, admin_email, users_can_register and default_role; wp-config.php and .htaccess changes; WordPress core files verified against the official checksums; cron jobs; newly appearing must-use plugins; XML-RPC and file-editor state; application passwords.
 * Filesystem: new or changed files in wp-content/mu-plugins/, and any PHP file under wp-content/uploads/ — where one never belongs. New PHP files are additionally checked against common backdoor signatures.
-* Logins: failed attempts, successful logins, and a login from a country outside your allow list — with optional blocking.
+* Logins: failed attempts, successful logins, a login from a country outside your allow list, and logins refused by the IP deny list — with optional blocking.
 * Two-factor authentication: who switched it on or off, wrong codes submitted after a correct password, and every use of a recovery code or the e-mail fallback.
 
 A separate Hardening screen reports the current posture — file editor, permissions, salts, updates, HTTPS, two-factor coverage and more — against the official WordPress hardening guide, linking to it at each point.
@@ -103,6 +103,18 @@ No. Activation on a network stops with a message rather than misbehaving quietly
 
 == Changelog ==
 
+= 1.3.0 =
+* Security: two-factor authentication could be bypassed by authenticating through xmlrpc.php with the account password, because XML-RPC never fires the hook the challenge hangs on. Primary-password API authentication is now refused for accounts with a second factor; application passwords are unaffected.
+* Security: the GitHub updater token could be sent to a foreign host if any WordPress HTTP request contained the asset URL as a substring, e.g. in a query string. The URL is now matched structurally by scheme, host and path.
+* Security: CSV export now neutralises spreadsheet formula injection — cells starting with =, +, - or @ are prefixed with a quote, since the log deliberately records attacker-typed strings.
+* Security: two-factor attempts are now capped per user across all addresses, so rotating IPs does not multiply the guess budget.
+* Added: an IP deny list for IPv4 and IPv6, single addresses or CIDR blocks, on the Login & Location tab. Denied addresses can never sign in: the list overrides the allow list, an allowed country and the private-network exemption, and applies even when country checking is off. No bypass link is issued for a denied address, and the settings screen refuses to store an entry matching the address you are saving from.
+* Added: the login.blocked_denylist event, defaulting to log only. Because the check runs after the password is verified, an entry means someone at that address had working credentials.
+* Changed: the log search box now searches the event type, the IP address and the timestamp as well as the description, the object and the user — everything a row puts on screen.
+* Changed: tested up to WordPress 7.0.4.
+* Fixed: the plugins screen kept offering an update to a version that was already installed, when the files had been updated by any means other than the updater itself. The cached check is now corrected on read, and is discarded outright when the version on disk changes.
+* Fixed: the plugin details modal showed the changelog of the installed version rather than of the version being offered, and reported the last released version even on a copy that was newer.
+
 = 1.2.0 =
 * Added: a Hardening screen. Twenty-two read-only checks graded against the official WordPress hardening guide, each linking to the section it comes from. Verdicts include "Your call" for the decisions that depend on how the site is run — DISALLOW_FILE_MODS being the clearest, since it blocks plugin installation and every security update alike.
 * Added: two-factor authentication (TOTP). A one-time code from any authenticator app, asked for after the password is accepted; the session is only issued once that code is right. Enrolment is per account and voluntary by default, with a site setting to require it for administrators after a grace period.
@@ -133,6 +145,9 @@ No. Activation on a network stops with a message rather than misbehaving quietly
 * Initial scaffolding release.
 
 == Upgrade Notice ==
+
+= 1.3.0 =
+Adds an IP deny list on the Login & Location tab. Nothing changes until you put an address in it. Also fixes the plugins screen offering an update that is already installed, and the details modal showing the changelog of the version you already had rather than the one on offer. Also makes the log search box find rows by event type, IP address and time, not only by description.
 
 = 1.2.0 =
 Start at Security Center → Hardening: it grades this installation against the official WordPress hardening guide and says what to change and where. Fixes three sources of false alarms: the scanner reporting its own files under uploads, a .htaccess reported as executable PHP, and wp-includes/version.php reported as modified on every localised install. Adds optional two-factor authentication — nothing changes for anyone until a user enrols, or until you require it for administrators in Settings.

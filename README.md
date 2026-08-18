@@ -44,7 +44,7 @@ as few false alarms as possible. Every decision below follows from that.
 | Out-of-band | user rows altered directly in the database, found by an hourly reconciliation scan against a stored baseline |
 | Configuration | `siteurl`, `home`, `admin_email`, `users_can_register`, `default_role`, `blog_public`, auto-update options, `wp-config.php` and `.htaccess` hashes, WordPress core files against the official checksums, cron jobs, new must-use plugins, XML-RPC state, file-editor state, application passwords |
 | Filesystem | new or changed files in `wp-content/mu-plugins/`, any PHP file under `wp-content/uploads/`, and backdoor signatures in new PHP files |
-| Logins | failed attempts, successful logins, and logins from a country outside the allow list — with optional blocking |
+| Logins | failed attempts, successful logins, logins from a country outside the allow list, and logins refused by the IP deny list — with optional blocking |
 | Two-factor | enrolment, removal, wrong codes after a correct password, recovery-code and e-mail-fallback use |
 
 ## Hardening report
@@ -108,6 +108,29 @@ How it holds together:
 Application passwords, REST and XML-RPC are not challenged. There is nobody at
 the keyboard to type a code, and an application password is already a separate
 credential that can be revoked on its own.
+
+## IP deny list
+
+A list of addresses and CIDR blocks — IPv4 and IPv6 — that can never sign in,
+on **Settings → Login & Location**. It is the strongest rule in
+[`Access_Policy`](includes/geo/class-access-policy.php): it sits ahead of every
+other rail, so it overrides the allow list, an allowed country and the
+private-network exemption, and it applies whether or not country checking is on.
+Only `WPSEC_DISABLE_BLOCKING` stands it down.
+
+- **No bypass link is issued for a denied address.** That token exists to rescue
+  someone a *country* rule caught by accident; mailing a way around an explicit
+  deny would undo the instruction.
+- **The settings screen refuses an entry matching the address you are saving
+  from**, and says which ones it dropped. Otherwise the setting saves, the
+  session survives, and the door shuts at the next login.
+- The check runs **after** the password is verified, so a `login.blocked_denylist`
+  entry means someone at that address had working credentials. The event
+  defaults to log-only: a deny list doing its job is a working control, not an
+  incident.
+
+It blocks the login, not the traffic. Denying the address at the firewall or CDN
+is cheaper and remains the right place for volume.
 
 ## Geo-aware login control
 

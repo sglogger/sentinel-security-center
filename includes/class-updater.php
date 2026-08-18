@@ -11,7 +11,9 @@
  *                                                folder to our plugin slug.
  *
  * The GitHub API response is cached in a transient to stay well under the
- * unauthenticated rate limit (60 req/h). For a private repo, supply a token
+ * unauthenticated rate limit (60 req/h); "Check again" on update-core.php
+ * bypasses that cache, since re-reading it is what the click is asking us not
+ * to do. For a private repo, supply a token
  * via the `WPSEC_GITHUB_TOKEN` constant or the
  * `wpsec_github_token` filter.
  *
@@ -151,7 +153,7 @@ final class Updater {
 		// in response or no_update, so bailing out here would take the details
 		// modal down with it every time GitHub is unreachable, rate-limited or
 		// has no release yet.
-		$release = $this->get_release() ?? $this->local_release();
+		$release = $this->get_release( $this->is_forced_check() ) ?? $this->local_release();
 
 		if ( version_compare( $release['version'], $this->version, '>' ) ) {
 			$transient->response[ $this->basename ] = $this->build_response( $release );
@@ -285,7 +287,7 @@ final class Updater {
 			'sections'          => $this->order_sections( $sections ),
 			'contributors'      => $readme['contributors'],
 			'banners'           => [],
-			'icons'             => [],
+			'icons'             => $this->icons(),
 		];
 
 		return (object) $info;
@@ -358,6 +360,33 @@ final class Updater {
 	// -------------------------------------------------------------------------
 
 	/**
+	 * The plugin's own icon, in the shape WordPress looks for.
+	 *
+	 * With nothing here, every screen that represents this plugin by a picture
+	 * falls back to the generic puzzle piece: update-core.php walks
+	 * `$update->icons` in the order svg, 2x, 1x, default and otherwise prints
+	 * `dashicons-admin-plugins`, and the details modal does the same with
+	 * `$api->icons`.
+	 *
+	 * The SVG is listed first because it is what WordPress prefers and it is
+	 * the only one that stays sharp at any size — the PNG is there for the
+	 * rendering paths that will not take an SVG. No `banners` entry: a banner
+	 * is a 772x250 letterbox, and stretching a square icon into one looks worse
+	 * than the plain modal header that WordPress draws without it.
+	 *
+	 * @return array<string, string>
+	 */
+	private function icons(): array {
+		$base = WPSEC_URL . 'assets/logos/';
+
+		return [
+			'svg'     => $base . 'sentinel-security-center-icon.svg',
+			'2x'      => $base . 'sentinel-security-center-icon-256x256.png',
+			'default' => $base . 'sentinel-security-center-icon-256x256.png',
+		];
+	}
+
+	/**
 	 * Shape the update object WordPress expects in the transient.
 	 *
 	 * @param array<string, mixed> $release Normalised release data.
@@ -373,6 +402,7 @@ final class Updater {
 			'tested'       => $release['tested'],
 			'requires'     => $release['requires'],
 			'requires_php' => $release['requires_php'],
+			'icons'        => $this->icons(),
 		];
 	}
 
@@ -398,12 +428,33 @@ final class Updater {
 	}
 
 	/**
+	 * Is this request the user explicitly asking WordPress to check again?
+	 *
+	 * "Check again" on update-core.php reaches us as an ordinary refresh of
+	 * core's `update_plugins` transient: core clears its own cache, but has no
+	 * way to tell a plugin-supplied updater that the answer it cached earlier
+	 * is the very thing being re-checked. Without this, a click on Check again
+	 * replays our own transient — for up to six hours after a release, the
+	 * button truthfully reports "no updates" while an update exists.
+	 *
+	 * Gated on the capability because the query argument is attacker-supplied:
+	 * an anonymous request carrying ?force-check=1 that happens to coincide
+	 * with a scheduled refresh would otherwise spend a GitHub API call, and the
+	 * unauthenticated limit is 60 an hour.
+	 */
+	private function is_forced_check(): bool {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only; only ever discards a cache, and core reads it the same way.
+		return is_admin() && ! empty( $_GET['force-check'] ) && current_user_can( 'update_plugins' );
+	}
+
+	/**
 	 * Fetch (and cache) the latest GitHub release, normalised to our shape.
 	 *
+	 * @param bool $force Skip the cached answer and re-query GitHub.
 	 * @return array<string, mixed>|null Null when the lookup fails.
 	 */
-	private function get_release(): ?array {
-		$cached = get_transient( $this->cache_key );
+	private function get_release( bool $force = false ): ?array {
+		$cached = $force ? false : get_transient( $this->cache_key );
 		if ( is_array( $cached ) ) {
 			// An empty array is the negative-cache marker written after a
 			// failed lookup. Returning it as though it were a release would

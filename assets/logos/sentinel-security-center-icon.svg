@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Sentinel Security Center icon">
+  <defs>
+    <linearGradient id="bg" x1="120" y1="80" x2="900" y2="940" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0B1739"/>
+      <stop offset="1" stop-color="#071022"/>
+    </linearGradient>
+    <linearGradient id="shield" x1="260" y1="180" x2="760" y2="840" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#39D6FF"/>
+      <stop offset="1" stop-color="#4B7CFF"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="410" y1="350" x2="650" y2="680" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#67F4D1"/>
+      <stop offset="1" stop-color="#23C6B7"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="26" stdDeviation="32" flood-color="#000000" flood-opacity=".38"/>
+    </filter>
+    <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="16" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- App tile -->
+  <rect x="72" y="72" width="880" height="880" rx="224" fill="url(#bg)"/>
+  <path d="M160 284C256 154 396 116 512 116c138 0 275 58 364 169" fill="none" stroke="#17346B" stroke-width="8" stroke-linecap="round" opacity=".55"/>
+  <circle cx="816" cy="208" r="9" fill="#39D6FF" opacity=".75"/>
+  <circle cx="854" cy="248" r="5" fill="#67F4D1" opacity=".7"/>
+
+  <!-- Shield -->
+  <g filter="url(#shadow)">
+    <path d="M512 174
+             C595 233 679 260 777 279
+             V475
+             C777 664 672 806 512 866
+             C352 806 247 664 247 475
+             V279
+             C345 260 429 233 512 174Z"
+          fill="#0D1D3C" stroke="url(#shield)" stroke-width="34" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Sentinel eye / radar -->
+  <path d="M334 495
+           C380 420 439 382 512 382
+           C585 382 644 420 690 495
+           C644 570 585 608 512 608
+           C439 608 380 570 334 495Z"
+        fill="none" stroke="#D8F7FF" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <circle cx="512" cy="495" r="82" fill="#0A1832" stroke="url(#accent)" stroke-width="28"/>
+  <circle cx="512" cy="495" r="22" fill="#67F4D1" filter="url(#glow)"/>
+
+  <!-- Radar sweep -->
+  <path d="M512 495 L625 432" stroke="#39D6FF" stroke-width="18" stroke-linecap="round" opacity=".95"/>
+  <path d="M512 495
+           m -128 0
+           a 128 128 0 0 1 256 0"
+        fill="none" stroke="#39D6FF" stroke-width="8" stroke-linecap="round" opacity=".25"/>
+
+  <!-- Stylized S / security pulse -->
+  <path d="M431 681
+           C458 650 500 638 542 646
+           C582 653 606 673 606 698
+           C606 725 578 740 527 740
+           C481 740 456 753 456 776
+           C456 802 483 817 526 817
+           C567 817 600 806 624 784"
+        fill="none" stroke="#D8F7FF" stroke-width="26" stroke-linecap="round" opacity=".98"/>
+
+  <!-- small alert pulse -->
+  <path d="M304 353 H349 L370 323 L401 391 L427 353 H458"
+        fill="none" stroke="#67F4D1" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" opacity=".95"/>
+</svg>

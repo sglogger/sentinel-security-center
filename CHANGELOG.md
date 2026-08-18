@@ -9,6 +9,39 @@ When a release goes out, the same summary must also be added to the
 `== Changelog ==` section of `readme.txt` — that is what WordPress shows in the
 plugin details modal.
 
+## [1.5.2] - 2026-08-18
+
+### Fixed
+
+- **"Check again" reported no update for up to six hours after one was
+  released.** The GitHub release lookup is cached for six hours to stay under
+  the unauthenticated API rate limit, but `update-core.php?force-check=1` only
+  clears the caches WordPress itself owns — it calls `wp_version_check()` and,
+  via `load-update-core.php`, `wp_update_plugins()`, and never
+  `wp_clean_update_cache()`. The forced check therefore replayed our own cached
+  answer: the button truthfully said "no updates" while an update existed. A
+  forced check now bypasses the cache and re-queries GitHub. It is gated on the
+  `update_plugins` capability, because `force-check` is a query argument any
+  visitor can set and an anonymous request coinciding with a scheduled refresh
+  would otherwise spend one of the 60 API calls an hour.
+
+### Added
+
+- **The plugin now has its own icon in the WordPress update screens.** Every
+  screen that pictures a plugin fell back to the generic puzzle piece:
+  `update-core.php` walks `$update->icons` (svg, 2x, 1x, default) and otherwise
+  prints `dashicons-admin-plugins`, and the details modal does the same with
+  `$api->icons`. Both are now supplied, SVG first. The admin menu keeps its
+  `dashicons-shield-alt`, which is deliberate — the menu icon is a silhouette
+  in a strip of other silhouettes, and a colour logo reads as an advert there.
+
+### Changed
+
+- **The 1024px icon master is kept out of the release ZIP.** It is a source
+  asset for store listings; nothing in the plugin references it, and at ~730 KB
+  it weighed twice as much as the entire rest of the package. The SVG and the
+  256px PNG — the two the updater points WordPress at — do ship.
+
 ## [1.5.1] - 2026-08-18
 
 ### Fixed

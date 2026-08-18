@@ -4,7 +4,7 @@ Tags: security, activity log, audit log, two-factor, file integrity
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,6 +103,10 @@ No. Activation on a network stops with a message rather than misbehaving quietly
 
 == Changelog ==
 
+= 1.5.2 =
+* Fixed: "Check again" on the Updates screen could report no update for up to six hours after one had been released. The plugin caches its release lookup to stay under the GitHub rate limit, and was reading that cache back even when you had explicitly asked WordPress to check again. A forced check now re-queries GitHub.
+* Added: the plugin's own icon, wherever WordPress previously drew the generic puzzle piece — the Updates screen and the plugin details modal. The admin menu keeps its shield.
+
 = 1.5.1 =
 * Fixed: a stale composer.lock left over from the 1.4.0 rename made the automated test run fail. Build tooling only; the plugin itself is unchanged from 1.5.0.
 
@@ -158,6 +162,9 @@ No. Activation on a network stops with a message rather than misbehaving quietly
 * Initial scaffolding release.
 
 == Upgrade Notice ==
+
+= 1.5.2 =
+Fixes "Check again" reporting no update for hours after one was published. Worth taking if you have ever wondered why the Updates screen was quiet. Note that the fix only takes effect once this version is installed: to see it now, use the plugin's update offer as it stands, or clear the wpsec_gh_release transient.
 
 = 1.5.1 =
 A build-tooling fix with no functional change from 1.5.0. Nothing to do after updating.

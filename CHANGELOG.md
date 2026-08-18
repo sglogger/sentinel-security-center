@@ -19,6 +19,11 @@ plugin details modal.
   --strict` failed the CI test job on every run since. The lock has been
   regenerated; only the hash changed, no dependency versions moved.
 
+- **The release workflow ran a Node 20 action.** GitHub deprecated the Node 20
+  Actions runtime, so `softprops/action-gh-release@v2` was being force-run on
+  Node 24 with a warning on every release. Pinned to `v3`, whose only change
+  from `v2.6.2` is that runtime bump; the inputs are identical.
+
 ## [1.5.0] - 2026-08-18
 
 ### Fixed

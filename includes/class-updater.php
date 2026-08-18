@@ -61,6 +61,43 @@ final class Updater {
 		add_filter( 'plugins_api', [ $this, 'plugin_info' ], 10, 3 );
 		add_filter( 'upgrader_source_selection', [ $this, 'rename_source' ], 10, 4 );
 		add_action( 'upgrader_process_complete', [ $this, 'flush_cache' ], 10, 0 );
+		add_filter( 'http_request_args', [ $this, 'authorise_download' ], 10, 2 );
+	}
+
+	/**
+	 * Attach credentials when WordPress downloads our release asset.
+	 *
+	 * A public repository serves the browser_download_url to anyone. A private
+	 * one does not: the asset has to be fetched from the API URL with a token
+	 * AND `Accept: application/octet-stream`, otherwise GitHub returns JSON
+	 * metadata (or a 404) and the upgrade fails after having already reported
+	 * an available update — the worst of both worlds.
+	 *
+	 * @param array<string, mixed> $args HTTP request arguments.
+	 * @param string               $url  Request URL.
+	 * @return array<string, mixed>
+	 */
+	public function authorise_download( $args, $url ) {
+		if ( ! is_string( $url ) || ! str_contains( $url, 'api.github.com/repos/' . self::REPO . '/releases/assets/' ) ) {
+			return $args;
+		}
+
+		$token = $this->token();
+
+		if ( '' === $token ) {
+			return $args;
+		}
+
+		$args['headers'] = array_merge(
+			(array) ( $args['headers'] ?? [] ),
+			[
+				'Authorization' => 'Bearer ' . $token,
+				'Accept'        => 'application/octet-stream',
+				'User-Agent'    => 'wp-security-center',
+			]
+		);
+
+		return $args;
 	}
 
 	// -------------------------------------------------------------------------
@@ -278,13 +315,23 @@ final class Updater {
 
 		// Prefer an uploaded .zip asset; fall back to the source zipball.
 		$package = (string) ( $body['zipball_url'] ?? '' );
+		$token   = $this->token();
+
 		if ( ! empty( $body['assets'] ) && is_array( $body['assets'] ) ) {
 			foreach ( $body['assets'] as $asset ) {
-				if ( isset( $asset['browser_download_url'], $asset['name'] )
-					&& '.zip' === strtolower( substr( (string) $asset['name'], -4 ) ) ) {
-					$package = (string) $asset['browser_download_url'];
-					break;
+				if ( ! isset( $asset['name'] ) || '.zip' !== strtolower( substr( (string) $asset['name'], -4 ) ) ) {
+					continue;
 				}
+
+				// With a token, take the API asset URL — it is the only one
+				// that can be authenticated, and therefore the only one that
+				// works for a private repository. Without a token the browser
+				// URL is correct and needs no credentials.
+				$package = ( '' !== $token && ! empty( $asset['url'] ) )
+					? (string) $asset['url']
+					: (string) ( $asset['browser_download_url'] ?? '' );
+
+				break;
 			}
 		}
 
@@ -522,6 +569,20 @@ final class Updater {
 	}
 
 	/**
+	 * The configured GitHub token, if any.
+	 */
+	private function token(): string {
+		$token = '';
+
+		if ( defined( 'WPSEC_GITHUB_TOKEN' ) && WPSEC_GITHUB_TOKEN ) {
+			$token = (string) WPSEC_GITHUB_TOKEN;
+		}
+
+		/** Allow a token to be supplied at runtime (e.g. for a private repo). */
+		return (string) apply_filters( 'wpsec_github_token', $token );
+	}
+
+	/**
 	 * Request headers for the GitHub API, including auth when a token exists.
 	 *
 	 * @return array<string, string>
@@ -532,12 +593,7 @@ final class Updater {
 			'User-Agent' => 'wp-security-center',
 		];
 
-		$token = '';
-		if ( defined( 'WPSEC_GITHUB_TOKEN' ) && WPSEC_GITHUB_TOKEN ) {
-			$token = (string) WPSEC_GITHUB_TOKEN;
-		}
-		/** Allow a token to be supplied at runtime (e.g. for a private repo). */
-		$token = (string) apply_filters( 'wpsec_github_token', $token );
+		$token = $this->token();
 
 		if ( '' !== $token ) {
 			$headers['Authorization'] = 'Bearer ' . $token;

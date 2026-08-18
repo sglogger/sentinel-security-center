@@ -9,6 +9,21 @@ When a release goes out, the same summary must also be added to the
 `== Changelog ==` section of `readme.txt` — that is what WordPress shows in the
 plugin details modal.
 
+## [1.1.1] - 2026-08-18
+
+### Fixed
+
+- Updating from a **private** GitHub repository failed at the download step,
+  after the update had already been advertised — the worst possible order. The
+  release asset was fetched from its `browser_download_url`, which cannot carry
+  credentials; a private repository requires the API asset URL together with the
+  token and `Accept: application/octet-stream`. Public repositories were never
+  affected.
+
+  Because the fix lives in the updater itself, an install already running 1.1.0
+  against a private repository has to be updated to 1.1.1 by hand once. From
+  1.1.1 onward it updates itself.
+
 ## [1.1.0] - 2026-08-18
 
 The first release that does anything. 1.0.0 was scaffolding.
@@ -82,5 +97,6 @@ GitHub Releases self-updater, CI and the local development environment.
   as though it were a valid release, producing a fatal error on the Plugins
   screen. Affects any repository without a published release.
 
+[1.1.1]: https://github.com/sglogger/wp-security-center/releases/tag/v1.1.1
 [1.1.0]: https://github.com/sglogger/wp-security-center/releases/tag/v1.1.0
 [1.0.0]: https://github.com/sglogger/wp-security-center/releases/tag/v1.0.0

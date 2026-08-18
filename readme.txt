@@ -4,7 +4,7 @@ Tags: security, activity log, audit log, geoblocking, file integrity
 Requires at least: 6.5
 Tested up to: 6.9
 Requires PHP: 8.1
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,9 @@ No. Activation on a network stops with a message rather than misbehaving quietly
 
 == Changelog ==
 
+= 1.1.1 =
+* Fixed: updating from a private GitHub repository failed after the update had already been offered. The release asset was fetched from its browser URL, which cannot carry a token; it is now fetched from the API asset URL with the token and the correct Accept header. Public repositories were unaffected.
+
 = 1.1.0 =
 * First functional release. Everything below is new.
 * Event log with a filterable admin viewer, search, sorting, per-page control and CSV export of exactly the filtered view.
@@ -91,6 +94,9 @@ No. Activation on a network stops with a message rather than misbehaving quietly
 * Initial scaffolding release.
 
 == Upgrade Notice ==
+
+= 1.1.1 =
+Required if your copy of this plugin is hosted in a private GitHub repository: without it, automatic updates are detected but cannot be downloaded. Install this version once by hand, and every later update will work on its own.
 
 = 1.1.0 =
 The first release that actually does anything. Review Settings after upgrading: alerts are off until recipients are set, and login blocking stays in monitor mode until you arm it.

@@ -108,11 +108,12 @@
 		<exclude-pattern>/admin/class-csv-exporter.php</exclude-pattern>
 	</rule>
 
-	<!-- Config_Scanner reads core state: xmlrpc_enabled is a core filter, not a
-		 hook of ours, and var_export renders a constant that may be bool or
-		 string for comparison rather than for debugging. -->
+	<!-- Config_Scanner and Hardening read core state: xmlrpc_enabled is a core
+		 filter, not a hook of ours, and var_export renders a constant that may
+		 be bool or string for comparison rather than for debugging. -->
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound">
 		<exclude-pattern>/includes/scanners/class-config-scanner.php</exclude-pattern>
+		<exclude-pattern>/includes/class-hardening.php</exclude-pattern>
 	</rule>
 	<rule ref="WordPress.PHP.DevelopmentFunctions.error_log_var_export">
 		<exclude-pattern>/includes/scanners/class-config-scanner.php</exclude-pattern>

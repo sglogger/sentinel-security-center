@@ -9,9 +9,32 @@ When a release goes out, the same summary must also be added to the
 `== Changelog ==` section of `readme.txt` — that is what WordPress shows in the
 plugin details modal.
 
-## [Unreleased]
+## [1.2.0] - 2026-08-18
 
 ### Added
+
+- **Hardening screen.** A read-only report on what this installation currently
+  looks like to someone trying to get into it: 22 checks across code execution,
+  wp-config and file permissions, staying current, accounts and access, and
+  monitoring. Each one states what is true right now, what to change and where,
+  and links to the section of the official
+  [WordPress hardening guide](https://developer.wordpress.org/advanced-administration/security/hardening/)
+  it comes from, so the advice can be checked against the source instead of
+  taken on trust.
+
+  Verdicts are Good, Fix this, Worth fixing — and *Your call*, which is not a
+  failing grade. `DISALLOW_FILE_MODS` is the case that made the fourth verdict
+  necessary: it closes the "install a plugin that is really a shell" path
+  outright, and it also blocks every security update, so a site with it set and
+  no deployment pipeline behind it gets steadily less safe rather than more.
+  Grading that pass or fail would be dishonest, so the trade-off is spelled out
+  instead. The same applies to moving wp-config.php, to the table prefix, and to
+  renaming the "admin" account — all three are cases where the guide itself is
+  lukewarm, and the screen says so.
+
+  The page also lists what it deliberately cannot grade — the host's patching,
+  the machine you administer from, FTP versus SFTP, database user privileges —
+  with links into the guide for each.
 
 - **Two-factor authentication (TOTP).** A one-time code from any authenticator
   app, asked for after the password is accepted; the session is issued only once

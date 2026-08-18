@@ -47,6 +47,28 @@ as few false alarms as possible. Every decision below follows from that.
 | Logins | failed attempts, successful logins, and logins from a country outside the allow list — with optional blocking |
 | Two-factor | enrolment, removal, wrong codes after a correct password, recovery-code and e-mail-fallback use |
 
+## Hardening report
+
+A read-only screen — **Security Center → Hardening** — grading the installation
+against the official
+[Hardening WordPress](https://developer.wordpress.org/advanced-administration/security/hardening/)
+guide. 22 checks in five groups: code execution, wp-config and file permissions,
+staying current, accounts and access, and monitoring. Every check says what is
+true now, what to change and where, and links to the section of the guide it
+comes from.
+
+Four verdicts, not three. Alongside Good / Fix this / Worth fixing there is
+**Your call**, for the decisions that depend on how the site is run.
+`DISALLOW_FILE_MODS` is the archetype: it removes plugin and theme installation
+entirely, which is excellent — and it removes every update along with it, which
+on a site that has no other deployment path is worse than leaving it unset. A
+pass/fail badge on that is a lie either way, so the trade-off is written out
+instead. Moving wp-config.php, changing the table prefix and renaming the
+"admin" account get the same treatment, because the guide itself is lukewarm on
+all three.
+
+Nothing on the page changes anything, and nothing is written.
+
 ## Two-factor authentication
 
 A TOTP code from any authenticator app, asked for after the password is

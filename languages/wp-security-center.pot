@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Security Center 1.1.0\n"
+"Project-Id-Version: WP Security Center 1.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-security-center\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-18T04:57:21+00:00\n"
+"POT-Creation-Date: 2026-08-18T09:40:43+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp-security-center\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #. Description of the plugin
 #: wp-security-center.php
-msgid "Security monitoring and alerting for WordPress. Logs and alerts on plugin/theme changes, administrator and role changes, configuration changes, filesystem integrity and logins from countries outside your allow list — with optional login blocking. Administrator-only, with immediate e-mail alerts."
+msgid "Security monitoring and alerting for WordPress. Logs and alerts on plugin/theme changes, administrator and role changes, configuration changes, filesystem integrity and logins from countries outside your allow list — with optional login blocking and two-factor authentication. Administrator-only, with immediate e-mail alerts."
 msgstr ""
 
 #. Author of the plugin
@@ -39,99 +39,109 @@ msgstr ""
 msgid "https://www.glogger.ch"
 msgstr ""
 
-#: admin/class-admin.php:49
 #: admin/class-admin.php:50
+#: admin/class-admin.php:51
 msgid "Security Center"
 msgstr ""
 
-#: admin/class-admin.php:60
 #: admin/class-admin.php:61
+#: admin/class-admin.php:62
 msgid "Event Log"
 msgstr ""
 
-#: admin/class-admin.php:69
 #: admin/class-admin.php:70
+#: admin/class-admin.php:71
+#: admin/class-two-factor-admin.php:283
+#: admin/views/page-hardening.php:82
+#: admin/views/page-two-factor.php:56
+#: admin/views/page-two-factor.php:129
 msgid "Status"
 msgstr ""
 
-#: admin/class-admin.php:78
 #: admin/class-admin.php:79
+#: admin/class-admin.php:80
+#: admin/views/page-hardening.php:37
+msgid "Hardening"
+msgstr ""
+
+#: admin/class-admin.php:88
+#: admin/class-admin.php:89
 #: admin/views/page-diagnostics.php:44
 msgid "Diagnostics"
 msgstr ""
 
-#: admin/class-admin.php:87
-#: admin/class-admin.php:88
-#: admin/class-admin.php:134
+#: admin/class-admin.php:97
+#: admin/class-admin.php:98
+#: admin/class-admin.php:144
 msgid "Settings"
 msgstr ""
 
-#: admin/class-admin.php:101
+#: admin/class-admin.php:111
 msgid "Events per page"
 msgstr ""
 
-#: admin/class-admin.php:161
+#: admin/class-admin.php:171
 msgid "No countries are on the allow list, so login location rules do nothing at all. Add at least your own country on the Settings screen."
 msgstr ""
 
-#: admin/class-admin.php:168
+#: admin/class-admin.php:178
 msgid "Login blocking is armed but no working country lookup is available. Blocking will stand itself down until a GeoIP database is installed."
 msgstr ""
 
-#: admin/class-admin.php:175
+#: admin/class-admin.php:185
 msgid "The GeoIP database is out of date. It is still being used, but country results may be wrong for recently reassigned addresses."
 msgstr ""
 
-#: admin/class-admin.php:204
+#: admin/class-admin.php:214
 msgid "Security Event Log"
 msgstr ""
 
 #. translators: %d: number of matching events
-#: admin/class-admin.php:211
+#: admin/class-admin.php:221
 #, php-format
 msgid "%d matching event."
 msgid_plural "%d matching events."
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/class-admin.php:219
+#: admin/class-admin.php:229
 msgid "Search log"
 msgstr ""
 
-#: admin/class-admin.php:269
+#: admin/class-admin.php:287
 msgid "You do not have permission to change these settings."
 msgstr ""
 
-#: admin/class-admin.php:583
+#: admin/class-admin.php:661
 msgid "Settings saved."
 msgstr ""
 
-#: admin/class-admin.php:584
+#: admin/class-admin.php:662
 msgid "The GeoIP database was downloaded and installed."
 msgstr ""
 
-#: admin/class-admin.php:585
+#: admin/class-admin.php:663
 msgid "The GeoIP database could not be downloaded. See the Status screen for the reason."
 msgstr ""
 
-#: admin/class-admin.php:586
+#: admin/class-admin.php:664
 msgid "The test alert was accepted for delivery. Check the recipient inbox."
 msgstr ""
 
-#: admin/class-admin.php:588
+#: admin/class-admin.php:666
 msgid "All scans have been run. Any findings are in the event log."
 msgstr ""
 
-#: admin/class-admin.php:589
+#: admin/class-admin.php:667
 msgid "All sessions were destroyed. Everyone, including you, must sign in again."
 msgstr ""
 
-#: admin/class-admin.php:612
+#: admin/class-admin.php:690
 msgid "The test alert could not be sent. Check that at least one recipient is configured."
 msgstr ""
 
 #. translators: %s: error message from the mail layer
-#: admin/class-admin.php:617
+#: admin/class-admin.php:695
 #, php-format
 msgid "The test alert could not be sent: %s"
 msgstr ""
@@ -150,13 +160,13 @@ msgid "Time (UTC)"
 msgstr ""
 
 #: admin/class-log-list-table.php:46
-#: admin/views/page-settings.php:126
+#: admin/views/page-settings.php:137
 #: includes/class-mailer.php:71
 msgid "Severity"
 msgstr ""
 
 #: admin/class-log-list-table.php:47
-#: admin/views/page-settings.php:125
+#: admin/views/page-settings.php:136
 #: includes/class-mailer.php:70
 msgid "Event"
 msgstr ""
@@ -171,7 +181,7 @@ msgid "Performed by"
 msgstr ""
 
 #: admin/class-log-list-table.php:50
-#: admin/class-log-list-table.php:353
+#: admin/class-log-list-table.php:374
 #: includes/class-mailer.php:101
 msgid "IP address"
 msgstr ""
@@ -208,51 +218,133 @@ msgid "anonymous"
 msgstr ""
 
 #. translators: %s: affected user login
-#: admin/class-log-list-table.php:253
+#: admin/class-log-list-table.php:261
 #, php-format
 msgid "affected: %s"
 msgstr ""
 
-#: admin/class-log-list-table.php:314
+#: admin/class-log-list-table.php:330
 msgid "All categories"
 msgstr ""
 
-#: admin/class-log-list-table.php:326
+#: admin/class-log-list-table.php:342
 msgid "Any severity"
 msgstr ""
 
 #. translators: %s: severity name
-#: admin/class-log-list-table.php:335
+#: admin/class-log-list-table.php:351
 #, php-format
 msgid "%s and above"
 msgstr ""
 
-#: admin/class-log-list-table.php:344
+#: admin/class-log-list-table.php:360
 msgid "All time"
 msgstr ""
 
-#: admin/class-log-list-table.php:345
+#: admin/class-log-list-table.php:362
 msgid "Last 24 hours"
 msgstr ""
 
-#: admin/class-log-list-table.php:345
+#: admin/class-log-list-table.php:363
 msgid "Last 7 days"
 msgstr ""
 
-#: admin/class-log-list-table.php:345
+#: admin/class-log-list-table.php:364
 msgid "Last 30 days"
 msgstr ""
 
-#: admin/class-log-list-table.php:345
+#: admin/class-log-list-table.php:365
 msgid "Last 90 days"
 msgstr ""
 
-#: admin/class-log-list-table.php:356
+#: admin/class-log-list-table.php:377
 msgid "Filter"
 msgstr ""
 
-#: admin/class-log-list-table.php:359
+#: admin/class-log-list-table.php:380
 msgid "Export CSV"
+msgstr ""
+
+#: admin/class-two-factor-admin.php:41
+#: admin/class-two-factor-admin.php:281
+#: admin/views/page-two-factor.php:30
+#: includes/auth/class-two-factor-login.php:355
+#: includes/class-event-registry.php:260
+#: includes/class-hardening.php:477
+msgid "Two-factor authentication"
+msgstr ""
+
+#: admin/class-two-factor-admin.php:42
+msgid "Two-factor"
+msgstr ""
+
+#: admin/class-two-factor-admin.php:249
+msgid "Two-factor authentication is on. Save the recovery codes below."
+msgstr ""
+
+#: admin/class-two-factor-admin.php:250
+msgid "Two-factor authentication has been switched off for your account."
+msgstr ""
+
+#: admin/class-two-factor-admin.php:251
+msgid "New recovery codes generated. The previous set no longer works."
+msgstr ""
+
+#: admin/class-two-factor-admin.php:252
+msgid "That code was not right. Make sure the phone clock is correct and try the code showing now."
+msgstr ""
+
+#: admin/class-two-factor-admin.php:288
+#: admin/views/page-two-factor.php:58
+msgid "On."
+msgstr ""
+
+#. translators: %d: number of unused recovery codes
+#: admin/class-two-factor-admin.php:292
+#: admin/views/page-two-factor.php:63
+#, php-format
+msgid "%d unused recovery code remains."
+msgid_plural "%d unused recovery codes remain."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/class-two-factor-admin.php:298
+#: admin/views/page-two-factor.php:131
+msgid "Off."
+msgstr ""
+
+#: admin/class-two-factor-admin.php:299
+msgid "A stolen password is enough to sign in to this account."
+msgstr ""
+
+#: admin/class-two-factor-admin.php:306
+msgid "Manage two-factor authentication"
+msgstr ""
+
+#: admin/class-two-factor-admin.php:306
+#: admin/views/page-two-factor.php:153
+#: includes/auth/class-two-factor-login.php:354
+msgid "Set up two-factor authentication"
+msgstr ""
+
+#: admin/class-two-factor-admin.php:310
+msgid "Reset two-factor authentication for this user"
+msgstr ""
+
+#: admin/class-two-factor-admin.php:312
+msgid "Use this when they have lost the authenticator, the recovery codes and access to their mailbox. They will have to set it up again, and the reset is recorded in the event log."
+msgstr ""
+
+#. translators: %d: days left before two-factor becomes mandatory
+#: admin/class-two-factor-admin.php:336
+#, php-format
+msgid "This site requires administrators to use two-factor authentication. You have %d day left to set it up before you cannot sign in without it."
+msgid_plural "This site requires administrators to use two-factor authentication. You have %d days left to set it up before you cannot sign in without it."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/class-two-factor-admin.php:346
+msgid "Set it up now"
 msgstr ""
 
 #: admin/views/page-diagnostics.php:46
@@ -292,75 +384,159 @@ msgid "(not trusted)"
 msgstr ""
 
 #: admin/views/page-diagnostics.php:85
-#: admin/views/page-diagnostics.php:158
+#: admin/views/page-diagnostics.php:162
 msgid "Country"
 msgstr ""
 
-#: admin/views/page-diagnostics.php:92
+#: admin/views/page-diagnostics.php:93
 msgid "from the CDN country header"
 msgstr ""
 
-#: admin/views/page-diagnostics.php:94
+#: admin/views/page-diagnostics.php:95
 msgid "from the local GeoIP database"
 msgstr ""
 
-#: admin/views/page-diagnostics.php:95
+#: admin/views/page-diagnostics.php:96
 msgid "no source available"
 msgstr ""
 
-#: admin/views/page-diagnostics.php:101
+#: admin/views/page-diagnostics.php:103
 msgid "What would happen on login"
 msgstr ""
 
-#: admin/views/page-diagnostics.php:105
+#: admin/views/page-diagnostics.php:107
 msgid "Allowed"
 msgstr ""
 
-#: admin/views/page-diagnostics.php:106
+#: admin/views/page-diagnostics.php:108
 msgid "Allowed, but reported"
 msgstr ""
 
-#: admin/views/page-diagnostics.php:107
+#: admin/views/page-diagnostics.php:109
 msgid "BLOCKED"
 msgstr ""
 
 #. translators: %s: internal name of the rule that decided
-#: admin/views/page-diagnostics.php:114
+#: admin/views/page-diagnostics.php:117
 #, php-format
 msgid "Decided by: %s"
 msgstr ""
 
-#: admin/views/page-diagnostics.php:121
+#: admin/views/page-diagnostics.php:125
 msgid "What would happen for another address?"
 msgstr ""
 
-#: admin/views/page-diagnostics.php:125
+#: admin/views/page-diagnostics.php:129
 msgid "Test"
 msgstr ""
 
-#: admin/views/page-diagnostics.php:134
+#: admin/views/page-diagnostics.php:138
 msgid "That is not a valid IP address."
 msgstr ""
 
-#: admin/views/page-diagnostics.php:157
+#: admin/views/page-diagnostics.php:161
 #: admin/views/page-status.php:246
 msgid "Address"
 msgstr ""
 
-#: admin/views/page-diagnostics.php:159
+#: admin/views/page-diagnostics.php:163
 msgid "Verdict"
 msgstr ""
 
-#: admin/views/page-diagnostics.php:160
+#: admin/views/page-diagnostics.php:164
 msgid "Rules consulted"
 msgstr ""
 
-#: admin/views/page-diagnostics.php:166
+#: admin/views/page-diagnostics.php:170
 msgid "Incoming headers"
 msgstr ""
 
-#: admin/views/page-diagnostics.php:167
+#: admin/views/page-diagnostics.php:171
 msgid "Everything the web server passed to PHP for this request. Use it to work out which header your proxy actually sets."
+msgstr ""
+
+#: admin/views/page-hardening.php:24
+msgid "Good"
+msgstr ""
+
+#: admin/views/page-hardening.php:25
+msgid "Worth fixing"
+msgstr ""
+
+#: admin/views/page-hardening.php:26
+msgid "Fix this"
+msgstr ""
+
+#: admin/views/page-hardening.php:27
+msgid "Your call"
+msgstr ""
+
+#: admin/views/page-hardening.php:40
+msgid "What this installation currently looks like to someone trying to get into it. Nothing on this page changes anything — each item says where the change is made and links to the section of the official WordPress hardening guide it comes from, so you can check the advice against the source."
+msgstr ""
+
+#: admin/views/page-hardening.php:45
+msgid "Hardening WordPress — developer.wordpress.org"
+msgstr ""
+
+#: admin/views/page-hardening.php:54
+msgid "good"
+msgstr ""
+
+#: admin/views/page-hardening.php:57
+msgid "to fix"
+msgstr ""
+
+#: admin/views/page-hardening.php:60
+msgid "worth fixing"
+msgstr ""
+
+#: admin/views/page-hardening.php:63
+msgid "your call"
+msgstr ""
+
+#: admin/views/page-hardening.php:70
+msgid "\"Your call\" is not a failing grade. Those are the decisions that depend on how the site is run — a badge either way would be dishonest, so the trade-off is spelled out instead."
+msgstr ""
+
+#: admin/views/page-hardening.php:83
+msgid "Check"
+msgstr ""
+
+#: admin/views/page-hardening.php:84
+msgid "What is true now, and what to do"
+msgstr ""
+
+#: admin/views/page-hardening.php:104
+msgid "Reference: Hardening WordPress"
+msgstr ""
+
+#: admin/views/page-hardening.php:114
+msgid "What is deliberately not checked here"
+msgstr ""
+
+#: admin/views/page-hardening.php:116
+msgid "The guide also covers things no plugin can see from inside PHP: whether your host keeps its software current, whether the machine you administer the site from is clean, whether you connect over SFTP rather than FTP, and what privileges the database user actually holds. Those are worth reading through even though nothing on this page can grade them."
+msgstr ""
+
+#: admin/views/page-hardening.php:119
+msgid "Web server and shared hosting"
+msgstr ""
+
+#: admin/views/page-hardening.php:120
+msgid "FTP versus SFTP"
+msgstr ""
+
+#: admin/views/page-hardening.php:121
+msgid "Restricting database user privileges"
+msgstr ""
+
+#: admin/views/page-hardening.php:122
+msgid "Blocking direct requests to wp-includes"
+msgstr ""
+
+#: admin/views/page-hardening.php:123
+msgid "Putting a firewall in front of the site"
 msgstr ""
 
 #: admin/views/page-settings.php:23
@@ -376,291 +552,391 @@ msgid "Login & Location"
 msgstr ""
 
 #: admin/views/page-settings.php:26
+msgid "Two-Factor"
+msgstr ""
+
+#: admin/views/page-settings.php:27
 msgid "File Integrity"
 msgstr ""
 
-#: admin/views/page-settings.php:30
+#: admin/views/page-settings.php:31
 msgid "Security Center Settings"
 msgstr ""
 
-#: admin/views/page-settings.php:48
+#: admin/views/page-settings.php:61
 msgid "Alert recipients"
 msgstr ""
 
-#: admin/views/page-settings.php:53
+#: admin/views/page-settings.php:64
 msgid "One e-mail address per line. Alerts are sent immediately, with no delay and no digest."
 msgstr ""
 
-#: admin/views/page-settings.php:57
+#: admin/views/page-settings.php:68
 msgid "Sender name"
 msgstr ""
 
-#: admin/views/page-settings.php:61
+#: admin/views/page-settings.php:72
 msgid "Sender address"
 msgstr ""
 
-#: admin/views/page-settings.php:64
+#: admin/views/page-settings.php:75
 msgid "Leave empty to use the WordPress default sender."
 msgstr ""
 
-#: admin/views/page-settings.php:68
+#: admin/views/page-settings.php:79
 msgid "Hourly e-mail limit"
 msgstr ""
 
-#: admin/views/page-settings.php:71
+#: admin/views/page-settings.php:82
 msgid "A safety valve, not a digest. Alerts are always immediate; only if this many messages are sent within an hour is delivery paused and a single summary sent instead. Every event is still written to the log. 0 disables the limit."
 msgstr ""
 
-#: admin/views/page-settings.php:75
+#: admin/views/page-settings.php:86
 msgid "Keep log entries for"
 msgstr ""
 
-#: admin/views/page-settings.php:78
-#: admin/views/page-settings.php:280
+#: admin/views/page-settings.php:89
+#: admin/views/page-settings.php:204
+#: admin/views/page-settings.php:389
 msgid "days"
 msgstr ""
 
-#: admin/views/page-settings.php:79
+#: admin/views/page-settings.php:90
 msgid "Older entries are removed daily. 0 keeps everything forever."
 msgstr ""
 
-#: admin/views/page-settings.php:83
+#: admin/views/page-settings.php:94
 msgid "On uninstall"
 msgstr ""
 
-#: admin/views/page-settings.php:87
+#: admin/views/page-settings.php:98
 msgid "Delete the event log and all settings when the plugin is uninstalled"
 msgstr ""
 
-#: admin/views/page-settings.php:89
+#: admin/views/page-settings.php:100
 msgid "Off by default. Discarding an audit trail should be a deliberate choice."
 msgstr ""
 
-#: admin/views/page-settings.php:97
+#: admin/views/page-settings.php:108
 msgid "Verify delivery"
 msgstr ""
 
-#: admin/views/page-settings.php:98
+#: admin/views/page-settings.php:109
 msgid "This plugin is only worth anything if its alerts actually arrive. A rejected sender address fails silently on many hosts, so it is worth proving delivery once."
 msgstr ""
 
-#: admin/views/page-settings.php:101
+#: admin/views/page-settings.php:112
 msgid "Send a test alert"
 msgstr ""
 
-#: admin/views/page-settings.php:107
+#: admin/views/page-settings.php:118
 msgid "Choose what happens for each event. \"E-mail\" sends immediately and also writes to the log; \"Log only\" records it without sending; \"Off\" ignores the event entirely."
 msgstr ""
 
-#: admin/views/page-settings.php:127
-#: admin/views/page-settings.php:176
+#: admin/views/page-settings.php:138
+#: admin/views/page-settings.php:284
 msgid "Action"
 msgstr ""
 
-#: admin/views/page-settings.php:140
+#: admin/views/page-settings.php:153
 msgid "E-mail"
 msgstr ""
 
-#: admin/views/page-settings.php:140
+#: admin/views/page-settings.php:154
 msgid "Log only"
 msgstr ""
 
-#: admin/views/page-settings.php:140
+#: admin/views/page-settings.php:155
 msgid "Off"
 msgstr ""
 
-#: admin/views/page-settings.php:167
+#: admin/views/page-settings.php:178
+msgid "PHP has no OpenSSL support on this server, so there is nowhere safe to keep a shared secret. Two-factor authentication stays off until that is fixed — storing the secret in the clear would make a database dump enough to bypass it."
+msgstr ""
+
+#: admin/views/page-settings.php:182
+msgid "A one-time code from an authenticator app, asked for after the password is accepted. Enrolment is per account: every user manages their own from their profile."
+msgstr ""
+
+#: admin/views/page-settings.php:187
+msgid "Availability"
+msgstr ""
+
+#: admin/views/page-settings.php:190
+msgid "Let users protect their account with an authenticator app"
+msgstr ""
+
+#: admin/views/page-settings.php:191
+msgid "Switching this off does not delete anything. Enrolled users simply stop being asked, and are asked again if it is switched back on."
+msgstr ""
+
+#: admin/views/page-settings.php:195
+msgid "Administrators"
+msgstr ""
+
+#: admin/views/page-settings.php:198
+msgid "Require it for everyone who can manage options"
+msgstr ""
+
+#: admin/views/page-settings.php:199
+msgid "They are nagged during the grace period below, and cannot sign in without enrolling once it has passed. The clock starts when you save this, not when the plugin was installed."
+msgstr ""
+
+#: admin/views/page-settings.php:201
+msgid "Grace period"
+msgstr ""
+
+#. translators: %s: formatted date
+#: admin/views/page-settings.php:213
+#, php-format
+msgid "Enrolment becomes mandatory on %s."
+msgstr ""
+
+#: admin/views/page-settings.php:216
+msgid "The grace period has passed. Administrators without a second factor must enrol at their next sign-in."
+msgstr ""
+
+#: admin/views/page-settings.php:224
+msgid "Recovery"
+msgstr ""
+
+#: admin/views/page-settings.php:226
+msgid "Ten single-use recovery codes are issued at enrolment and shown once. They are stored only as hashes, which is also why they survive a rotation of the site salts when the authenticator secrets do not."
+msgstr ""
+
+#: admin/views/page-settings.php:228
+msgid "Also allow a one-time code sent to the account e-mail address"
+msgstr ""
+
+#: admin/views/page-settings.php:230
+msgid "A real weakening: anyone who can read that mailbox can complete the sign-in, and on many sites the mailbox is on the same hosting account. Worth having when losing a phone would otherwise mean losing the site — not worth having otherwise. Every send and every use is logged."
+msgstr ""
+
+#: admin/views/page-settings.php:233
+msgid "The mailed code expires after"
+msgstr ""
+
+#: admin/views/page-settings.php:236
+#: admin/views/page-settings.php:362
+msgid "minutes"
+msgstr ""
+
+#: admin/views/page-settings.php:238
+msgid "If a user loses the authenticator, the recovery codes and the mailbox, any administrator can reset their second factor from that user's profile screen."
+msgstr ""
+
+#: admin/views/page-settings.php:242
+msgid "Your account"
+msgstr ""
+
+#: admin/views/page-settings.php:248
+msgid "Two-factor authentication is on for your account."
+msgstr ""
+
+#: admin/views/page-settings.php:249
+msgid "Two-factor authentication is not set up for your account."
+msgstr ""
+
+#: admin/views/page-settings.php:253
+msgid "Manage it"
+msgstr ""
+
+#: admin/views/page-settings.php:260
+msgid "What is not covered"
+msgstr ""
+
+#: admin/views/page-settings.php:261
+msgid "Application passwords, the REST API and XML-RPC are not challenged. There is nobody at the keyboard to type a code, and an application password is already a separate credential you can revoke on its own. If an account must be locked down completely, revoke its application passwords as well."
+msgstr ""
+
+#: admin/views/page-settings.php:275
 #: admin/views/page-status.php:51
 msgid "Location checks"
 msgstr ""
 
-#: admin/views/page-settings.php:171
+#: admin/views/page-settings.php:279
 msgid "Evaluate and log the country of every successful login"
 msgstr ""
 
-#: admin/views/page-settings.php:180
+#: admin/views/page-settings.php:288
 msgid "Monitor only — alert, but let the login through"
 msgstr ""
 
-#: admin/views/page-settings.php:184
+#: admin/views/page-settings.php:292
 msgid "Block logins from countries that are not on the list"
 msgstr ""
 
-#: admin/views/page-settings.php:187
+#: admin/views/page-settings.php:295
 msgid "Blocking cannot be armed: no working country lookup is available. Install a GeoIP database below, or configure a trusted CDN country header."
 msgstr ""
 
-#: admin/views/page-settings.php:189
+#: admin/views/page-settings.php:297
 msgid "Blocking cannot be armed while the country list is empty."
 msgstr ""
 
-#: admin/views/page-settings.php:192
+#: admin/views/page-settings.php:300
 msgid "An address whose country cannot be determined counts as not allowed and is blocked. VPN and Tor traffic usually falls into this category. If the lookup breaks entirely, blocking switches itself back to monitor mode rather than locking everyone out."
 msgstr ""
 
-#: admin/views/page-settings.php:197
+#: admin/views/page-settings.php:305
 #: admin/views/page-status.php:66
 msgid "Allowed countries"
 msgstr ""
 
-#: admin/views/page-settings.php:201
+#: admin/views/page-settings.php:309
 msgid "Two-letter ISO country codes, separated by spaces. For example: CH DE AT"
 msgstr ""
 
 #. translators: 1: country name, 2: country code
-#: admin/views/page-settings.php:206
+#: admin/views/page-settings.php:315
 #, php-format
 msgid "You are currently connecting from %1$s (%2$s)."
 msgstr ""
 
-#: admin/views/page-settings.php:216
+#: admin/views/page-settings.php:325
 msgid "Always-allowed addresses"
 msgstr ""
 
-#: admin/views/page-settings.php:219
+#: admin/views/page-settings.php:328
 msgid "One IP address or CIDR block per line, IPv4 or IPv6. These skip the country rule entirely. Private, loopback and link-local addresses are always allowed and need not be listed."
 msgstr ""
 
-#: admin/views/page-settings.php:223
+#: admin/views/page-settings.php:332
 #: admin/views/page-status.php:92
 msgid "Trusted proxies"
 msgstr ""
 
-#: admin/views/page-settings.php:226
+#: admin/views/page-settings.php:335
 msgid "Forwarding headers such as X-Forwarded-For are read ONLY when the connecting address is in this list. Leave it empty if the site is not behind a proxy or CDN — trusting a header that anyone can send would let an attacker choose their own apparent location."
 msgstr ""
 
-#: admin/views/page-settings.php:229
+#: admin/views/page-settings.php:338
 msgid "Use the country header supplied by the CDN (CF-IPCountry) when available"
 msgstr ""
 
-#: admin/views/page-settings.php:234
+#: admin/views/page-settings.php:343
 msgid "API authentication"
 msgstr ""
 
-#: admin/views/page-settings.php:238
+#: admin/views/page-settings.php:347
 msgid "Apply location rules to application passwords and XML-RPC as well"
 msgstr ""
 
-#: admin/views/page-settings.php:240
+#: admin/views/page-settings.php:349
 msgid "Off by default. These authenticate through the same mechanism as an interactive login, so turning this on can silently break integrations whose servers sit abroad."
 msgstr ""
 
-#: admin/views/page-settings.php:244
+#: admin/views/page-settings.php:353
 msgid "Bypass link"
 msgstr ""
 
-#: admin/views/page-settings.php:248
+#: admin/views/page-settings.php:357
 msgid "E-mail a single-use recovery link whenever a login is blocked"
 msgstr ""
 
-#: admin/views/page-settings.php:251
+#: admin/views/page-settings.php:360
 msgid "Link valid for"
 msgstr ""
 
-#: admin/views/page-settings.php:253
-msgid "minutes"
-msgstr ""
-
-#: admin/views/page-settings.php:256
+#: admin/views/page-settings.php:365
 msgid "grants access for"
 msgstr ""
 
-#: admin/views/page-settings.php:258
+#: admin/views/page-settings.php:367
 msgid "hours"
 msgstr ""
 
-#: admin/views/page-settings.php:264
+#: admin/views/page-settings.php:373
 msgid "MaxMind licence key"
 msgstr ""
 
-#: admin/views/page-settings.php:272
+#: admin/views/page-settings.php:381
 msgid "The key is set in wp-config.php via WPSEC_MAXMIND_LICENSE_KEY and cannot be edited here."
 msgstr ""
 
-#: admin/views/page-settings.php:274
+#: admin/views/page-settings.php:383
 msgid "A free GeoLite2 key from MaxMind. The database cannot be bundled with the plugin because MaxMind's licence forbids redistributing it. Defining WPSEC_MAXMIND_LICENSE_KEY in wp-config.php keeps the key out of the database entirely."
 msgstr ""
 
-#: admin/views/page-settings.php:278
+#: admin/views/page-settings.php:387
 msgid "Warn when the database is older than"
 msgstr ""
 
-#: admin/views/page-settings.php:290
+#: admin/views/page-settings.php:399
 msgid "Quick actions"
 msgstr ""
 
-#: admin/views/page-settings.php:293
+#: admin/views/page-settings.php:402
 msgid "Download the GeoIP database now"
 msgstr ""
 
-#: admin/views/page-settings.php:298
+#: admin/views/page-settings.php:407
 msgid "Add my current country to the list"
 msgstr ""
 
 #. translators: %s: preset name
-#: admin/views/page-settings.php:310
+#: admin/views/page-settings.php:422
 #, php-format
 msgid "Add trusted proxies: %s"
 msgstr ""
 
-#: admin/views/page-settings.php:325
+#: admin/views/page-settings.php:437
 msgid "The plugin never modifies, quarantines or deletes a file. It only reports what it finds."
 msgstr ""
 
-#: admin/views/page-settings.php:330
+#: admin/views/page-settings.php:442
 msgid "What to scan"
 msgstr ""
 
-#: admin/views/page-settings.php:332
+#: admin/views/page-settings.php:444
 msgid "wp-content/mu-plugins — loads before everything and cannot be deactivated from the dashboard"
 msgstr ""
 
-#: admin/views/page-settings.php:333
+#: admin/views/page-settings.php:445
 msgid "PHP files under wp-content/uploads — one should never exist there"
 msgstr ""
 
-#: admin/views/page-settings.php:334
+#: admin/views/page-settings.php:446
 msgid "wp-config.php and .htaccess"
 msgstr ""
 
-#: admin/views/page-settings.php:335
+#: admin/views/page-settings.php:447
 msgid "WordPress core files, against the official checksums"
 msgstr ""
 
-#: admin/views/page-settings.php:339
+#: admin/views/page-settings.php:451
 msgid "Backdoor heuristics"
 msgstr ""
 
-#: admin/views/page-settings.php:341
+#: admin/views/page-settings.php:453
 msgid "Check new PHP files for patterns common in web shells"
 msgstr ""
 
-#: admin/views/page-settings.php:343
+#: admin/views/page-settings.php:455
 msgid "Report at a score of"
 msgstr ""
 
-#: admin/views/page-settings.php:345
+#: admin/views/page-settings.php:457
 msgid "out of 100"
 msgstr ""
 
-#: admin/views/page-settings.php:348
+#: admin/views/page-settings.php:460
 msgid "Lower catches more and produces more false positives. Every pattern here has legitimate uses on its own; the score is what distinguishes them."
 msgstr ""
 
-#: admin/views/page-settings.php:352
+#: admin/views/page-settings.php:464
 msgid "Files per scan run"
 msgstr ""
 
-#: admin/views/page-settings.php:355
+#: admin/views/page-settings.php:467
 msgid "A ceiling so a very large uploads directory cannot exhaust the PHP time limit. Anything not reached is covered by the next run."
 msgstr ""
 
-#: admin/views/page-settings.php:359
+#: admin/views/page-settings.php:471
 msgid "Ignore paths containing"
 msgstr ""
 
-#: admin/views/page-settings.php:362
+#: admin/views/page-settings.php:474
 msgid "One fragment per line. Anything whose path contains it is skipped."
 msgstr ""
 
@@ -787,7 +1063,7 @@ msgid "%s old"
 msgstr ""
 
 #: admin/views/page-status.php:130
-#: includes/geo/class-country-resolver.php:264
+#: includes/geo/class-country-resolver.php:268
 msgid "Unknown"
 msgstr ""
 
@@ -933,63 +1209,664 @@ msgstr ""
 msgid "Sessions created before location blocking was armed are not affected by it, because cookie checks never run the login rules. This ends every session, including your own."
 msgstr ""
 
-#: includes/class-event-registry.php:217
-msgid "Critical"
+#: admin/views/page-two-factor.php:37
+msgid "Two-factor authentication is unavailable on this installation. Either it is switched off in the Security Center settings, or PHP has no OpenSSL support — without it there is nowhere safe to keep the shared secret, so the feature refuses to run rather than store it in the clear."
 msgstr ""
 
-#: includes/class-event-registry.php:219
-msgid "High"
+#: admin/views/page-two-factor.php:44
+msgid "Your recovery codes"
 msgstr ""
 
-#: includes/class-event-registry.php:221
-msgid "Warning"
+#: admin/views/page-two-factor.php:45
+msgid "Each code works once. Keep them somewhere you can reach without this site and without your phone — a password manager, or printed and filed. This is the only time they are shown."
 msgstr ""
 
-#: includes/class-event-registry.php:223
-msgid "Notice"
+#: admin/views/page-two-factor.php:72
+msgid "You are nearly out of recovery codes. Generate a new set now, while you can still sign in."
 msgstr ""
 
-#: includes/class-event-registry.php:225
-msgid "Info"
+#: admin/views/page-two-factor.php:76
+msgid "Recovery codes"
+msgstr ""
+
+#: admin/views/page-two-factor.php:77
+msgid "Generating a new set immediately invalidates the old one."
+msgstr ""
+
+#: admin/views/page-two-factor.php:79
+msgid "Generate new recovery codes"
+msgstr ""
+
+#: admin/views/page-two-factor.php:82
+msgid "Turn it off"
+msgstr ""
+
+#: admin/views/page-two-factor.php:84
+msgid "Your account goes back to being protected by the password alone."
+msgstr ""
+
+#: admin/views/page-two-factor.php:86
+msgid "This site requires administrators to use two-factor authentication, so you will be asked to set it up again at your next sign-in."
+msgstr ""
+
+#: admin/views/page-two-factor.php:90
+msgid "Turn off two-factor authentication"
+msgstr ""
+
+#: admin/views/page-two-factor.php:95
+msgid "Step 1 — add the account to your authenticator"
+msgstr ""
+
+#: admin/views/page-two-factor.php:96
+msgid "Scan this with any authenticator app: 1Password, Bitwarden, Aegis, Google Authenticator, Microsoft Authenticator — they all speak the same standard."
+msgstr ""
+
+#: admin/views/page-two-factor.php:107
+msgid "Or type this key in by hand:"
+msgstr ""
+
+#: admin/views/page-two-factor.php:113
+#: includes/auth/class-two-factor-login.php:428
+msgid "Open in an authenticator app on this device"
+msgstr ""
+
+#: admin/views/page-two-factor.php:116
+msgid "Step 2 — prove it worked"
+msgstr ""
+
+#: admin/views/page-two-factor.php:117
+msgid "Nothing is switched on until a code from the app is accepted, so a mistyped key cannot lock you out."
+msgstr ""
+
+#: admin/views/page-two-factor.php:120
+msgid "Six-digit code"
+msgstr ""
+
+#: admin/views/page-two-factor.php:124
+msgid "Switch on two-factor authentication"
+msgstr ""
+
+#: admin/views/page-two-factor.php:132
+msgid "Anyone who learns your password can sign in as you. An authenticator app closes that off."
+msgstr ""
+
+#. translators: %s: formatted date
+#: admin/views/page-two-factor.php:143
+#, php-format
+msgid "This site requires administrators to use two-factor authentication from %s."
+msgstr ""
+
+#: admin/views/page-two-factor.php:146
+msgid "This site requires administrators to use two-factor authentication."
+msgstr ""
+
+#: admin/views/page-two-factor.php:159
+#: admin/views/page-two-factor.php:162
+msgid "If you lose your authenticator"
+msgstr ""
+
+#: admin/views/page-two-factor.php:160
+msgid "Use a recovery code. If those are gone too, the sign-in screen can e-mail a one-time code to the address on this account — which means whoever reads that mailbox can sign in as you, so treat it as the last resort it is. If everything is lost, another administrator can reset the second factor for your account."
+msgstr ""
+
+#: admin/views/page-two-factor.php:163
+msgid "Use a recovery code. The e-mail fallback is switched off on this site, so if the recovery codes are gone as well, another administrator has to reset the second factor for your account."
+msgstr ""
+
+#: includes/auth/class-two-factor-login.php:140
+msgid "Too many attempts. Wait a few minutes and sign in again."
+msgstr ""
+
+#: includes/auth/class-two-factor-login.php:153
+msgid "A one-time code is on its way to the address on your account."
+msgstr ""
+
+#: includes/auth/class-two-factor-login.php:162
+msgid "That code was not right. Check the app and try the current code."
+msgstr ""
+
+#: includes/auth/class-two-factor-login.php:172
+msgid "That code was not right, or it has already been used."
+msgstr ""
+
+#: includes/auth/class-two-factor-login.php:369
+msgid "This site requires administrators to use an authenticator app. Scan the code below, then enter the six digits it shows."
+msgstr ""
+
+#: includes/auth/class-two-factor-login.php:372
+msgid "Enter the six-digit code from your authenticator app. A recovery code works here too."
+msgstr ""
+
+#: includes/auth/class-two-factor-login.php:377
+msgid "Authentication code"
+msgstr ""
+
+#: includes/auth/class-two-factor-login.php:390
+msgid "Confirm and sign in"
+msgstr ""
+
+#: includes/auth/class-two-factor-login.php:390
+msgid "Sign in"
+msgstr ""
+
+#: includes/auth/class-two-factor-login.php:397
+msgid "Lost your authenticator?"
+msgstr ""
+
+#: includes/auth/class-two-factor-login.php:399
+msgid "E-mail me a code"
+msgstr ""
+
+#: includes/auth/class-two-factor-login.php:422
+msgid "Or type this key into the app:"
+msgstr ""
+
+#: includes/auth/class-two-factor-login.php:439
+msgid "Save your recovery codes"
+msgstr ""
+
+#: includes/auth/class-two-factor-login.php:441
+msgid "Two-factor authentication is now on. These recovery codes are the way back in if you lose the authenticator. Each one works once. This is the only time they are shown."
+msgstr ""
+
+#: includes/auth/class-two-factor-login.php:450
+msgid "I have saved them — continue"
+msgstr ""
+
+#: includes/auth/class-two-factor.php:422
+msgid "The e-mail fallback is switched off on this site."
+msgstr ""
+
+#: includes/auth/class-two-factor.php:431
+msgid "A code was just sent. Check your inbox before requesting another."
+msgstr ""
+
+#. translators: 1: site name, 2: the one-time code, 3: minutes until it expires, 4: client IP address
+#: includes/auth/class-two-factor.php:453
+#, php-format
+msgid ""
+"Someone is signing in to %1$s as you and asked for a one-time code because their authenticator app was unavailable.\n"
+"\n"
+"Your code is: %2$s\n"
+"\n"
+"It expires in %3$d minutes and can be used once.\n"
+"\n"
+"The request came from %4$s.\n"
+"\n"
+"If this was not you, someone knows your password. Change it now and tell an administrator."
+msgstr ""
+
+#. translators: %s: site name
+#: includes/auth/class-two-factor.php:466
+#, php-format
+msgid "Your sign-in code for %s"
+msgstr ""
+
+#: includes/auth/class-two-factor.php:491
+msgid "The code could not be sent. Check the site's mail configuration."
 msgstr ""
 
 #: includes/class-event-registry.php:236
-msgid "Plugins"
-msgstr ""
-
-#: includes/class-event-registry.php:237
-msgid "Themes"
+msgid "Critical"
 msgstr ""
 
 #: includes/class-event-registry.php:238
-msgid "Users & administrators"
-msgstr ""
-
-#: includes/class-event-registry.php:239
-msgid "Application passwords"
+msgid "High"
 msgstr ""
 
 #: includes/class-event-registry.php:240
-msgid "Logins"
-msgstr ""
-
-#: includes/class-event-registry.php:241
-msgid "Configuration"
+msgid "Warning"
 msgstr ""
 
 #: includes/class-event-registry.php:242
+msgid "Notice"
+msgstr ""
+
+#: includes/class-event-registry.php:244
+msgid "Info"
+msgstr ""
+
+#: includes/class-event-registry.php:255
+msgid "Plugins"
+msgstr ""
+
+#: includes/class-event-registry.php:256
+msgid "Themes"
+msgstr ""
+
+#: includes/class-event-registry.php:257
+msgid "Users & administrators"
+msgstr ""
+
+#: includes/class-event-registry.php:258
+msgid "Application passwords"
+msgstr ""
+
+#: includes/class-event-registry.php:259
+msgid "Logins"
+msgstr ""
+
+#: includes/class-event-registry.php:261
+msgid "Configuration"
+msgstr ""
+
+#: includes/class-event-registry.php:262
 msgid "Files & integrity"
 msgstr ""
 
-#: includes/class-event-registry.php:243
+#: includes/class-event-registry.php:263
 msgid "Plugin status"
 msgstr ""
 
-#: includes/class-installer.php:129
+#: includes/class-hardening.php:52
+msgid "Code execution"
+msgstr ""
+
+#: includes/class-hardening.php:53
+msgid "wp-config.php, secrets and files"
+msgstr ""
+
+#: includes/class-hardening.php:54
+msgid "Staying current"
+msgstr ""
+
+#: includes/class-hardening.php:55
+msgid "Accounts and access"
+msgstr ""
+
+#: includes/class-hardening.php:56
+msgid "Monitoring and recovery"
+msgstr ""
+
+#: includes/class-hardening.php:114
+msgid "Dashboard file editor"
+msgstr ""
+
+#: includes/class-hardening.php:117
+msgid "DISALLOW_FILE_EDIT is set. The theme and plugin editors are gone."
+msgstr ""
+
+#: includes/class-hardening.php:118
+msgid "DISALLOW_FILE_EDIT is not set, so any administrator can edit PHP from the dashboard."
+msgstr ""
+
+#: includes/class-hardening.php:121
+msgid "Add define( 'DISALLOW_FILE_EDIT', true ); to wp-config.php. This is the single cheapest hardening step there is: the editor turns a stolen administrator password into arbitrary code execution, and it is the first tool an attacker reaches for. Almost nobody edits theme files from the dashboard on purpose."
+msgstr ""
+
+#: includes/class-hardening.php:130
+msgid "Installing and updating from the dashboard"
+msgstr ""
+
+#: includes/class-hardening.php:133
+msgid "DISALLOW_FILE_MODS is set. Nothing can be installed, updated or deleted through the dashboard."
+msgstr ""
+
+#: includes/class-hardening.php:134
+msgid "DISALLOW_FILE_MODS is not set. An administrator session can install and update plugins and themes."
+msgstr ""
+
+#: includes/class-hardening.php:136
+msgid "Check that updates really are arriving another way. This constant also blocks every security update, so a site with it set and no deployment pipeline behind it gets steadily less safe, not more. It implies DISALLOW_FILE_EDIT."
+msgstr ""
+
+#: includes/class-hardening.php:137
+msgid "Worth setting — define( 'DISALLOW_FILE_MODS', true ); — but only if code reaches this site by another route: WP-CLI, Composer, or a deployment pipeline. It closes the \"install a plugin that is really a shell\" path entirely, and it disables the update screens along with it. On a site that updates itself from the dashboard, leaving it unset and watching the log is the better trade."
+msgstr ""
+
+#: includes/class-hardening.php:146
+msgid "File permissions"
+msgstr ""
+
+#: includes/class-hardening.php:149
+msgid "No core directory is writable by everyone."
+msgstr ""
+
+#. translators: %s: comma-separated list of paths
+#: includes/class-hardening.php:152
+#, php-format
+msgid "World-writable: %s"
+msgstr ""
+
+#: includes/class-hardening.php:157
+msgid "Anything mode 0777 or 0666 can be rewritten by any process on the server, which on shared hosting means any other customer. The guide recommends 0755 for directories and 0644 for files, with write access granted only where WordPress genuinely needs it."
+msgstr ""
+
+#: includes/class-hardening.php:181
+msgid "Where wp-config.php lives"
+msgstr ""
+
+#: includes/class-hardening.php:184
+msgid "One directory above the WordPress install, outside the document root."
+msgstr ""
+
+#: includes/class-hardening.php:185
+msgid "In the WordPress root directory."
+msgstr ""
+
+#: includes/class-hardening.php:188
+msgid "It can be moved one level up, out of the web root. The guide notes that opinions differ on how much this actually buys you, and that a careless move can make things worse — so treat it as optional. Denying direct access to the file in the server config achieves most of the same thing with less risk."
+msgstr ""
+
+#: includes/class-hardening.php:199
+msgid "wp-config.php permissions"
+msgstr ""
+
+#. translators: %s: octal file mode, e.g. 0644
+#: includes/class-hardening.php:203
+#, php-format
+msgid "Mode %s"
+msgstr ""
+
+#: includes/class-hardening.php:207
+msgid "The file holds the database credentials and every authentication salt, and it is readable by other accounts on this server. The guide suggests 0400 or 0440 — readable by you, and by the web server only if your setup needs it."
+msgstr ""
+
+#: includes/class-hardening.php:217
+msgid "Authentication keys and salts"
+msgstr ""
+
+#: includes/class-hardening.php:220
+msgid "All eight keys and salts are defined, unique and long."
+msgstr ""
+
+#: includes/class-hardening.php:224
+msgid "Generate a fresh set at https://api.wordpress.org/secret-key/1.1/salt/ and paste them into wp-config.php. Weak or shared salts mean session cookies can be forged without ever knowing a password. Everyone, including you, is signed out when they change — and on this site the two-factor secrets stop decrypting, so users fall back to their recovery codes."
+msgstr ""
+
+#: includes/class-hardening.php:233
+msgid "Error output"
+msgstr ""
+
+#: includes/class-hardening.php:236
+msgid "WP_DEBUG and WP_DEBUG_DISPLAY are both on: PHP errors are being printed to visitors."
+msgstr ""
+
+#: includes/class-hardening.php:237
+msgid "Errors are not printed to the page."
+msgstr ""
+
+#: includes/class-hardening.php:239
+msgid "Set define( 'WP_DEBUG_DISPLAY', false ); and log to a file instead. Error output hands out absolute paths, database structure and sometimes credentials, and it is indexed by search engines like any other text."
+msgstr ""
+
+#: includes/class-hardening.php:250
+msgid "Database table prefix"
+msgstr ""
+
+#. translators: %s: database table prefix
+#: includes/class-hardening.php:254
+#, php-format
+msgid "Tables are prefixed %s"
+msgstr ""
+
+#: includes/class-hardening.php:258
+msgid "Changing it is often recommended and rarely worth it. The guide files this under security through obscurity: it does not stop an attacker who can already run SQL, and the migration itself can break a working site. Left as it is, it costs you nothing."
+msgstr ""
+
+#: includes/class-hardening.php:259
+msgid "Non-default. This is obscurity rather than security, so it changes little either way — but it costs nothing now that it is done."
+msgstr ""
+
+#: includes/class-hardening.php:291
+msgid "WordPress version"
+msgstr ""
+
+#. translators: %s: WordPress version
+#: includes/class-hardening.php:296
+#, php-format
+msgid "Running %s, which is current."
+msgstr ""
+
+#. translators: 1: installed version, 2: available version
+#: includes/class-hardening.php:301
+#, php-format
+msgid "Running %1$s; %2$s is available."
+msgstr ""
+
+#: includes/class-hardening.php:307
+msgid "Update now. Once a release is out, the information needed to exploit what it fixed is effectively public — which is exactly what makes an old version worth attacking."
+msgstr ""
+
+#: includes/class-hardening.php:318
+msgid "Automatic core updates"
+msgstr ""
+
+#: includes/class-hardening.php:321
+msgid "AUTOMATIC_UPDATER_DISABLED is set: nothing updates itself."
+msgstr ""
+
+#. translators: %s: the configured value of WP_AUTO_UPDATE_CORE
+#: includes/class-hardening.php:324
+#, php-format
+msgid "WP_AUTO_UPDATE_CORE is %s."
+msgstr ""
+
+#: includes/class-hardening.php:329
+msgid "Minor releases are almost entirely security and bug fixes, and WordPress has shipped them automatically since 3.7. Unless something downstream depends on a pinned version, let them through — a site that waits for someone to notice a release is a site that stays vulnerable for as long as nobody looks."
+msgstr ""
+
+#: includes/class-hardening.php:340
+msgid "Plugin and theme updates"
+msgstr ""
+
+#: includes/class-hardening.php:343
+msgid "Everything is up to date."
+msgstr ""
+
+#. translators: 1: number of plugins, 2: number of themes
+#: includes/class-hardening.php:346
+#, php-format
+msgid "%1$d plugin and %2$d theme updates waiting."
+msgstr ""
+
+#: includes/class-hardening.php:352
+msgid "Outdated extensions are the most common way a WordPress site is taken over — far more common than a flaw in core. Every update this plugin sees is written to the event log, so you can tell an update you made from one you did not."
+msgstr ""
+
+#: includes/class-hardening.php:361
+msgid "Unused plugins and themes"
+msgstr ""
+
+#: includes/class-hardening.php:364
+msgid "Nothing installed that is not in use."
+msgstr ""
+
+#. translators: 1: number of inactive plugins, 2: number of inactive themes
+#: includes/class-hardening.php:367
+#, php-format
+msgid "%1$d inactive plugins, %2$d unused themes."
+msgstr ""
+
+#: includes/class-hardening.php:373
+msgid "Delete what you are not using. Deactivated code still sits on disk, is still reachable by a direct request in some cases, and still stops getting updates the moment you forget it is there. The guide is blunt about it: if you are not using a plugin, remove it."
+msgstr ""
+
+#: includes/class-hardening.php:396
+msgid "Administrator accounts"
+msgstr ""
+
+#. translators: %d: number of administrator accounts
+#: includes/class-hardening.php:400
+#, php-format
+msgid "%d account can manage options."
+msgid_plural "%d accounts can manage options."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-hardening.php:404
+msgid "Every administrator is a full compromise of the site if their password leaks. Demote the ones who only need to write, and delete the ones nobody uses — an account that nobody logs into is an account nobody notices being used."
+msgstr ""
+
+#: includes/class-hardening.php:405
+msgid "Keep it that way. Editors and authors can do their work without being able to install code."
+msgstr ""
+
+#: includes/class-hardening.php:414
+msgid "The \"admin\" username"
+msgstr ""
+
+#: includes/class-hardening.php:417
+msgid "An account called \"admin\" exists."
+msgstr ""
+
+#: includes/class-hardening.php:418
+msgid "No account is called \"admin\"."
+msgstr ""
+
+#: includes/class-hardening.php:420
+msgid "Renaming it is obscurity, not security — but it does mean every automated brute-force run has to guess the name as well as the password, and those runs overwhelmingly try \"admin\" first. On this site those attempts are recorded as login.failed, so you can see for yourself how much of it there is."
+msgstr ""
+
+#: includes/class-hardening.php:432
+msgid "Open registration"
+msgstr ""
+
+#. translators: %s: role slug new users receive
+#: includes/class-hardening.php:437
+#, php-format
+msgid "Anyone can register, and new accounts get the \"%s\" role."
+msgstr ""
+
+#: includes/class-hardening.php:440
+msgid "Registration is closed."
+msgstr ""
+
+#: includes/class-hardening.php:442
+msgid "This is a self-service route to a privileged account. Set the default role back to Subscriber, or close registration. Both options are on Settings → General, and this plugin alerts immediately if either one changes."
+msgstr ""
+
+#: includes/class-hardening.php:453
+msgid "Administration over HTTPS"
+msgstr ""
+
+#: includes/class-hardening.php:456
+msgid "The site and the dashboard are served over HTTPS."
+msgstr ""
+
+#: includes/class-hardening.php:457
+msgid "The dashboard is reachable over plain HTTP."
+msgstr ""
+
+#: includes/class-hardening.php:460
+msgid "Get a certificate, move the site to https:// and add define( 'FORCE_SSL_ADMIN', true ); to wp-config.php. Without it the session cookie crosses every network between the browser and the server in the clear, and a second factor does not help — the cookie is what gets stolen, not the password."
+msgstr ""
+
+#. translators: 1: administrators with a second factor, 2: total administrators
+#: includes/class-hardening.php:481
+#, php-format
+msgid "%1$d of %2$d administrators have a second factor."
+msgstr ""
+
+#: includes/class-hardening.php:487
+msgid "The guide recommends a second factor alongside a strong password, and it is the one control that survives a password being stolen outright. Set it up on the Two-factor screen, or require it for administrators on Settings → Two-Factor."
+msgstr ""
+
+#: includes/class-hardening.php:496
+msgid "XML-RPC"
+msgstr ""
+
+#: includes/class-hardening.php:499
+msgid "Enabled."
+msgstr ""
+
+#: includes/class-hardening.php:500
+msgid "Disabled."
+msgstr ""
+
+#: includes/class-hardening.php:502
+msgid "It is a second front door for authentication, and one that can test many passwords in a single request. Turn it off unless something needs it — the Jetpack plugin and the official mobile apps do. This plugin alerts if the setting changes either way."
+msgstr ""
+
+#: includes/class-hardening.php:525
+msgid "Somewhere for alerts to go"
+msgstr ""
+
+#: includes/class-hardening.php:528
+msgid "No alert recipients are configured."
+msgstr ""
+
+#. translators: %d: number of alert recipients
+#: includes/class-hardening.php:531
+#, php-format
+msgid "%d recipient configured."
+msgid_plural "%d recipients configured."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-hardening.php:535
+msgid "Everything is still being written to the log, but nothing will reach you. Add at least one address on Settings → General and send yourself a test message — an alerting system nobody has ever seen work is not an alerting system."
+msgstr ""
+
+#: includes/class-hardening.php:546
+msgid "Watching the filesystem"
+msgstr ""
+
+#: includes/class-hardening.php:549
+msgid "Core checksums, mu-plugins and uploads are all being scanned."
+msgstr ""
+
+#: includes/class-hardening.php:550
+msgid "Some filesystem checks are switched off."
+msgstr ""
+
+#: includes/class-hardening.php:553
+msgid "The guide treats file monitoring as a core part of hardening, because a backdoor that nobody looks for stays for years. Switch the missing scans back on under Settings → File Integrity."
+msgstr ""
+
+#: includes/class-hardening.php:562
+msgid "Scans actually running"
+msgstr ""
+
+#: includes/class-hardening.php:565
+msgid "Every scheduled job is on time."
+msgstr ""
+
+#. translators: %d: number of overdue scheduled jobs
+#: includes/class-hardening.php:568
+#, php-format
+msgid "%d scheduled job is overdue."
+msgid_plural "%d scheduled jobs are overdue."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-hardening.php:573
+msgid "WP-Cron only fires when someone visits the site, so a quiet site scans late — and a site that has stopped receiving visitors is exactly when you want the scan to run. Drive wp-cron.php from a real system cron. The Status screen lists which jobs are behind."
+msgstr ""
+
+#: includes/class-hardening.php:580
+msgid "Backups"
+msgstr ""
+
+#: includes/class-hardening.php:582
+msgid "Not something this plugin can see."
+msgstr ""
+
+#: includes/class-hardening.php:583
+msgid "No security plugin can tell you whether your backups work — only a restore can. The guide puts backups alongside hardening for a reason: everything here reduces the odds of a compromise, and none of it helps you recover from one. Keep backups off this server, and restore one somewhere harmless from time to time to prove they are real."
+msgstr ""
+
+#. translators: %s: comma-separated constant names
+#: includes/class-hardening.php:676
+#, php-format
+msgid "Not defined: %s."
+msgstr ""
+
+#. translators: %s: comma-separated constant names
+#: includes/class-hardening.php:684
+#, php-format
+msgid "Still the sample value, empty or too short: %s."
+msgstr ""
+
+#: includes/class-hardening.php:690
+msgid "Two or more of them are identical, which defeats the point of having eight."
+msgstr ""
+
+#: includes/class-installer.php:131
 msgid "WP Security Center does not support WordPress Multisite. It has not been activated."
 msgstr ""
 
-#: includes/class-installer.php:130
+#: includes/class-installer.php:132
 msgid "Multisite is not supported"
 msgstr ""
 
@@ -1173,184 +2050,243 @@ msgstr ""
 
 #: includes/class-mailer.php:236
 #, php-format
-msgid "Login from a country that is not on the allow list: %1$s"
+msgid "Two-factor authentication switched on: %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:237
 #, php-format
-msgid "Login WOULD have been blocked (monitor mode): %1$s"
+msgid "Two-factor authentication switched OFF: %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:238
 #, php-format
-msgid "Login BLOCKED from a disallowed country: %1$s"
+msgid "Two-factor authentication reset by an administrator: %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:239
 #, php-format
-msgid "Login allowed by a bypass grant: %1$s"
+msgid "Second factor requested: %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:240
 #, php-format
-msgid "Bypass link redeemed by %1$s"
+msgid "Second factor accepted: %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:241
 #, php-format
-msgid "Login would have been blocked but the kill switch is active: %1$s"
+msgid "Wrong second-factor code after a correct password: %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:242
-msgid "The site URL was changed"
+#, php-format
+msgid "Signed in with a two-factor recovery code: %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:243
-msgid "The home URL was changed"
+#, php-format
+msgid "New two-factor recovery codes generated: %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:244
-msgid "The site administrator e-mail address was changed"
+#, php-format
+msgid "One-time sign-in code e-mailed: %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:245
-msgid "A change of the administrator e-mail address was requested"
+#, php-format
+msgid "Signed in with an e-mailed one-time code instead of an authenticator: %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:246
-msgid "Open user registration was changed"
+msgid "Two-factor policy changed"
 msgstr ""
 
 #: includes/class-mailer.php:247
-msgid "The default role for new users was changed"
+#, php-format
+msgid "Failed login attempt: %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:248
-msgid "Search engine visibility was changed"
+#, php-format
+msgid "Login from a country that is not on the allow list: %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:249
-msgid "Automatic update settings were changed"
+#, php-format
+msgid "Login WOULD have been blocked (monitor mode): %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:250
-msgid "The active plugin list was written directly"
+#, php-format
+msgid "Login BLOCKED from a disallowed country: %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:251
-msgid "XML-RPC availability changed"
+#, php-format
+msgid "Login allowed by a bypass grant: %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:252
-msgid "The file-editing configuration changed"
+#, php-format
+msgid "Bypass link redeemed by %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:253
 #, php-format
-msgid "A file was edited through the built-in editor: %1$s"
+msgid "Login would have been blocked but the kill switch is active: %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:254
-msgid "An automatic-update constant changed"
+msgid "The site URL was changed"
 msgstr ""
 
 #: includes/class-mailer.php:255
-#, php-format
-msgid "New scheduled task: %1$s"
+msgid "The home URL was changed"
 msgstr ""
 
 #: includes/class-mailer.php:256
-#, php-format
-msgid "Scheduled task removed: %1$s"
+msgid "The site administrator e-mail address was changed"
 msgstr ""
 
 #: includes/class-mailer.php:257
-#, php-format
-msgid "New must-use plugin appeared: %1$s"
+msgid "A change of the administrator e-mail address was requested"
 msgstr ""
 
 #: includes/class-mailer.php:258
-msgid "wp-config.php was modified"
+msgid "Open user registration was changed"
 msgstr ""
 
 #: includes/class-mailer.php:259
-msgid ".htaccess was modified"
+msgid "The default role for new users was changed"
 msgstr ""
 
 #: includes/class-mailer.php:260
-#, php-format
-msgid "New file in mu-plugins: %1$s"
+msgid "Search engine visibility was changed"
 msgstr ""
 
 #: includes/class-mailer.php:261
-#, php-format
-msgid "Changed file in mu-plugins: %1$s"
+msgid "Automatic update settings were changed"
 msgstr ""
 
 #: includes/class-mailer.php:262
-#, php-format
-msgid "PHP file found in the uploads directory: %1$s"
+msgid "The active plugin list was written directly"
 msgstr ""
 
 #: includes/class-mailer.php:263
-#, php-format
-msgid ".htaccess in the uploads directory changed: %1$s"
+msgid "XML-RPC availability changed"
 msgstr ""
 
 #: includes/class-mailer.php:264
-#, php-format
-msgid "Known PHP file in uploads changed: %1$s"
+msgid "The file-editing configuration changed"
 msgstr ""
 
 #: includes/class-mailer.php:265
 #, php-format
-msgid "Possible backdoor signature: %1$s"
+msgid "A file was edited through the built-in editor: %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:266
-#, php-format
-msgid "Modified WordPress core file: %1$s"
+msgid "An automatic-update constant changed"
 msgstr ""
 
 #: includes/class-mailer.php:267
 #, php-format
-msgid "Missing WordPress core file: %1$s"
+msgid "New scheduled task: %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:268
 #, php-format
-msgid "Unrecognised file in a core directory: %1$s"
+msgid "Scheduled task removed: %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:269
-msgid "The GeoIP database could not be updated"
+#, php-format
+msgid "New must-use plugin appeared: %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:270
-msgid "The GeoIP database is missing"
+msgid "wp-config.php was modified"
 msgstr ""
 
 #: includes/class-mailer.php:271
-msgid "Login blocking was automatically disarmed"
+msgid ".htaccess was modified"
 msgstr ""
 
 #: includes/class-mailer.php:272
-msgid "Alert e-mails are being throttled"
+#, php-format
+msgid "New file in mu-plugins: %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:273
-msgid "WP Security Center was activated"
+#, php-format
+msgid "Changed file in mu-plugins: %1$s"
 msgstr ""
 
 #: includes/class-mailer.php:274
+#, php-format
+msgid "PHP file found in the uploads directory: %1$s"
+msgstr ""
+
+#: includes/class-mailer.php:275
+#, php-format
+msgid ".htaccess in the uploads directory changed: %1$s"
+msgstr ""
+
+#: includes/class-mailer.php:276
+#, php-format
+msgid "Known PHP file in uploads changed: %1$s"
+msgstr ""
+
+#: includes/class-mailer.php:277
+#, php-format
+msgid "Possible backdoor signature: %1$s"
+msgstr ""
+
+#: includes/class-mailer.php:278
+#, php-format
+msgid "Modified WordPress core file: %1$s"
+msgstr ""
+
+#: includes/class-mailer.php:279
+#, php-format
+msgid "Missing WordPress core file: %1$s"
+msgstr ""
+
+#: includes/class-mailer.php:280
+#, php-format
+msgid "Unrecognised file in a core directory: %1$s"
+msgstr ""
+
+#: includes/class-mailer.php:281
+msgid "The GeoIP database could not be updated"
+msgstr ""
+
+#: includes/class-mailer.php:282
+msgid "The GeoIP database is missing"
+msgstr ""
+
+#: includes/class-mailer.php:283
+msgid "Login blocking was automatically disarmed"
+msgstr ""
+
+#: includes/class-mailer.php:284
+msgid "Alert e-mails are being throttled"
+msgstr ""
+
+#: includes/class-mailer.php:285
+msgid "WP Security Center was activated"
+msgstr ""
+
+#: includes/class-mailer.php:286
 msgid "WP Security Center was deactivated"
 msgstr ""
 
-#: includes/class-updater.php:128
+#: includes/class-updater.php:167
 msgid "See the GitHub release notes for details."
 msgstr ""
 
-#: includes/class-updater.php:178
+#: includes/class-updater.php:247
 msgid "Could not rename the downloaded update folder."
 msgstr ""
 
@@ -1370,36 +2306,36 @@ msgstr ""
 msgid "Loopback only"
 msgstr ""
 
-#: includes/geo/class-country-resolver.php:260
+#: includes/geo/class-country-resolver.php:264
 msgid "Local network"
 msgstr ""
 
-#: includes/geo/class-geoip-database.php:125
+#: includes/geo/class-geoip-database.php:155
 msgid "No MaxMind licence key is configured."
 msgstr ""
 
-#: includes/geo/class-geoip-database.php:134
+#: includes/geo/class-geoip-database.php:164
 msgid "The uploads directory is not writable."
 msgstr ""
 
-#: includes/geo/class-geoip-database.php:179
+#: includes/geo/class-geoip-database.php:215
 msgid "The downloaded database failed its checksum verification."
 msgstr ""
 
-#: includes/geo/class-geoip-database.php:197
+#: includes/geo/class-geoip-database.php:233
 msgid "The extracted file does not look like a MaxMind database."
 msgstr ""
 
-#: includes/geo/class-geoip-database.php:204
+#: includes/geo/class-geoip-database.php:240
 msgid "The new database could not replace the existing one."
 msgstr ""
 
-#: includes/geo/class-geoip-database.php:241
+#: includes/geo/class-geoip-database.php:277
 msgid "MaxMind rejected the licence key."
 msgstr ""
 
 #. translators: %d: HTTP status code
-#: includes/geo/class-geoip-database.php:246
+#: includes/geo/class-geoip-database.php:282
 #, php-format
 msgid "MaxMind returned HTTP %d."
 msgstr ""

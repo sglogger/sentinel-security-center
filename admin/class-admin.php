@@ -27,6 +27,7 @@ final class Admin {
 	public const MENU_SETTINGS    = 'wp-security-center-settings';
 	public const MENU_DIAGNOSTICS = 'wp-security-center-diagnostics';
 	public const MENU_STATUS      = 'wp-security-center-status';
+	public const MENU_HARDENING   = 'wp-security-center-hardening';
 
 	private const NONCE = 'wpsec_settings';
 
@@ -71,6 +72,15 @@ final class Admin {
 			self::CAP,
 			self::MENU_STATUS,
 			[ $this, 'render_status' ]
+		);
+
+		add_submenu_page(
+			self::MENU_LOG,
+			__( 'Hardening', 'wp-security-center' ),
+			__( 'Hardening', 'wp-security-center' ),
+			self::CAP,
+			self::MENU_HARDENING,
+			[ $this, 'render_hardening' ]
 		);
 
 		add_submenu_page(
@@ -228,6 +238,14 @@ final class Admin {
 		}
 
 		require WPSEC_DIR . 'admin/views/page-status.php';
+	}
+
+	public function render_hardening(): void {
+		if ( ! current_user_can( self::CAP ) ) {
+			return;
+		}
+
+		require WPSEC_DIR . 'admin/views/page-hardening.php';
 	}
 
 	public function render_diagnostics(): void {

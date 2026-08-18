@@ -3,134 +3,138 @@
 # This file is distributed under the same licence as the WP Security Center plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Security Center 1.1.0\n"
-"Report-Msgid-Bugs-To: https://github.com/sglogger/wp-security-center/issues\n"
+"Project-Id-Version: WP Security Center 1.2.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-security-"
+"center\n"
+"POT-Creation-Date: 2026-08-18T09:40:43+00:00\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: wp-security-center\n"
 
-
-#. Plugin Name of the plugin
-#: wp-security-center.php
-msgid "WP Security Center"
-msgstr ""
-
-#. Plugin URI of the plugin
-#: wp-security-center.php
-msgid "https://github.com/sglogger/wp-security-center"
-msgstr ""
-
-#. Description of the plugin
-#: wp-security-center.php
-msgid "Security monitoring and alerting for WordPress. Logs and alerts on plugin/theme changes, administrator and role changes, configuration changes, filesystem integrity and logins from countries outside your allow list — with optional login blocking. Administrator-only, with immediate e-mail alerts."
-msgstr "Sicherheitsüberwachung und Alarmierung für WordPress. Protokolliert und meldet Änderungen an Plugins und Themes, an Administratoren und Rollen, an der Konfiguration und am Dateibestand sowie Logins aus Ländern ausserhalb deiner Positivliste — mit optionaler Login-Sperre. Nur für Administratoren sichtbar, mit sofortigen E-Mail-Alarmen."
-
-#. Author of the plugin
-#: wp-security-center.php
-msgid "Steven Glogger"
-msgstr ""
-
-#. Author URI of the plugin
-#: wp-security-center.php
-msgid "https://www.glogger.ch"
-msgstr ""
-
-#: admin/class-admin.php:49
-#: admin/class-admin.php:50
+#: admin/class-admin.php:50 admin/class-admin.php:51
 msgid "Security Center"
 msgstr "Security Center"
 
-#: admin/class-admin.php:60
-#: admin/class-admin.php:61
+#: admin/class-admin.php:61 admin/class-admin.php:62
 msgid "Event Log"
 msgstr "Ereignisprotokoll"
 
-#: admin/class-admin.php:69
-#: admin/class-admin.php:70
+#: admin/class-admin.php:70 admin/class-admin.php:71
+#: admin/class-two-factor-admin.php:283 admin/views/page-hardening.php:82
+#: admin/views/page-two-factor.php:56 admin/views/page-two-factor.php:129
 msgid "Status"
 msgstr "Status"
 
-#: admin/class-admin.php:78
-#: admin/class-admin.php:79
+#: admin/class-admin.php:79 admin/class-admin.php:80
+#: admin/views/page-hardening.php:37
+msgid "Hardening"
+msgstr "Härtung"
+
+#: admin/class-admin.php:88 admin/class-admin.php:89
 #: admin/views/page-diagnostics.php:44
 msgid "Diagnostics"
 msgstr "Diagnose"
 
-#: admin/class-admin.php:87
-#: admin/class-admin.php:88
-#: admin/class-admin.php:134
+#: admin/class-admin.php:97 admin/class-admin.php:98 admin/class-admin.php:144
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: admin/class-admin.php:101
+#: admin/class-admin.php:111
 msgid "Events per page"
 msgstr "Ereignisse pro Seite"
 
-#: admin/class-admin.php:161
-msgid "No countries are on the allow list, so login location rules do nothing at all. Add at least your own country on the Settings screen."
-msgstr "Es steht kein Land auf der Positivliste, die Standortregeln greifen deshalb überhaupt nicht. Trage in den Einstellungen mindestens dein eigenes Land ein."
+#: admin/class-admin.php:171
+msgid ""
+"No countries are on the allow list, so login location rules do nothing at "
+"all. Add at least your own country on the Settings screen."
+msgstr ""
+"Es steht kein Land auf der Positivliste, die Standortregeln greifen deshalb "
+"überhaupt nicht. Trage in den Einstellungen mindestens dein eigenes Land ein."
 
-#: admin/class-admin.php:168
-msgid "Login blocking is armed but no working country lookup is available. Blocking will stand itself down until a GeoIP database is installed."
-msgstr "Die Login-Sperre ist scharf, es steht aber keine funktionierende Länderermittlung zur Verfügung. Die Sperre entschärft sich selbst, bis eine GeoIP-Datenbank installiert ist."
+#: admin/class-admin.php:178
+msgid ""
+"Login blocking is armed but no working country lookup is available. Blocking "
+"will stand itself down until a GeoIP database is installed."
+msgstr ""
+"Die Login-Sperre ist scharf, es steht aber keine funktionierende "
+"Länderermittlung zur Verfügung. Die Sperre entschärft sich selbst, bis eine "
+"GeoIP-Datenbank installiert ist."
 
-#: admin/class-admin.php:175
-msgid "The GeoIP database is out of date. It is still being used, but country results may be wrong for recently reassigned addresses."
-msgstr "Die GeoIP-Datenbank ist veraltet. Sie wird weiter benutzt, bei kürzlich neu vergebenen Adressen kann das Land aber falsch sein."
+#: admin/class-admin.php:185
+msgid ""
+"The GeoIP database is out of date. It is still being used, but country "
+"results may be wrong for recently reassigned addresses."
+msgstr ""
+"Die GeoIP-Datenbank ist veraltet. Sie wird weiter benutzt, bei kürzlich neu "
+"vergebenen Adressen kann das Land aber falsch sein."
 
-#: admin/class-admin.php:204
+#: admin/class-admin.php:214
 msgid "Security Event Log"
 msgstr "Sicherheits-Ereignisprotokoll"
 
 #. translators: %d: number of matching events
-#: admin/class-admin.php:211
+#: admin/class-admin.php:221
 #, php-format
 msgid "%d matching event."
 msgid_plural "%d matching events."
 msgstr[0] "%d passendes Ereignis."
 msgstr[1] "%d passende Ereignisse."
 
-#: admin/class-admin.php:219
+#: admin/class-admin.php:229
 msgid "Search log"
 msgstr "Protokoll durchsuchen"
 
-#: admin/class-admin.php:269
+#: admin/class-admin.php:287
 msgid "You do not have permission to change these settings."
 msgstr "Du hast keine Berechtigung, diese Einstellungen zu ändern."
 
-#: admin/class-admin.php:583
+#: admin/class-admin.php:661
 msgid "Settings saved."
 msgstr "Einstellungen gespeichert."
 
-#: admin/class-admin.php:584
+#: admin/class-admin.php:662
 msgid "The GeoIP database was downloaded and installed."
 msgstr "Die GeoIP-Datenbank wurde heruntergeladen und installiert."
 
-#: admin/class-admin.php:585
-msgid "The GeoIP database could not be downloaded. See the Status screen for the reason."
-msgstr "Die GeoIP-Datenbank konnte nicht heruntergeladen werden. Den Grund zeigt die Status-Seite."
+#: admin/class-admin.php:663
+msgid ""
+"The GeoIP database could not be downloaded. See the Status screen for the "
+"reason."
+msgstr ""
+"Die GeoIP-Datenbank konnte nicht heruntergeladen werden. Den Grund zeigt die "
+"Status-Seite."
 
-#: admin/class-admin.php:586
+#: admin/class-admin.php:664
 msgid "The test alert was accepted for delivery. Check the recipient inbox."
-msgstr "Der Testalarm wurde zur Zustellung angenommen. Prüfe das Postfach des Empfängers."
+msgstr ""
+"Der Testalarm wurde zur Zustellung angenommen. Prüfe das Postfach des "
+"Empfängers."
 
-#: admin/class-admin.php:588
+#: admin/class-admin.php:666
 msgid "All scans have been run. Any findings are in the event log."
-msgstr "Alle Prüfungen wurden ausgeführt. Etwaige Funde stehen im Ereignisprotokoll."
+msgstr ""
+"Alle Prüfungen wurden ausgeführt. Etwaige Funde stehen im Ereignisprotokoll."
 
-#: admin/class-admin.php:589
-msgid "All sessions were destroyed. Everyone, including you, must sign in again."
-msgstr "Alle Sitzungen wurden beendet. Alle müssen sich neu anmelden, du eingeschlossen."
+#: admin/class-admin.php:667
+msgid ""
+"All sessions were destroyed. Everyone, including you, must sign in again."
+msgstr ""
+"Alle Sitzungen wurden beendet. Alle müssen sich neu anmelden, du "
+"eingeschlossen."
 
-#: admin/class-admin.php:612
-msgid "The test alert could not be sent. Check that at least one recipient is configured."
-msgstr "Der Testalarm konnte nicht gesendet werden. Prüfe, ob mindestens ein Empfänger eingetragen ist."
+#: admin/class-admin.php:690
+msgid ""
+"The test alert could not be sent. Check that at least one recipient is "
+"configured."
+msgstr ""
+"Der Testalarm konnte nicht gesendet werden. Prüfe, ob mindestens ein "
+"Empfänger eingetragen ist."
 
 #. translators: %s: error message from the mail layer
-#: admin/class-admin.php:617
+#: admin/class-admin.php:695
 #, php-format
 msgid "The test alert could not be sent: %s"
 msgstr "Der Testalarm konnte nicht gesendet werden: %s"
@@ -143,19 +147,16 @@ msgstr "Du hast keine Berechtigung, das Sicherheitsprotokoll zu exportieren."
 msgid "The export could not be started."
 msgstr "Der Export konnte nicht gestartet werden."
 
-#: admin/class-log-list-table.php:45
-#: includes/class-mailer.php:74
+#: admin/class-log-list-table.php:45 includes/class-mailer.php:74
 msgid "Time (UTC)"
 msgstr "Zeit (UTC)"
 
-#: admin/class-log-list-table.php:46
-#: admin/views/page-settings.php:126
+#: admin/class-log-list-table.php:46 admin/views/page-settings.php:137
 #: includes/class-mailer.php:71
 msgid "Severity"
 msgstr "Schweregrad"
 
-#: admin/class-log-list-table.php:47
-#: admin/views/page-settings.php:125
+#: admin/class-log-list-table.php:47 admin/views/page-settings.php:136
 #: includes/class-mailer.php:70
 msgid "Event"
 msgstr "Ereignis"
@@ -164,13 +165,11 @@ msgstr "Ereignis"
 msgid "Description"
 msgstr "Beschreibung"
 
-#: admin/class-log-list-table.php:49
-#: includes/class-mailer.php:80
+#: admin/class-log-list-table.php:49 includes/class-mailer.php:80
 msgid "Performed by"
 msgstr "Ausgeführt von"
 
-#: admin/class-log-list-table.php:50
-#: admin/class-log-list-table.php:353
+#: admin/class-log-list-table.php:50 admin/class-log-list-table.php:374
 #: includes/class-mailer.php:101
 msgid "IP address"
 msgstr "IP-Adresse"
@@ -185,8 +184,7 @@ msgstr "Noch keine Ereignisse aufgezeichnet."
 msgid "%s ago"
 msgstr "vor %s"
 
-#: admin/class-log-list-table.php:205
-#: includes/class-mailer.php:120
+#: admin/class-log-list-table.php:205 includes/class-mailer.php:120
 msgid "Details"
 msgstr "Details"
 
@@ -207,52 +205,152 @@ msgid "anonymous"
 msgstr "anonym"
 
 #. translators: %s: affected user login
-#: admin/class-log-list-table.php:253
+#: admin/class-log-list-table.php:261
 #, php-format
 msgid "affected: %s"
 msgstr "betroffen: %s"
 
-#: admin/class-log-list-table.php:314
+#: admin/class-log-list-table.php:330
 msgid "All categories"
 msgstr "Alle Kategorien"
 
-#: admin/class-log-list-table.php:326
+#: admin/class-log-list-table.php:342
 msgid "Any severity"
 msgstr "Jeder Schweregrad"
 
 #. translators: %s: severity name
-#: admin/class-log-list-table.php:335
+#: admin/class-log-list-table.php:351
 #, php-format
 msgid "%s and above"
 msgstr "%s und höher"
 
-#: admin/class-log-list-table.php:344
+#: admin/class-log-list-table.php:360
 msgid "All time"
 msgstr "Gesamter Zeitraum"
 
-#: admin/class-log-list-table.php:345
+#: admin/class-log-list-table.php:362
 msgid "Last 24 hours"
 msgstr "Letzte 24 Stunden"
 
-#: admin/class-log-list-table.php:345
+#: admin/class-log-list-table.php:363
 msgid "Last 7 days"
 msgstr "Letzte 7 Tage"
 
-#: admin/class-log-list-table.php:345
+#: admin/class-log-list-table.php:364
 msgid "Last 30 days"
 msgstr "Letzte 30 Tage"
 
-#: admin/class-log-list-table.php:345
+#: admin/class-log-list-table.php:365
 msgid "Last 90 days"
 msgstr "Letzte 90 Tage"
 
-#: admin/class-log-list-table.php:356
+#: admin/class-log-list-table.php:377
 msgid "Filter"
 msgstr "Filtern"
 
-#: admin/class-log-list-table.php:359
+#: admin/class-log-list-table.php:380
 msgid "Export CSV"
 msgstr "CSV exportieren"
+
+#: admin/class-two-factor-admin.php:41 admin/class-two-factor-admin.php:281
+#: admin/views/page-two-factor.php:30
+#: includes/auth/class-two-factor-login.php:355
+#: includes/class-event-registry.php:260 includes/class-hardening.php:477
+msgid "Two-factor authentication"
+msgstr "Zwei-Faktor-Authentifizierung"
+
+#: admin/class-two-factor-admin.php:42
+msgid "Two-factor"
+msgstr "Zwei-Faktor"
+
+#: admin/class-two-factor-admin.php:249
+msgid "Two-factor authentication is on. Save the recovery codes below."
+msgstr ""
+"Die Zwei-Faktor-Authentifizierung ist aktiv. Sichere die "
+"Wiederherstellungscodes unten."
+
+#: admin/class-two-factor-admin.php:250
+msgid "Two-factor authentication has been switched off for your account."
+msgstr "Die Zwei-Faktor-Authentifizierung wurde für dein Konto ausgeschaltet."
+
+#: admin/class-two-factor-admin.php:251
+msgid "New recovery codes generated. The previous set no longer works."
+msgstr ""
+"Neue Wiederherstellungscodes erzeugt. Der bisherige Satz funktioniert nicht "
+"mehr."
+
+#: admin/class-two-factor-admin.php:252
+msgid ""
+"That code was not right. Make sure the phone clock is correct and try the "
+"code showing now."
+msgstr ""
+"Dieser Code war nicht richtig. Prüfe, ob die Uhr des Telefons stimmt, und "
+"nimm den Code, der jetzt angezeigt wird."
+
+#: admin/class-two-factor-admin.php:288 admin/views/page-two-factor.php:58
+msgid "On."
+msgstr "Ein."
+
+#. translators: %d: number of unused recovery codes
+#: admin/class-two-factor-admin.php:292 admin/views/page-two-factor.php:63
+#, php-format
+msgid "%d unused recovery code remains."
+msgid_plural "%d unused recovery codes remain."
+msgstr[0] "Es ist noch %d unbenutzter Wiederherstellungscode übrig."
+msgstr[1] "Es sind noch %d unbenutzte Wiederherstellungscodes übrig."
+
+#: admin/class-two-factor-admin.php:298 admin/views/page-two-factor.php:131
+msgid "Off."
+msgstr "Aus."
+
+#: admin/class-two-factor-admin.php:299
+msgid "A stolen password is enough to sign in to this account."
+msgstr "Ein gestohlenes Passwort genügt, um sich mit diesem Konto anzumelden."
+
+#: admin/class-two-factor-admin.php:306
+msgid "Manage two-factor authentication"
+msgstr "Zwei-Faktor-Authentifizierung verwalten"
+
+#: admin/class-two-factor-admin.php:306 admin/views/page-two-factor.php:153
+#: includes/auth/class-two-factor-login.php:354
+msgid "Set up two-factor authentication"
+msgstr "Zwei-Faktor-Authentifizierung einrichten"
+
+#: admin/class-two-factor-admin.php:310
+msgid "Reset two-factor authentication for this user"
+msgstr "Zwei-Faktor-Authentifizierung für diesen Benutzer zurücksetzen"
+
+#: admin/class-two-factor-admin.php:312
+msgid ""
+"Use this when they have lost the authenticator, the recovery codes and "
+"access to their mailbox. They will have to set it up again, and the reset is "
+"recorded in the event log."
+msgstr ""
+"Nutze das, wenn Authenticator, Wiederherstellungscodes und Zugang zum "
+"Postfach verloren sind. Die Person muss die Zwei-Faktor-Authentifizierung "
+"neu einrichten, und das Zurücksetzen wird im Ereignisprotokoll festgehalten."
+
+#. translators: %d: days left before two-factor becomes mandatory
+#: admin/class-two-factor-admin.php:336
+#, php-format
+msgid ""
+"This site requires administrators to use two-factor authentication. You have "
+"%d day left to set it up before you cannot sign in without it."
+msgid_plural ""
+"This site requires administrators to use two-factor authentication. You have "
+"%d days left to set it up before you cannot sign in without it."
+msgstr[0] ""
+"Diese Website verlangt von Administratoren eine Zwei-Faktor-"
+"Authentifizierung. Du hast noch %d Tag Zeit, sie einzurichten, danach ist "
+"keine Anmeldung mehr ohne sie möglich."
+msgstr[1] ""
+"Diese Website verlangt von Administratoren eine Zwei-Faktor-"
+"Authentifizierung. Du hast noch %d Tage Zeit, sie einzurichten, danach ist "
+"keine Anmeldung mehr ohne sie möglich."
+
+#: admin/class-two-factor-admin.php:346
+msgid "Set it up now"
+msgstr "Jetzt einrichten"
 
 #: admin/views/page-diagnostics.php:46
 msgid "How this request was seen"
@@ -283,84 +381,182 @@ msgid "Forwarded-for chain"
 msgstr "Forwarded-For-Kette"
 
 #: admin/views/page-diagnostics.php:79
-msgid "(trusted proxy)"
-msgstr "(vertrauenswürdiger Proxy)"
-
-#: admin/views/page-diagnostics.php:79
 msgid "(not trusted)"
 msgstr "(nicht vertrauenswürdig)"
 
-#: admin/views/page-diagnostics.php:85
-#: admin/views/page-diagnostics.php:158
+#: admin/views/page-diagnostics.php:79
+msgid "(trusted proxy)"
+msgstr "(vertrauenswürdiger Proxy)"
+
+#: admin/views/page-diagnostics.php:85 admin/views/page-diagnostics.php:162
 msgid "Country"
 msgstr "Land"
 
-#: admin/views/page-diagnostics.php:92
+#: admin/views/page-diagnostics.php:93
 msgid "from the CDN country header"
 msgstr "aus dem Länder-Header des CDN"
 
-#: admin/views/page-diagnostics.php:94
+#: admin/views/page-diagnostics.php:95
 msgid "from the local GeoIP database"
 msgstr "aus der lokalen GeoIP-Datenbank"
 
-#: admin/views/page-diagnostics.php:95
+#: admin/views/page-diagnostics.php:96
 msgid "no source available"
 msgstr "keine Quelle verfügbar"
 
-#: admin/views/page-diagnostics.php:101
+#: admin/views/page-diagnostics.php:103
 msgid "What would happen on login"
 msgstr "Was bei einem Login passieren würde"
 
-#: admin/views/page-diagnostics.php:105
+#: admin/views/page-diagnostics.php:107
 msgid "Allowed"
 msgstr "Erlaubt"
 
-#: admin/views/page-diagnostics.php:106
+#: admin/views/page-diagnostics.php:108
 msgid "Allowed, but reported"
 msgstr "Erlaubt, aber gemeldet"
 
-#: admin/views/page-diagnostics.php:107
+#: admin/views/page-diagnostics.php:109
 msgid "BLOCKED"
 msgstr "GESPERRT"
 
 #. translators: %s: internal name of the rule that decided
-#: admin/views/page-diagnostics.php:114
+#: admin/views/page-diagnostics.php:117
 #, php-format
 msgid "Decided by: %s"
 msgstr "Entschieden durch: %s"
 
-#: admin/views/page-diagnostics.php:121
+#: admin/views/page-diagnostics.php:125
 msgid "What would happen for another address?"
 msgstr "Was würde bei einer anderen Adresse passieren?"
 
-#: admin/views/page-diagnostics.php:125
+#: admin/views/page-diagnostics.php:129
 msgid "Test"
 msgstr "Testen"
 
-#: admin/views/page-diagnostics.php:134
+#: admin/views/page-diagnostics.php:138
 msgid "That is not a valid IP address."
 msgstr "Das ist keine gültige IP-Adresse."
 
-#: admin/views/page-diagnostics.php:157
-#: admin/views/page-status.php:246
+#: admin/views/page-diagnostics.php:161 admin/views/page-status.php:246
 msgid "Address"
 msgstr "Adresse"
 
-#: admin/views/page-diagnostics.php:159
+#: admin/views/page-diagnostics.php:163
 msgid "Verdict"
 msgstr "Ergebnis"
 
-#: admin/views/page-diagnostics.php:160
+#: admin/views/page-diagnostics.php:164
 msgid "Rules consulted"
 msgstr "Geprüfte Regeln"
 
-#: admin/views/page-diagnostics.php:166
+#: admin/views/page-diagnostics.php:170
 msgid "Incoming headers"
 msgstr "Eingehende Header"
 
-#: admin/views/page-diagnostics.php:167
-msgid "Everything the web server passed to PHP for this request. Use it to work out which header your proxy actually sets."
-msgstr "Alles, was der Webserver für diese Anfrage an PHP übergeben hat. Damit findest du heraus, welchen Header dein Proxy tatsächlich setzt."
+#: admin/views/page-diagnostics.php:171
+msgid ""
+"Everything the web server passed to PHP for this request. Use it to work out "
+"which header your proxy actually sets."
+msgstr ""
+"Alles, was der Webserver für diese Anfrage an PHP übergeben hat. Damit "
+"findest du heraus, welchen Header dein Proxy tatsächlich setzt."
+
+#: admin/views/page-hardening.php:24
+msgid "Good"
+msgstr "Gut"
+
+#: admin/views/page-hardening.php:25
+msgid "Worth fixing"
+msgstr "Sollte behoben werden"
+
+#: admin/views/page-hardening.php:26
+msgid "Fix this"
+msgstr "Bitte beheben"
+
+#: admin/views/page-hardening.php:27
+msgid "Your call"
+msgstr "Deine Entscheidung"
+
+#: admin/views/page-hardening.php:40
+msgid ""
+"What this installation currently looks like to someone trying to get into "
+"it. Nothing on this page changes anything — each item says where the change "
+"is made and links to the section of the official WordPress hardening guide "
+"it comes from, so you can check the advice against the source."
+msgstr "Wie diese Installation im Moment auf jemanden wirkt, der hineinkommen will. Auf dieser Seite wird nichts verändert — bei jedem Punkt steht, wo die Änderung vorgenommen wird, samt Link auf den Abschnitt des offiziellen WordPress-Härtungsleitfadens, aus dem er stammt. So kannst du die Empfehlung an der Quelle prüfen."
+
+#: admin/views/page-hardening.php:45
+msgid "Hardening WordPress — developer.wordpress.org"
+msgstr "Hardening WordPress — developer.wordpress.org"
+
+#: admin/views/page-hardening.php:54
+msgid "good"
+msgstr "gut"
+
+#: admin/views/page-hardening.php:57
+msgid "to fix"
+msgstr "zu beheben"
+
+#: admin/views/page-hardening.php:60
+msgid "worth fixing"
+msgstr "sollte behoben werden"
+
+#: admin/views/page-hardening.php:63
+msgid "your call"
+msgstr "deine Entscheidung"
+
+#: admin/views/page-hardening.php:70
+msgid ""
+"\"Your call\" is not a failing grade. Those are the decisions that depend on "
+"how the site is run — a badge either way would be dishonest, so the trade-"
+"off is spelled out instead."
+msgstr "«Deine Entscheidung» ist keine schlechte Note. Das sind die Punkte, die davon abhängen, wie die Website betrieben wird — ein Urteil in die eine oder andere Richtung wäre unehrlich, deshalb steht dort die Abwägung."
+
+#: admin/views/page-hardening.php:83
+msgid "Check"
+msgstr "Prüfung"
+
+#: admin/views/page-hardening.php:84
+msgid "What is true now, and what to do"
+msgstr "Wie es jetzt ist, und was zu tun ist"
+
+#: admin/views/page-hardening.php:104
+msgid "Reference: Hardening WordPress"
+msgstr "Referenz: Hardening WordPress"
+
+#: admin/views/page-hardening.php:114
+msgid "What is deliberately not checked here"
+msgstr "Was hier bewusst nicht geprüft wird"
+
+#: admin/views/page-hardening.php:116
+msgid ""
+"The guide also covers things no plugin can see from inside PHP: whether your "
+"host keeps its software current, whether the machine you administer the site "
+"from is clean, whether you connect over SFTP rather than FTP, and what "
+"privileges the database user actually holds. Those are worth reading through "
+"even though nothing on this page can grade them."
+msgstr "Der Leitfaden behandelt auch Dinge, die kein Plugin aus PHP heraus sehen kann: ob dein Hoster seine Software aktuell hält, ob der Rechner, von dem aus du die Website verwaltest, sauber ist, ob du dich über SFTP statt FTP verbindest, und welche Rechte der Datenbankbenutzer tatsächlich hat. Lies sie durch, auch wenn diese Seite sie nicht bewerten kann."
+
+#: admin/views/page-hardening.php:119
+msgid "Web server and shared hosting"
+msgstr "Webserver und Shared Hosting"
+
+#: admin/views/page-hardening.php:120
+msgid "FTP versus SFTP"
+msgstr "FTP gegenüber SFTP"
+
+#: admin/views/page-hardening.php:121
+msgid "Restricting database user privileges"
+msgstr "Rechte des Datenbankbenutzers einschränken"
+
+#: admin/views/page-hardening.php:122
+msgid "Blocking direct requests to wp-includes"
+msgstr "Direkte Aufrufe von wp-includes blockieren"
+
+#: admin/views/page-hardening.php:123
+msgid "Putting a firewall in front of the site"
+msgstr "Eine Firewall vor die Website stellen"
 
 #: admin/views/page-settings.php:23
 msgid "General"
@@ -375,293 +571,545 @@ msgid "Login & Location"
 msgstr "Login & Standort"
 
 #: admin/views/page-settings.php:26
+msgid "Two-Factor"
+msgstr "Zwei-Faktor"
+
+#: admin/views/page-settings.php:27
 msgid "File Integrity"
 msgstr "Dateiintegrität"
 
-#: admin/views/page-settings.php:30
+#: admin/views/page-settings.php:31
 msgid "Security Center Settings"
 msgstr "Security-Center-Einstellungen"
 
-#: admin/views/page-settings.php:48
+#: admin/views/page-settings.php:61
 msgid "Alert recipients"
 msgstr "Alarm-Empfänger"
 
-#: admin/views/page-settings.php:53
-msgid "One e-mail address per line. Alerts are sent immediately, with no delay and no digest."
-msgstr "Eine E-Mail-Adresse pro Zeile. Alarme gehen sofort raus, ohne Verzögerung und ohne Sammelmeldung."
+#: admin/views/page-settings.php:64
+msgid ""
+"One e-mail address per line. Alerts are sent immediately, with no delay and "
+"no digest."
+msgstr ""
+"Eine E-Mail-Adresse pro Zeile. Alarme gehen sofort raus, ohne Verzögerung "
+"und ohne Sammelmeldung."
 
-#: admin/views/page-settings.php:57
+#: admin/views/page-settings.php:68
 msgid "Sender name"
 msgstr "Absendername"
 
-#: admin/views/page-settings.php:61
+#: admin/views/page-settings.php:72
 msgid "Sender address"
 msgstr "Absenderadresse"
 
-#: admin/views/page-settings.php:64
+#: admin/views/page-settings.php:75
 msgid "Leave empty to use the WordPress default sender."
 msgstr "Leer lassen, um den Standardabsender von WordPress zu verwenden."
 
-#: admin/views/page-settings.php:68
+#: admin/views/page-settings.php:79
 msgid "Hourly e-mail limit"
 msgstr "Stündliches E-Mail-Limit"
 
-#: admin/views/page-settings.php:71
-msgid "A safety valve, not a digest. Alerts are always immediate; only if this many messages are sent within an hour is delivery paused and a single summary sent instead. Every event is still written to the log. 0 disables the limit."
-msgstr "Ein Sicherheitsventil, keine Sammelmeldung. Alarme gehen immer sofort raus; erst wenn innerhalb einer Stunde so viele Nachrichten versendet wurden, pausiert der Versand und es geht eine einzelne Zusammenfassung raus. Protokolliert wird trotzdem jedes Ereignis. 0 deaktiviert das Limit."
+#: admin/views/page-settings.php:82
+msgid ""
+"A safety valve, not a digest. Alerts are always immediate; only if this many "
+"messages are sent within an hour is delivery paused and a single summary "
+"sent instead. Every event is still written to the log. 0 disables the limit."
+msgstr ""
+"Ein Sicherheitsventil, keine Sammelmeldung. Alarme gehen immer sofort raus; "
+"erst wenn innerhalb einer Stunde so viele Nachrichten versendet wurden, "
+"pausiert der Versand und es geht eine einzelne Zusammenfassung raus. "
+"Protokolliert wird trotzdem jedes Ereignis. 0 deaktiviert das Limit."
 
-#: admin/views/page-settings.php:75
+#: admin/views/page-settings.php:86
 msgid "Keep log entries for"
 msgstr "Protokolleinträge aufbewahren für"
 
-#: admin/views/page-settings.php:78
-#: admin/views/page-settings.php:280
+#: admin/views/page-settings.php:89 admin/views/page-settings.php:204
+#: admin/views/page-settings.php:389
 msgid "days"
 msgstr "Tage"
 
-#: admin/views/page-settings.php:79
+#: admin/views/page-settings.php:90
 msgid "Older entries are removed daily. 0 keeps everything forever."
 msgstr "Ältere Einträge werden täglich entfernt. 0 behält alles dauerhaft."
 
-#: admin/views/page-settings.php:83
+#: admin/views/page-settings.php:94
 msgid "On uninstall"
 msgstr "Bei Deinstallation"
 
-#: admin/views/page-settings.php:87
+#: admin/views/page-settings.php:98
 msgid "Delete the event log and all settings when the plugin is uninstalled"
-msgstr "Ereignisprotokoll und alle Einstellungen bei der Deinstallation löschen"
+msgstr ""
+"Ereignisprotokoll und alle Einstellungen bei der Deinstallation löschen"
 
-#: admin/views/page-settings.php:89
-msgid "Off by default. Discarding an audit trail should be a deliberate choice."
-msgstr "Standardmässig aus. Ein Prüfprotokoll zu verwerfen sollte eine bewusste Entscheidung sein."
+#: admin/views/page-settings.php:100
+msgid ""
+"Off by default. Discarding an audit trail should be a deliberate choice."
+msgstr ""
+"Standardmässig aus. Ein Prüfprotokoll zu verwerfen sollte eine bewusste "
+"Entscheidung sein."
 
-#: admin/views/page-settings.php:97
+#: admin/views/page-settings.php:108
 msgid "Verify delivery"
 msgstr "Zustellung prüfen"
 
-#: admin/views/page-settings.php:98
-msgid "This plugin is only worth anything if its alerts actually arrive. A rejected sender address fails silently on many hosts, so it is worth proving delivery once."
-msgstr "Dieses Plugin ist nur etwas wert, wenn seine Alarme auch ankommen. Eine abgelehnte Absenderadresse scheitert auf vielen Hostings stillschweigend — es lohnt sich, die Zustellung einmal nachzuweisen."
+#: admin/views/page-settings.php:109
+msgid ""
+"This plugin is only worth anything if its alerts actually arrive. A rejected "
+"sender address fails silently on many hosts, so it is worth proving delivery "
+"once."
+msgstr ""
+"Dieses Plugin ist nur etwas wert, wenn seine Alarme auch ankommen. Eine "
+"abgelehnte Absenderadresse scheitert auf vielen Hostings stillschweigend — "
+"es lohnt sich, die Zustellung einmal nachzuweisen."
 
-#: admin/views/page-settings.php:101
+#: admin/views/page-settings.php:112
 msgid "Send a test alert"
 msgstr "Testalarm senden"
 
-#: admin/views/page-settings.php:107
-msgid "Choose what happens for each event. \"E-mail\" sends immediately and also writes to the log; \"Log only\" records it without sending; \"Off\" ignores the event entirely."
-msgstr "Lege für jedes Ereignis fest, was passiert. „E-Mail“ versendet sofort und protokolliert zusätzlich; „Nur protokollieren“ zeichnet auf, ohne zu versenden; „Aus“ ignoriert das Ereignis vollständig."
+#: admin/views/page-settings.php:118
+msgid ""
+"Choose what happens for each event. \"E-mail\" sends immediately and also "
+"writes to the log; \"Log only\" records it without sending; \"Off\" ignores "
+"the event entirely."
+msgstr ""
+"Lege für jedes Ereignis fest, was passiert. „E-Mail“ versendet sofort und "
+"protokolliert zusätzlich; „Nur protokollieren“ zeichnet auf, ohne zu "
+"versenden; „Aus“ ignoriert das Ereignis vollständig."
 
-#: admin/views/page-settings.php:127
-#: admin/views/page-settings.php:176
+#: admin/views/page-settings.php:138 admin/views/page-settings.php:284
 msgid "Action"
 msgstr "Aktion"
 
-#: admin/views/page-settings.php:140
+#: admin/views/page-settings.php:153
 msgid "E-mail"
 msgstr "E-Mail"
 
-#: admin/views/page-settings.php:140
+#: admin/views/page-settings.php:154
 msgid "Log only"
 msgstr "Nur protokollieren"
 
-#: admin/views/page-settings.php:140
+#: admin/views/page-settings.php:155
 msgid "Off"
 msgstr "Aus"
 
-#: admin/views/page-settings.php:167
-#: admin/views/page-status.php:51
+#: admin/views/page-settings.php:178
+msgid ""
+"PHP has no OpenSSL support on this server, so there is nowhere safe to keep "
+"a shared secret. Two-factor authentication stays off until that is fixed — "
+"storing the secret in the clear would make a database dump enough to bypass "
+"it."
+msgstr ""
+"PHP hat auf diesem Server keine OpenSSL-Unterstützung, es gibt also keinen "
+"sicheren Ort für ein geteiltes Geheimnis. Die Zwei-Faktor-Authentifizierung "
+"bleibt aus, bis das behoben ist — das Geheimnis im Klartext zu speichern "
+"hiesse, dass ein Datenbank-Abzug genügt, um sie zu umgehen."
+
+#: admin/views/page-settings.php:182
+msgid ""
+"A one-time code from an authenticator app, asked for after the password is "
+"accepted. Enrolment is per account: every user manages their own from their "
+"profile."
+msgstr ""
+"Ein Einmalcode aus einer Authenticator-App, abgefragt nachdem das Passwort "
+"akzeptiert wurde. Die Einrichtung erfolgt pro Konto: Jede Person verwaltet "
+"sie selbst im eigenen Profil."
+
+#: admin/views/page-settings.php:187
+msgid "Availability"
+msgstr "Verfügbarkeit"
+
+#: admin/views/page-settings.php:190
+msgid "Let users protect their account with an authenticator app"
+msgstr "Benutzern erlauben, ihr Konto mit einer Authenticator-App zu schützen"
+
+#: admin/views/page-settings.php:191
+msgid ""
+"Switching this off does not delete anything. Enrolled users simply stop "
+"being asked, and are asked again if it is switched back on."
+msgstr ""
+"Das Ausschalten löscht nichts. Eingerichtete Benutzer werden einfach nicht "
+"mehr gefragt — und wieder, sobald es erneut eingeschaltet wird."
+
+#: admin/views/page-settings.php:195
+msgid "Administrators"
+msgstr "Administratoren"
+
+#: admin/views/page-settings.php:198
+msgid "Require it for everyone who can manage options"
+msgstr "Für alle verlangen, die Optionen verwalten dürfen"
+
+#: admin/views/page-settings.php:199
+msgid ""
+"They are nagged during the grace period below, and cannot sign in without "
+"enrolling once it has passed. The clock starts when you save this, not when "
+"the plugin was installed."
+msgstr ""
+"Sie werden während der unten stehenden Übergangsfrist erinnert und können "
+"sich nach deren Ablauf ohne Einrichtung nicht mehr anmelden. Die Frist "
+"beginnt beim Speichern, nicht bei der Installation des Plugins."
+
+#: admin/views/page-settings.php:201
+msgid "Grace period"
+msgstr "Übergangsfrist"
+
+#. translators: %s: formatted date
+#: admin/views/page-settings.php:213
+#, php-format
+msgid "Enrolment becomes mandatory on %s."
+msgstr "Die Einrichtung wird am %s zur Pflicht."
+
+#: admin/views/page-settings.php:216
+msgid ""
+"The grace period has passed. Administrators without a second factor must "
+"enrol at their next sign-in."
+msgstr ""
+"Die Übergangsfrist ist abgelaufen. Administratoren ohne zweiten Faktor "
+"müssen ihn bei der nächsten Anmeldung einrichten."
+
+#: admin/views/page-settings.php:224
+msgid "Recovery"
+msgstr "Wiederherstellung"
+
+#: admin/views/page-settings.php:226
+msgid ""
+"Ten single-use recovery codes are issued at enrolment and shown once. They "
+"are stored only as hashes, which is also why they survive a rotation of the "
+"site salts when the authenticator secrets do not."
+msgstr ""
+"Bei der Einrichtung werden zehn einmal verwendbare Wiederherstellungscodes "
+"ausgegeben und einmalig angezeigt. Gespeichert werden nur Hashes — deshalb "
+"überstehen sie auch einen Wechsel der Salts der Website, während die "
+"Authenticator-Geheimnisse das nicht tun."
+
+#: admin/views/page-settings.php:228
+msgid "Also allow a one-time code sent to the account e-mail address"
+msgstr "Zusätzlich einen Einmalcode an die E-Mail-Adresse des Kontos erlauben"
+
+#: admin/views/page-settings.php:230
+msgid ""
+"A real weakening: anyone who can read that mailbox can complete the sign-in, "
+"and on many sites the mailbox is on the same hosting account. Worth having "
+"when losing a phone would otherwise mean losing the site — not worth having "
+"otherwise. Every send and every use is logged."
+msgstr ""
+"Eine echte Schwächung: Wer dieses Postfach lesen kann, kann die Anmeldung "
+"abschliessen — und auf vielen Websites liegt das Postfach beim selben "
+"Hoster. Sinnvoll, wenn der Verlust eines Telefons sonst den Verlust der "
+"Website bedeutet, sonst nicht. Jeder Versand und jede Verwendung wird "
+"protokolliert."
+
+#: admin/views/page-settings.php:233
+msgid "The mailed code expires after"
+msgstr "Der versendete Code verfällt nach"
+
+#: admin/views/page-settings.php:236 admin/views/page-settings.php:362
+msgid "minutes"
+msgstr "Minuten"
+
+#: admin/views/page-settings.php:238
+msgid ""
+"If a user loses the authenticator, the recovery codes and the mailbox, any "
+"administrator can reset their second factor from that user's profile screen."
+msgstr ""
+"Verliert jemand Authenticator, Wiederherstellungscodes und Postfach, kann "
+"jeder Administrator den zweiten Faktor im Profil dieser Person zurücksetzen."
+
+#: admin/views/page-settings.php:242
+msgid "Your account"
+msgstr "Dein Konto"
+
+#: admin/views/page-settings.php:248
+msgid "Two-factor authentication is on for your account."
+msgstr "Die Zwei-Faktor-Authentifizierung ist für dein Konto aktiv."
+
+#: admin/views/page-settings.php:249
+msgid "Two-factor authentication is not set up for your account."
+msgstr ""
+"Die Zwei-Faktor-Authentifizierung ist für dein Konto nicht eingerichtet."
+
+#: admin/views/page-settings.php:253
+msgid "Manage it"
+msgstr "Verwalten"
+
+#: admin/views/page-settings.php:260
+msgid "What is not covered"
+msgstr "Was nicht abgedeckt ist"
+
+#: admin/views/page-settings.php:261
+msgid ""
+"Application passwords, the REST API and XML-RPC are not challenged. There is "
+"nobody at the keyboard to type a code, and an application password is "
+"already a separate credential you can revoke on its own. If an account must "
+"be locked down completely, revoke its application passwords as well."
+msgstr ""
+"Anwendungspasswörter, die REST-API und XML-RPC werden nicht abgefragt. Es "
+"sitzt niemand an der Tastatur, der einen Code eintippen könnte, und ein "
+"Anwendungspasswort ist bereits eine eigene Anmeldeinformation, die du "
+"einzeln widerrufen kannst. Soll ein Konto vollständig abgeriegelt werden, "
+"widerrufe auch seine Anwendungspasswörter."
+
+#: admin/views/page-settings.php:275 admin/views/page-status.php:51
 msgid "Location checks"
 msgstr "Standortprüfung"
 
-#: admin/views/page-settings.php:171
+#: admin/views/page-settings.php:279
 msgid "Evaluate and log the country of every successful login"
 msgstr "Land jedes erfolgreichen Logins auswerten und protokollieren"
 
-#: admin/views/page-settings.php:180
+#: admin/views/page-settings.php:288
 msgid "Monitor only — alert, but let the login through"
 msgstr "Nur beobachten — alarmieren, den Login aber durchlassen"
 
-#: admin/views/page-settings.php:184
+#: admin/views/page-settings.php:292
 msgid "Block logins from countries that are not on the list"
 msgstr "Logins aus Ländern sperren, die nicht auf der Liste stehen"
 
-#: admin/views/page-settings.php:187
-msgid "Blocking cannot be armed: no working country lookup is available. Install a GeoIP database below, or configure a trusted CDN country header."
-msgstr "Die Sperre lässt sich nicht scharf schalten: Es steht keine funktionierende Länderermittlung zur Verfügung. Installiere unten eine GeoIP-Datenbank oder richte einen vertrauenswürdigen CDN-Länder-Header ein."
+#: admin/views/page-settings.php:295
+msgid ""
+"Blocking cannot be armed: no working country lookup is available. Install a "
+"GeoIP database below, or configure a trusted CDN country header."
+msgstr ""
+"Die Sperre lässt sich nicht scharf schalten: Es steht keine funktionierende "
+"Länderermittlung zur Verfügung. Installiere unten eine GeoIP-Datenbank oder "
+"richte einen vertrauenswürdigen CDN-Länder-Header ein."
 
-#: admin/views/page-settings.php:189
+#: admin/views/page-settings.php:297
 msgid "Blocking cannot be armed while the country list is empty."
-msgstr "Die Sperre lässt sich nicht scharf schalten, solange die Länderliste leer ist."
+msgstr ""
+"Die Sperre lässt sich nicht scharf schalten, solange die Länderliste leer "
+"ist."
 
-#: admin/views/page-settings.php:192
-msgid "An address whose country cannot be determined counts as not allowed and is blocked. VPN and Tor traffic usually falls into this category. If the lookup breaks entirely, blocking switches itself back to monitor mode rather than locking everyone out."
-msgstr "Eine Adresse, deren Land sich nicht ermitteln lässt, gilt als nicht erlaubt und wird gesperrt. VPN- und Tor-Verkehr fällt in der Regel in diese Kategorie. Fällt die Ermittlung ganz aus, schaltet die Sperre selbst in den Beobachtungsmodus zurück, statt alle auszusperren."
+#: admin/views/page-settings.php:300
+msgid ""
+"An address whose country cannot be determined counts as not allowed and is "
+"blocked. VPN and Tor traffic usually falls into this category. If the lookup "
+"breaks entirely, blocking switches itself back to monitor mode rather than "
+"locking everyone out."
+msgstr ""
+"Eine Adresse, deren Land sich nicht ermitteln lässt, gilt als nicht erlaubt "
+"und wird gesperrt. VPN- und Tor-Verkehr fällt in der Regel in diese "
+"Kategorie. Fällt die Ermittlung ganz aus, schaltet die Sperre selbst in den "
+"Beobachtungsmodus zurück, statt alle auszusperren."
 
-#: admin/views/page-settings.php:197
-#: admin/views/page-status.php:66
+#: admin/views/page-settings.php:305 admin/views/page-status.php:66
 msgid "Allowed countries"
 msgstr "Erlaubte Länder"
 
-#: admin/views/page-settings.php:201
-msgid "Two-letter ISO country codes, separated by spaces. For example: CH DE AT"
-msgstr "Zweibuchstabige ISO-Ländercodes, durch Leerzeichen getrennt. Zum Beispiel: CH DE AT"
+#: admin/views/page-settings.php:309
+msgid ""
+"Two-letter ISO country codes, separated by spaces. For example: CH DE AT"
+msgstr ""
+"Zweibuchstabige ISO-Ländercodes, durch Leerzeichen getrennt. Zum Beispiel: "
+"CH DE AT"
 
 #. translators: 1: country name, 2: country code
-#: admin/views/page-settings.php:206
+#: admin/views/page-settings.php:315
 #, php-format
 msgid "You are currently connecting from %1$s (%2$s)."
 msgstr "Du verbindest dich derzeit aus %1$s (%2$s)."
 
-#: admin/views/page-settings.php:216
+#: admin/views/page-settings.php:325
 msgid "Always-allowed addresses"
 msgstr "Immer erlaubte Adressen"
 
-#: admin/views/page-settings.php:219
-msgid "One IP address or CIDR block per line, IPv4 or IPv6. These skip the country rule entirely. Private, loopback and link-local addresses are always allowed and need not be listed."
-msgstr "Eine IP-Adresse oder ein CIDR-Block pro Zeile, IPv4 oder IPv6. Diese umgehen die Länderregel vollständig. Private, Loopback- und Link-Local-Adressen sind ohnehin immer erlaubt und müssen nicht eingetragen werden."
+#: admin/views/page-settings.php:328
+msgid ""
+"One IP address or CIDR block per line, IPv4 or IPv6. These skip the country "
+"rule entirely. Private, loopback and link-local addresses are always allowed "
+"and need not be listed."
+msgstr ""
+"Eine IP-Adresse oder ein CIDR-Block pro Zeile, IPv4 oder IPv6. Diese umgehen "
+"die Länderregel vollständig. Private, Loopback- und Link-Local-Adressen sind "
+"ohnehin immer erlaubt und müssen nicht eingetragen werden."
 
-#: admin/views/page-settings.php:223
-#: admin/views/page-status.php:92
+#: admin/views/page-settings.php:332 admin/views/page-status.php:92
 msgid "Trusted proxies"
 msgstr "Vertrauenswürdige Proxys"
 
-#: admin/views/page-settings.php:226
-msgid "Forwarding headers such as X-Forwarded-For are read ONLY when the connecting address is in this list. Leave it empty if the site is not behind a proxy or CDN — trusting a header that anyone can send would let an attacker choose their own apparent location."
-msgstr "Weiterleitungs-Header wie X-Forwarded-For werden NUR ausgewertet, wenn die verbindende Adresse in dieser Liste steht. Lass sie leer, wenn die Website nicht hinter einem Proxy oder CDN steht — einem Header zu vertrauen, den jeder senden kann, liesse einen Angreifer seinen scheinbaren Standort selbst wählen."
+#: admin/views/page-settings.php:335
+msgid ""
+"Forwarding headers such as X-Forwarded-For are read ONLY when the connecting "
+"address is in this list. Leave it empty if the site is not behind a proxy or "
+"CDN — trusting a header that anyone can send would let an attacker choose "
+"their own apparent location."
+msgstr ""
+"Weiterleitungs-Header wie X-Forwarded-For werden NUR ausgewertet, wenn die "
+"verbindende Adresse in dieser Liste steht. Lass sie leer, wenn die Website "
+"nicht hinter einem Proxy oder CDN steht — einem Header zu vertrauen, den "
+"jeder senden kann, liesse einen Angreifer seinen scheinbaren Standort selbst "
+"wählen."
 
-#: admin/views/page-settings.php:229
-msgid "Use the country header supplied by the CDN (CF-IPCountry) when available"
-msgstr "Den vom CDN gelieferten Länder-Header (CF-IPCountry) verwenden, wenn vorhanden"
+#: admin/views/page-settings.php:338
+msgid ""
+"Use the country header supplied by the CDN (CF-IPCountry) when available"
+msgstr ""
+"Den vom CDN gelieferten Länder-Header (CF-IPCountry) verwenden, wenn "
+"vorhanden"
 
-#: admin/views/page-settings.php:234
+#: admin/views/page-settings.php:343
 msgid "API authentication"
 msgstr "API-Authentifizierung"
 
-#: admin/views/page-settings.php:238
+#: admin/views/page-settings.php:347
 msgid "Apply location rules to application passwords and XML-RPC as well"
 msgstr "Standortregeln auch auf Anwendungspasswörter und XML-RPC anwenden"
 
-#: admin/views/page-settings.php:240
-msgid "Off by default. These authenticate through the same mechanism as an interactive login, so turning this on can silently break integrations whose servers sit abroad."
-msgstr "Standardmässig aus. Diese authentifizieren über denselben Mechanismus wie ein interaktiver Login — einschalten kann Integrationen, deren Server im Ausland stehen, stillschweigend lahmlegen."
+#: admin/views/page-settings.php:349
+msgid ""
+"Off by default. These authenticate through the same mechanism as an "
+"interactive login, so turning this on can silently break integrations whose "
+"servers sit abroad."
+msgstr ""
+"Standardmässig aus. Diese authentifizieren über denselben Mechanismus wie "
+"ein interaktiver Login — einschalten kann Integrationen, deren Server im "
+"Ausland stehen, stillschweigend lahmlegen."
 
-#: admin/views/page-settings.php:244
+#: admin/views/page-settings.php:353
 msgid "Bypass link"
 msgstr "Notfall-Link"
 
-#: admin/views/page-settings.php:248
+#: admin/views/page-settings.php:357
 msgid "E-mail a single-use recovery link whenever a login is blocked"
-msgstr "Bei jedem gesperrten Login einen einmalig nutzbaren Wiederherstellungslink versenden"
+msgstr ""
+"Bei jedem gesperrten Login einen einmalig nutzbaren Wiederherstellungslink "
+"versenden"
 
-#: admin/views/page-settings.php:251
+#: admin/views/page-settings.php:360
 msgid "Link valid for"
 msgstr "Link gültig für"
 
-#: admin/views/page-settings.php:253
-msgid "minutes"
-msgstr "Minuten"
-
-#: admin/views/page-settings.php:256
+#: admin/views/page-settings.php:365
 msgid "grants access for"
 msgstr "gewährt Zugang für"
 
-#: admin/views/page-settings.php:258
+#: admin/views/page-settings.php:367
 msgid "hours"
 msgstr "Stunden"
 
-#: admin/views/page-settings.php:264
+#: admin/views/page-settings.php:373
 msgid "MaxMind licence key"
 msgstr "MaxMind-Lizenzschlüssel"
 
-#: admin/views/page-settings.php:272
-msgid "The key is set in wp-config.php via WPSEC_MAXMIND_LICENSE_KEY and cannot be edited here."
-msgstr "Der Schlüssel ist in der wp-config.php über WPSEC_MAXMIND_LICENSE_KEY gesetzt und lässt sich hier nicht bearbeiten."
+#: admin/views/page-settings.php:381
+msgid ""
+"The key is set in wp-config.php via WPSEC_MAXMIND_LICENSE_KEY and cannot be "
+"edited here."
+msgstr ""
+"Der Schlüssel ist in der wp-config.php über WPSEC_MAXMIND_LICENSE_KEY "
+"gesetzt und lässt sich hier nicht bearbeiten."
 
-#: admin/views/page-settings.php:274
-msgid "A free GeoLite2 key from MaxMind. The database cannot be bundled with the plugin because MaxMind's licence forbids redistributing it. Defining WPSEC_MAXMIND_LICENSE_KEY in wp-config.php keeps the key out of the database entirely."
-msgstr "Ein kostenloser GeoLite2-Schlüssel von MaxMind. Die Datenbank darf dem Plugin nicht beiliegen, weil MaxMinds Lizenz die Weitergabe verbietet. WPSEC_MAXMIND_LICENSE_KEY in der wp-config.php hält den Schlüssel vollständig aus der Datenbank heraus."
+#: admin/views/page-settings.php:383
+msgid ""
+"A free GeoLite2 key from MaxMind. The database cannot be bundled with the "
+"plugin because MaxMind's licence forbids redistributing it. Defining "
+"WPSEC_MAXMIND_LICENSE_KEY in wp-config.php keeps the key out of the database "
+"entirely."
+msgstr ""
+"Ein kostenloser GeoLite2-Schlüssel von MaxMind. Die Datenbank darf dem "
+"Plugin nicht beiliegen, weil MaxMinds Lizenz die Weitergabe verbietet. "
+"WPSEC_MAXMIND_LICENSE_KEY in der wp-config.php hält den Schlüssel "
+"vollständig aus der Datenbank heraus."
 
-#: admin/views/page-settings.php:278
+#: admin/views/page-settings.php:387
 msgid "Warn when the database is older than"
 msgstr "Warnen, wenn die Datenbank älter ist als"
 
-#: admin/views/page-settings.php:290
+#: admin/views/page-settings.php:399
 msgid "Quick actions"
 msgstr "Schnellaktionen"
 
-#: admin/views/page-settings.php:293
+#: admin/views/page-settings.php:402
 msgid "Download the GeoIP database now"
 msgstr "GeoIP-Datenbank jetzt herunterladen"
 
-#: admin/views/page-settings.php:298
+#: admin/views/page-settings.php:407
 msgid "Add my current country to the list"
 msgstr "Mein aktuelles Land zur Liste hinzufügen"
 
 #. translators: %s: preset name
-#: admin/views/page-settings.php:310
+#: admin/views/page-settings.php:422
 #, php-format
 msgid "Add trusted proxies: %s"
 msgstr "Vertrauenswürdige Proxys hinzufügen: %s"
 
-#: admin/views/page-settings.php:325
-msgid "The plugin never modifies, quarantines or deletes a file. It only reports what it finds."
-msgstr "Das Plugin verändert, verschiebt und löscht niemals eine Datei. Es meldet nur, was es findet."
+#: admin/views/page-settings.php:437
+msgid ""
+"The plugin never modifies, quarantines or deletes a file. It only reports "
+"what it finds."
+msgstr ""
+"Das Plugin verändert, verschiebt und löscht niemals eine Datei. Es meldet "
+"nur, was es findet."
 
-#: admin/views/page-settings.php:330
+#: admin/views/page-settings.php:442
 msgid "What to scan"
 msgstr "Was geprüft wird"
 
-#: admin/views/page-settings.php:332
-msgid "wp-content/mu-plugins — loads before everything and cannot be deactivated from the dashboard"
-msgstr "wp-content/mu-plugins — lädt vor allem anderen und lässt sich im Backend nicht deaktivieren"
+#: admin/views/page-settings.php:444
+msgid ""
+"wp-content/mu-plugins — loads before everything and cannot be deactivated "
+"from the dashboard"
+msgstr ""
+"wp-content/mu-plugins — lädt vor allem anderen und lässt sich im Backend "
+"nicht deaktivieren"
 
-#: admin/views/page-settings.php:333
+#: admin/views/page-settings.php:445
 msgid "PHP files under wp-content/uploads — one should never exist there"
 msgstr "PHP-Dateien unter wp-content/uploads — dort gehört nie eine hin"
 
-#: admin/views/page-settings.php:334
+#: admin/views/page-settings.php:446
 msgid "wp-config.php and .htaccess"
 msgstr "wp-config.php und .htaccess"
 
-#: admin/views/page-settings.php:335
+#: admin/views/page-settings.php:447
 msgid "WordPress core files, against the official checksums"
 msgstr "WordPress-Kerndateien, gegen die offiziellen Prüfsummen"
 
-#: admin/views/page-settings.php:339
+#: admin/views/page-settings.php:451
 msgid "Backdoor heuristics"
 msgstr "Backdoor-Heuristik"
 
-#: admin/views/page-settings.php:341
+#: admin/views/page-settings.php:453
 msgid "Check new PHP files for patterns common in web shells"
 msgstr "Neue PHP-Dateien auf Muster prüfen, die für Web-Shells typisch sind"
 
-#: admin/views/page-settings.php:343
+#: admin/views/page-settings.php:455
 msgid "Report at a score of"
 msgstr "Melden ab einem Wert von"
 
-#: admin/views/page-settings.php:345
+#: admin/views/page-settings.php:457
 msgid "out of 100"
 msgstr "von 100"
 
-#: admin/views/page-settings.php:348
-msgid "Lower catches more and produces more false positives. Every pattern here has legitimate uses on its own; the score is what distinguishes them."
-msgstr "Niedriger findet mehr und erzeugt mehr Fehlalarme. Jedes einzelne Muster hat für sich genommen legitime Verwendungen; erst der Wert unterscheidet sie."
+#: admin/views/page-settings.php:460
+msgid ""
+"Lower catches more and produces more false positives. Every pattern here has "
+"legitimate uses on its own; the score is what distinguishes them."
+msgstr ""
+"Niedriger findet mehr und erzeugt mehr Fehlalarme. Jedes einzelne Muster hat "
+"für sich genommen legitime Verwendungen; erst der Wert unterscheidet sie."
 
-#: admin/views/page-settings.php:352
+#: admin/views/page-settings.php:464
 msgid "Files per scan run"
 msgstr "Dateien pro Prüflauf"
 
-#: admin/views/page-settings.php:355
-msgid "A ceiling so a very large uploads directory cannot exhaust the PHP time limit. Anything not reached is covered by the next run."
-msgstr "Eine Obergrenze, damit ein sehr grosses Upload-Verzeichnis nicht das PHP-Zeitlimit sprengt. Was nicht erreicht wurde, deckt der nächste Lauf ab."
+#: admin/views/page-settings.php:467
+msgid ""
+"A ceiling so a very large uploads directory cannot exhaust the PHP time "
+"limit. Anything not reached is covered by the next run."
+msgstr ""
+"Eine Obergrenze, damit ein sehr grosses Upload-Verzeichnis nicht das PHP-"
+"Zeitlimit sprengt. Was nicht erreicht wurde, deckt der nächste Lauf ab."
 
-#: admin/views/page-settings.php:359
+#: admin/views/page-settings.php:471
 msgid "Ignore paths containing"
 msgstr "Pfade ignorieren, die enthalten"
 
-#: admin/views/page-settings.php:362
+#: admin/views/page-settings.php:474
 msgid "One fragment per line. Anything whose path contains it is skipped."
-msgstr "Ein Fragment pro Zeile. Alles, dessen Pfad es enthält, wird übersprungen."
+msgstr ""
+"Ein Fragment pro Zeile. Alles, dessen Pfad es enthält, wird übersprungen."
 
 #: admin/views/page-status.php:40
 msgid "Security Center Status"
@@ -672,12 +1120,12 @@ msgid "Login protection"
 msgstr "Login-Schutz"
 
 #: admin/views/page-status.php:53
-msgid "Enabled"
-msgstr "Aktiviert"
-
-#: admin/views/page-status.php:53
 msgid "Disabled"
 msgstr "Deaktiviert"
+
+#: admin/views/page-status.php:53
+msgid "Enabled"
+msgstr "Aktiviert"
 
 #: admin/views/page-status.php:57
 msgid "Action on a disallowed country"
@@ -708,16 +1156,18 @@ msgid "Country lookup"
 msgstr "Länderermittlung"
 
 #: admin/views/page-status.php:76
-msgid "Working"
-msgstr "Funktioniert"
-
-#: admin/views/page-status.php:76
 msgid "Unavailable"
 msgstr "Nicht verfügbar"
 
+#: admin/views/page-status.php:76
+msgid "Working"
+msgstr "Funktioniert"
+
 #: admin/views/page-status.php:78
 msgid "If this breaks, blocking automatically falls back to monitor mode."
-msgstr "Fällt das aus, schaltet die Sperre automatisch in den Beobachtungsmodus zurück."
+msgstr ""
+"Fällt das aus, schaltet die Sperre automatisch in den Beobachtungsmodus "
+"zurück."
 
 #: admin/views/page-status.php:79
 msgid "Blocking cannot be armed until this works."
@@ -736,8 +1186,12 @@ msgid "Not active"
 msgstr "Nicht aktiv"
 
 #: admin/views/page-status.php:88
-msgid "Set WPSEC_DISABLE_BLOCKING in wp-config.php to disable blocking without dashboard access."
-msgstr "Setze WPSEC_DISABLE_BLOCKING in der wp-config.php, um die Sperre ohne Zugang zum Backend zu deaktivieren."
+msgid ""
+"Set WPSEC_DISABLE_BLOCKING in wp-config.php to disable blocking without "
+"dashboard access."
+msgstr ""
+"Setze WPSEC_DISABLE_BLOCKING in der wp-config.php, um die Sperre ohne Zugang "
+"zum Backend zu deaktivieren."
 
 #. translators: %d: number of configured ranges
 #: admin/views/page-status.php:97
@@ -753,7 +1207,9 @@ msgstr "Keine — Weiterleitungs-Header werden ignoriert"
 
 #: admin/views/page-status.php:101
 msgid "This is the correct setting unless the site sits behind a proxy or CDN."
-msgstr "Das ist die richtige Einstellung, sofern die Website nicht hinter einem Proxy oder CDN steht."
+msgstr ""
+"Das ist die richtige Einstellung, sofern die Website nicht hinter einem "
+"Proxy oder CDN steht."
 
 #: admin/views/page-status.php:107
 msgid "GeoIP database"
@@ -773,7 +1229,9 @@ msgstr "Nicht installiert"
 
 #: admin/views/page-status.php:117
 msgid "Add a MaxMind licence key on the Settings screen and download it."
-msgstr "Trage in den Einstellungen einen MaxMind-Lizenzschlüssel ein und lade sie herunter."
+msgstr ""
+"Trage in den Einstellungen einen MaxMind-Lizenzschlüssel ein und lade sie "
+"herunter."
 
 #: admin/views/page-status.php:122
 msgid "Database age"
@@ -785,14 +1243,16 @@ msgstr "Alter der Datenbank"
 msgid "%s old"
 msgstr "%s alt"
 
-#: admin/views/page-status.php:130
-#: includes/geo/class-country-resolver.php:264
+#: admin/views/page-status.php:130 includes/geo/class-country-resolver.php:268
 msgid "Unknown"
 msgstr "Unbekannt"
 
 #: admin/views/page-status.php:131
-msgid "Still in use, but results may be wrong for recently reassigned addresses."
-msgstr "Wird weiter benutzt, bei kürzlich neu vergebenen Adressen kann das Ergebnis aber falsch sein."
+msgid ""
+"Still in use, but results may be wrong for recently reassigned addresses."
+msgstr ""
+"Wird weiter benutzt, bei kürzlich neu vergebenen Adressen kann das Ergebnis "
+"aber falsch sein."
 
 #: admin/views/page-status.php:135
 msgid "Self test"
@@ -819,8 +1279,12 @@ msgid "No"
 msgstr "Nein"
 
 #: admin/views/page-status.php:150
-msgid "nginx ignores .htaccess. Add a deny rule for this path, or move the file outside the webroot with WPSEC_GEOIP_PATH."
-msgstr "nginx ignoriert .htaccess. Ergänze eine Deny-Regel für diesen Pfad oder verschiebe die Datei mit WPSEC_GEOIP_PATH aus dem Webroot heraus."
+msgid ""
+"nginx ignores .htaccess. Add a deny rule for this path, or move the file "
+"outside the webroot with WPSEC_GEOIP_PATH."
+msgstr ""
+"nginx ignoriert .htaccess. Ergänze eine Deny-Regel für diesen Pfad oder "
+"verschiebe die Datei mit WPSEC_GEOIP_PATH aus dem Webroot heraus."
 
 #: admin/views/page-status.php:157
 msgid "Last error"
@@ -846,7 +1310,9 @@ msgstr "In dieser Stunde versendete E-Mails"
 #: admin/views/page-status.php:183
 #, php-format
 msgid "%d alerts were held back this hour. They are all in the log."
-msgstr "%d Alarme wurden in dieser Stunde zurückgehalten. Sie stehen alle im Protokoll."
+msgstr ""
+"%d Alarme wurden in dieser Stunde zurückgehalten. Sie stehen alle im "
+"Protokoll."
 
 #: admin/views/page-status.php:192
 msgid "Scheduled scans"
@@ -893,12 +1359,23 @@ msgid "Overdue"
 msgstr "Überfällig"
 
 #: admin/views/page-status.php:236
-msgid "WP-Cron is disabled, so a real system cron must be driving wp-cron.php. That is the recommended setup."
-msgstr "WP-Cron ist deaktiviert, ein echter System-Cron muss also wp-cron.php aufrufen. Das ist die empfohlene Einrichtung."
+msgid ""
+"WP-Cron is disabled, so a real system cron must be driving wp-cron.php. That "
+"is the recommended setup."
+msgstr ""
+"WP-Cron ist deaktiviert, ein echter System-Cron muss also wp-cron.php "
+"aufrufen. Das ist die empfohlene Einrichtung."
 
 #: admin/views/page-status.php:238
-msgid "WP-Cron runs on site traffic. On a quiet site these tasks can be badly late — which is precisely when a compromised site stops receiving visitors. Consider disabling WP-Cron and driving wp-cron.php from a real system cron."
-msgstr "WP-Cron läuft über den Website-Verkehr. Auf einer ruhigen Website können diese Aufgaben stark verspätet laufen — also genau dann, wenn eine kompromittierte Website keine Besucher mehr bekommt. Erwäge, WP-Cron zu deaktivieren und wp-cron.php über einen echten System-Cron aufzurufen."
+msgid ""
+"WP-Cron runs on site traffic. On a quiet site these tasks can be badly late "
+"— which is precisely when a compromised site stops receiving visitors. "
+"Consider disabling WP-Cron and driving wp-cron.php from a real system cron."
+msgstr ""
+"WP-Cron läuft über den Website-Verkehr. Auf einer ruhigen Website können "
+"diese Aufgaben stark verspätet laufen — also genau dann, wenn eine "
+"kompromittierte Website keine Besucher mehr bekommt. Erwäge, WP-Cron zu "
+"deaktivieren und wp-cron.php über einen echten System-Cron aufzurufen."
 
 #: admin/views/page-status.php:242
 msgid "Active bypass grants"
@@ -929,66 +1406,875 @@ msgid "Sign every user out"
 msgstr "Alle Benutzer abmelden"
 
 #: admin/views/page-status.php:280
-msgid "Sessions created before location blocking was armed are not affected by it, because cookie checks never run the login rules. This ends every session, including your own."
-msgstr "Sitzungen, die vor dem Scharfschalten der Standortsperre entstanden sind, bleiben davon unberührt, weil die Cookie-Prüfung die Login-Regeln nie durchläuft. Das hier beendet jede Sitzung, auch deine eigene."
+msgid ""
+"Sessions created before location blocking was armed are not affected by it, "
+"because cookie checks never run the login rules. This ends every session, "
+"including your own."
+msgstr ""
+"Sitzungen, die vor dem Scharfschalten der Standortsperre entstanden sind, "
+"bleiben davon unberührt, weil die Cookie-Prüfung die Login-Regeln nie "
+"durchläuft. Das hier beendet jede Sitzung, auch deine eigene."
 
-#: includes/class-event-registry.php:217
+#: admin/views/page-two-factor.php:37
+msgid ""
+"Two-factor authentication is unavailable on this installation. Either it is "
+"switched off in the Security Center settings, or PHP has no OpenSSL support "
+"— without it there is nowhere safe to keep the shared secret, so the feature "
+"refuses to run rather than store it in the clear."
+msgstr ""
+"Die Zwei-Faktor-Authentifizierung steht auf dieser Installation nicht zur "
+"Verfügung. Entweder ist sie in den Einstellungen des Security Center "
+"ausgeschaltet, oder PHP hat keine OpenSSL-Unterstützung — ohne sie gibt es "
+"keinen sicheren Ort für das geteilte Geheimnis, und die Funktion verweigert "
+"den Dienst, statt es im Klartext zu speichern."
+
+#: admin/views/page-two-factor.php:44
+msgid "Your recovery codes"
+msgstr "Deine Wiederherstellungscodes"
+
+#: admin/views/page-two-factor.php:45
+msgid ""
+"Each code works once. Keep them somewhere you can reach without this site "
+"and without your phone — a password manager, or printed and filed. This is "
+"the only time they are shown."
+msgstr ""
+"Jeder Code funktioniert einmal. Bewahre sie dort auf, wo du ohne diese "
+"Website und ohne dein Telefon herankommst — in einem Passwortmanager oder "
+"ausgedruckt und abgelegt. Sie werden nur dieses eine Mal angezeigt."
+
+#: admin/views/page-two-factor.php:72
+msgid ""
+"You are nearly out of recovery codes. Generate a new set now, while you can "
+"still sign in."
+msgstr ""
+"Dir gehen die Wiederherstellungscodes aus. Erzeuge jetzt einen neuen Satz, "
+"solange du dich noch anmelden kannst."
+
+#: admin/views/page-two-factor.php:76
+msgid "Recovery codes"
+msgstr "Wiederherstellungscodes"
+
+#: admin/views/page-two-factor.php:77
+msgid "Generating a new set immediately invalidates the old one."
+msgstr "Ein neuer Satz macht den alten sofort ungültig."
+
+#: admin/views/page-two-factor.php:79
+msgid "Generate new recovery codes"
+msgstr "Neue Wiederherstellungscodes erzeugen"
+
+#: admin/views/page-two-factor.php:82
+msgid "Turn it off"
+msgstr "Ausschalten"
+
+#: admin/views/page-two-factor.php:84
+msgid "Your account goes back to being protected by the password alone."
+msgstr "Dein Konto ist danach wieder nur durch das Passwort geschützt."
+
+#: admin/views/page-two-factor.php:86
+msgid ""
+"This site requires administrators to use two-factor authentication, so you "
+"will be asked to set it up again at your next sign-in."
+msgstr ""
+"Diese Website verlangt von Administratoren eine Zwei-Faktor-"
+"Authentifizierung; du wirst bei der nächsten Anmeldung erneut zur "
+"Einrichtung aufgefordert."
+
+#: admin/views/page-two-factor.php:90
+msgid "Turn off two-factor authentication"
+msgstr "Zwei-Faktor-Authentifizierung ausschalten"
+
+#: admin/views/page-two-factor.php:95
+msgid "Step 1 — add the account to your authenticator"
+msgstr "Schritt 1 — Konto in der Authenticator-App hinzufügen"
+
+#: admin/views/page-two-factor.php:96
+msgid ""
+"Scan this with any authenticator app: 1Password, Bitwarden, Aegis, Google "
+"Authenticator, Microsoft Authenticator — they all speak the same standard."
+msgstr ""
+"Scanne das mit einer beliebigen Authenticator-App: 1Password, Bitwarden, "
+"Aegis, Google Authenticator, Microsoft Authenticator — sie alle sprechen "
+"denselben Standard."
+
+#: admin/views/page-two-factor.php:107
+msgid "Or type this key in by hand:"
+msgstr "Oder gib diesen Schlüssel von Hand ein:"
+
+#: admin/views/page-two-factor.php:113
+#: includes/auth/class-two-factor-login.php:428
+msgid "Open in an authenticator app on this device"
+msgstr "Auf diesem Gerät in einer Authenticator-App öffnen"
+
+#: admin/views/page-two-factor.php:116
+msgid "Step 2 — prove it worked"
+msgstr "Schritt 2 — nachweisen, dass es geklappt hat"
+
+#: admin/views/page-two-factor.php:117
+msgid ""
+"Nothing is switched on until a code from the app is accepted, so a mistyped "
+"key cannot lock you out."
+msgstr ""
+"Es wird nichts eingeschaltet, bevor ein Code aus der App akzeptiert wurde — "
+"ein vertippter Schlüssel kann dich also nicht aussperren."
+
+#: admin/views/page-two-factor.php:120
+msgid "Six-digit code"
+msgstr "Sechsstelliger Code"
+
+#: admin/views/page-two-factor.php:124
+msgid "Switch on two-factor authentication"
+msgstr "Zwei-Faktor-Authentifizierung einschalten"
+
+#: admin/views/page-two-factor.php:132
+msgid ""
+"Anyone who learns your password can sign in as you. An authenticator app "
+"closes that off."
+msgstr ""
+"Wer dein Passwort erfährt, kann sich als du anmelden. Eine Authenticator-App "
+"schliesst das aus."
+
+#. translators: %s: formatted date
+#: admin/views/page-two-factor.php:143
+#, php-format
+msgid ""
+"This site requires administrators to use two-factor authentication from %s."
+msgstr ""
+"Diese Website verlangt von Administratoren ab dem %s eine Zwei-Faktor-"
+"Authentifizierung."
+
+#: admin/views/page-two-factor.php:146
+msgid "This site requires administrators to use two-factor authentication."
+msgstr ""
+"Diese Website verlangt von Administratoren eine Zwei-Faktor-"
+"Authentifizierung."
+
+#: admin/views/page-two-factor.php:159 admin/views/page-two-factor.php:162
+msgid "If you lose your authenticator"
+msgstr "Wenn du deinen Authenticator verlierst"
+
+#: admin/views/page-two-factor.php:160
+msgid ""
+"Use a recovery code. If those are gone too, the sign-in screen can e-mail a "
+"one-time code to the address on this account — which means whoever reads "
+"that mailbox can sign in as you, so treat it as the last resort it is. If "
+"everything is lost, another administrator can reset the second factor for "
+"your account."
+msgstr ""
+"Nimm einen Wiederherstellungscode. Sind auch die weg, kann dir die "
+"Anmeldeseite einen Einmalcode an die Adresse dieses Kontos senden — was "
+"bedeutet, dass sich jeder, der dieses Postfach liest, als du anmelden kann. "
+"Behandle es als das letzte Mittel, das es ist. Ist alles verloren, kann ein "
+"anderer Administrator den zweiten Faktor für dein Konto zurücksetzen."
+
+#: admin/views/page-two-factor.php:163
+msgid ""
+"Use a recovery code. The e-mail fallback is switched off on this site, so if "
+"the recovery codes are gone as well, another administrator has to reset the "
+"second factor for your account."
+msgstr ""
+"Nimm einen Wiederherstellungscode. Der E-Mail-Notfallweg ist auf dieser "
+"Website ausgeschaltet — sind also auch die Wiederherstellungscodes weg, muss "
+"ein anderer Administrator den zweiten Faktor für dein Konto zurücksetzen."
+
+#: includes/auth/class-two-factor-login.php:140
+msgid "Too many attempts. Wait a few minutes and sign in again."
+msgstr "Zu viele Versuche. Warte ein paar Minuten und melde dich erneut an."
+
+#: includes/auth/class-two-factor-login.php:153
+msgid "A one-time code is on its way to the address on your account."
+msgstr "Ein Einmalcode ist an die Adresse deines Kontos unterwegs."
+
+#: includes/auth/class-two-factor-login.php:162
+msgid "That code was not right. Check the app and try the current code."
+msgstr ""
+"Dieser Code war nicht richtig. Sieh in der App nach und nimm den aktuellen "
+"Code."
+
+#: includes/auth/class-two-factor-login.php:172
+msgid "That code was not right, or it has already been used."
+msgstr "Dieser Code war nicht richtig, oder er wurde bereits verwendet."
+
+#: includes/auth/class-two-factor-login.php:369
+msgid ""
+"This site requires administrators to use an authenticator app. Scan the code "
+"below, then enter the six digits it shows."
+msgstr ""
+"Diese Website verlangt von Administratoren eine Authenticator-App. Scanne "
+"den Code unten und gib danach die sechs Ziffern ein, die er anzeigt."
+
+#: includes/auth/class-two-factor-login.php:372
+msgid ""
+"Enter the six-digit code from your authenticator app. A recovery code works "
+"here too."
+msgstr ""
+"Gib den sechsstelligen Code aus deiner Authenticator-App ein. Ein "
+"Wiederherstellungscode funktioniert hier ebenfalls."
+
+#: includes/auth/class-two-factor-login.php:377
+msgid "Authentication code"
+msgstr "Authentifizierungscode"
+
+#: includes/auth/class-two-factor-login.php:390
+msgid "Confirm and sign in"
+msgstr "Bestätigen und anmelden"
+
+#: includes/auth/class-two-factor-login.php:390
+msgid "Sign in"
+msgstr "Anmelden"
+
+#: includes/auth/class-two-factor-login.php:397
+msgid "Lost your authenticator?"
+msgstr "Authenticator verloren?"
+
+#: includes/auth/class-two-factor-login.php:399
+msgid "E-mail me a code"
+msgstr "Code per E-Mail senden"
+
+#: includes/auth/class-two-factor-login.php:422
+msgid "Or type this key into the app:"
+msgstr "Oder gib diesen Schlüssel in der App ein:"
+
+#: includes/auth/class-two-factor-login.php:439
+msgid "Save your recovery codes"
+msgstr "Sichere deine Wiederherstellungscodes"
+
+#: includes/auth/class-two-factor-login.php:441
+msgid ""
+"Two-factor authentication is now on. These recovery codes are the way back "
+"in if you lose the authenticator. Each one works once. This is the only time "
+"they are shown."
+msgstr ""
+"Die Zwei-Faktor-Authentifizierung ist jetzt aktiv. Diese "
+"Wiederherstellungscodes sind der Weg zurück, wenn du den Authenticator "
+"verlierst. Jeder funktioniert einmal. Sie werden nur dieses eine Mal "
+"angezeigt."
+
+#: includes/auth/class-two-factor-login.php:450
+msgid "I have saved them — continue"
+msgstr "Ich habe sie gesichert — weiter"
+
+#: includes/auth/class-two-factor.php:422
+msgid "The e-mail fallback is switched off on this site."
+msgstr "Der E-Mail-Notfallweg ist auf dieser Website ausgeschaltet."
+
+#: includes/auth/class-two-factor.php:431
+msgid "A code was just sent. Check your inbox before requesting another."
+msgstr ""
+"Es wurde gerade ein Code gesendet. Sieh in deinem Posteingang nach, bevor du "
+"einen weiteren anforderst."
+
+#. translators: 1: site name, 2: the one-time code, 3: minutes until it expires, 4: client IP address
+#: includes/auth/class-two-factor.php:453
+#, php-format
+msgid ""
+"Someone is signing in to %1$s as you and asked for a one-time code because "
+"their authenticator app was unavailable.\n"
+"\n"
+"Your code is: %2$s\n"
+"\n"
+"It expires in %3$d minutes and can be used once.\n"
+"\n"
+"The request came from %4$s.\n"
+"\n"
+"If this was not you, someone knows your password. Change it now and tell an "
+"administrator."
+msgstr ""
+"Jemand meldet sich bei %1$s als du an und hat einen Einmalcode angefordert, "
+"weil die Authenticator-App nicht verfügbar war.\n"
+"\n"
+"Dein Code lautet: %2$s\n"
+"\n"
+"Er verfällt in %3$d Minuten und kann einmal verwendet werden.\n"
+"\n"
+"Die Anfrage kam von %4$s.\n"
+"\n"
+"Warst du das nicht, kennt jemand dein Passwort. Ändere es sofort und "
+"informiere einen Administrator."
+
+#. translators: %s: site name
+#: includes/auth/class-two-factor.php:466
+#, php-format
+msgid "Your sign-in code for %s"
+msgstr "Dein Anmeldecode für %s"
+
+#: includes/auth/class-two-factor.php:491
+msgid "The code could not be sent. Check the site's mail configuration."
+msgstr ""
+"Der Code konnte nicht gesendet werden. Prüfe die Mail-Konfiguration der "
+"Website."
+
+#: includes/class-event-registry.php:236
 msgid "Critical"
 msgstr "Kritisch"
 
-#: includes/class-event-registry.php:219
+#: includes/class-event-registry.php:238
 msgid "High"
 msgstr "Hoch"
 
-#: includes/class-event-registry.php:221
+#: includes/class-event-registry.php:240
 msgid "Warning"
 msgstr "Warnung"
 
-#: includes/class-event-registry.php:223
+#: includes/class-event-registry.php:242
 msgid "Notice"
 msgstr "Hinweis"
 
-#: includes/class-event-registry.php:225
+#: includes/class-event-registry.php:244
 msgid "Info"
 msgstr "Info"
 
-#: includes/class-event-registry.php:236
+#: includes/class-event-registry.php:255
 msgid "Plugins"
 msgstr "Plugins"
 
-#: includes/class-event-registry.php:237
+#: includes/class-event-registry.php:256
 msgid "Themes"
 msgstr "Themes"
 
-#: includes/class-event-registry.php:238
+#: includes/class-event-registry.php:257
 msgid "Users & administrators"
 msgstr "Benutzer & Administratoren"
 
-#: includes/class-event-registry.php:239
+#: includes/class-event-registry.php:258
 msgid "Application passwords"
 msgstr "Anwendungspasswörter"
 
-#: includes/class-event-registry.php:240
+#: includes/class-event-registry.php:259
 msgid "Logins"
 msgstr "Logins"
 
-#: includes/class-event-registry.php:241
+#: includes/class-event-registry.php:261
 msgid "Configuration"
 msgstr "Konfiguration"
 
-#: includes/class-event-registry.php:242
+#: includes/class-event-registry.php:262
 msgid "Files & integrity"
 msgstr "Dateien & Integrität"
 
-#: includes/class-event-registry.php:243
+#: includes/class-event-registry.php:263
 msgid "Plugin status"
 msgstr "Plugin-Status"
 
-#: includes/class-installer.php:129
-msgid "WP Security Center does not support WordPress Multisite. It has not been activated."
-msgstr "WP Security Center unterstützt WordPress-Multisite nicht. Es wurde nicht aktiviert."
+#: includes/class-hardening.php:52
+msgid "Code execution"
+msgstr "Codeausführung"
 
-#: includes/class-installer.php:130
+#: includes/class-hardening.php:53
+msgid "wp-config.php, secrets and files"
+msgstr "wp-config.php, Geheimnisse und Dateien"
+
+#: includes/class-hardening.php:54
+msgid "Staying current"
+msgstr "Aktuell bleiben"
+
+#: includes/class-hardening.php:55
+msgid "Accounts and access"
+msgstr "Konten und Zugriff"
+
+#: includes/class-hardening.php:56
+msgid "Monitoring and recovery"
+msgstr "Überwachung und Wiederherstellung"
+
+#: includes/class-hardening.php:114
+msgid "Dashboard file editor"
+msgstr "Datei-Editor im Dashboard"
+
+#: includes/class-hardening.php:117
+msgid "DISALLOW_FILE_EDIT is set. The theme and plugin editors are gone."
+msgstr "DISALLOW_FILE_EDIT ist gesetzt. Der Theme- und Plugin-Editor ist weg."
+
+#: includes/class-hardening.php:118
+msgid ""
+"DISALLOW_FILE_EDIT is not set, so any administrator can edit PHP from the "
+"dashboard."
+msgstr "DISALLOW_FILE_EDIT ist nicht gesetzt — jeder Administrator kann PHP direkt im Dashboard bearbeiten."
+
+#: includes/class-hardening.php:121
+msgid ""
+"Add define( 'DISALLOW_FILE_EDIT', true ); to wp-config.php. This is the "
+"single cheapest hardening step there is: the editor turns a stolen "
+"administrator password into arbitrary code execution, and it is the first "
+"tool an attacker reaches for. Almost nobody edits theme files from the "
+"dashboard on purpose."
+msgstr "Trage define( 'DISALLOW_FILE_EDIT', true ); in die wp-config.php ein. Das ist die billigste Härtungsmassnahme überhaupt: Der Editor macht aus einem gestohlenen Administrator-Passwort beliebige Codeausführung, und er ist das erste Werkzeug, zu dem ein Angreifer greift. Kaum jemand bearbeitet Theme-Dateien absichtlich im Dashboard."
+
+#: includes/class-hardening.php:130
+msgid "Installing and updating from the dashboard"
+msgstr "Installieren und Aktualisieren über das Dashboard"
+
+#: includes/class-hardening.php:133
+msgid ""
+"DISALLOW_FILE_MODS is set. Nothing can be installed, updated or deleted "
+"through the dashboard."
+msgstr "DISALLOW_FILE_MODS ist gesetzt. Über das Dashboard lässt sich nichts installieren, aktualisieren oder löschen."
+
+#: includes/class-hardening.php:134
+msgid ""
+"DISALLOW_FILE_MODS is not set. An administrator session can install and "
+"update plugins and themes."
+msgstr "DISALLOW_FILE_MODS ist nicht gesetzt. Eine Administrator-Sitzung kann Plugins und Themes installieren und aktualisieren."
+
+#: includes/class-hardening.php:136
+msgid ""
+"Check that updates really are arriving another way. This constant also "
+"blocks every security update, so a site with it set and no deployment "
+"pipeline behind it gets steadily less safe, not more. It implies "
+"DISALLOW_FILE_EDIT."
+msgstr "Prüfe, ob Updates wirklich auf einem anderen Weg ankommen. Diese Konstante blockiert auch jedes Sicherheitsupdate — eine Website, bei der sie gesetzt ist und hinter der keine Deployment-Kette steht, wird also stetig unsicherer statt sicherer. Sie schliesst DISALLOW_FILE_EDIT mit ein."
+
+#: includes/class-hardening.php:137
+msgid ""
+"Worth setting — define( 'DISALLOW_FILE_MODS', true ); — but only if code "
+"reaches this site by another route: WP-CLI, Composer, or a deployment "
+"pipeline. It closes the \"install a plugin that is really a shell\" path "
+"entirely, and it disables the update screens along with it. On a site that "
+"updates itself from the dashboard, leaving it unset and watching the log is "
+"the better trade."
+msgstr "Lohnt sich — define( 'DISALLOW_FILE_MODS', true ); — aber nur, wenn Code auf einem anderen Weg auf diese Website kommt: WP-CLI, Composer oder eine Deployment-Kette. Sie schliesst den Weg «ein Plugin installieren, das in Wahrheit eine Shell ist» vollständig und legt zugleich die Update-Ansichten still. Auf einer Website, die sich über das Dashboard selbst aktualisiert, ist es der bessere Handel, sie nicht zu setzen und stattdessen das Protokoll im Auge zu behalten."
+
+#: includes/class-hardening.php:146
+msgid "File permissions"
+msgstr "Dateirechte"
+
+#: includes/class-hardening.php:149
+msgid "No core directory is writable by everyone."
+msgstr "Kein Kernverzeichnis ist für alle beschreibbar."
+
+#. translators: %s: comma-separated list of paths
+#: includes/class-hardening.php:152
+#, php-format
+msgid "World-writable: %s"
+msgstr "Für alle beschreibbar: %s"
+
+#: includes/class-hardening.php:157
+msgid ""
+"Anything mode 0777 or 0666 can be rewritten by any process on the server, "
+"which on shared hosting means any other customer. The guide recommends 0755 "
+"for directories and 0644 for files, with write access granted only where "
+"WordPress genuinely needs it."
+msgstr "Alles mit Modus 0777 oder 0666 kann von jedem Prozess auf dem Server überschrieben werden — auf Shared Hosting heisst das: von jedem anderen Kunden. Der Leitfaden empfiehlt 0755 für Verzeichnisse und 0644 für Dateien, mit Schreibrechten nur dort, wo WordPress sie wirklich braucht."
+
+#: includes/class-hardening.php:181
+msgid "Where wp-config.php lives"
+msgstr "Wo die wp-config.php liegt"
+
+#: includes/class-hardening.php:184
+msgid "One directory above the WordPress install, outside the document root."
+msgstr "Ein Verzeichnis oberhalb der WordPress-Installation, ausserhalb des Document Root."
+
+#: includes/class-hardening.php:185
+msgid "In the WordPress root directory."
+msgstr "Im WordPress-Wurzelverzeichnis."
+
+#: includes/class-hardening.php:188
+msgid ""
+"It can be moved one level up, out of the web root. The guide notes that "
+"opinions differ on how much this actually buys you, and that a careless move "
+"can make things worse — so treat it as optional. Denying direct access to "
+"the file in the server config achieves most of the same thing with less risk."
+msgstr "Sie lässt sich eine Ebene höher verschieben, aus dem Web-Root heraus. Der Leitfaden hält fest, dass die Meinungen darüber auseinandergehen, wie viel das wirklich bringt, und dass ein unsauberes Verschieben es schlimmer machen kann — nimm es also als optional. Den direkten Zugriff auf die Datei in der Serverkonfiguration zu verbieten erreicht fast dasselbe mit weniger Risiko."
+
+#: includes/class-hardening.php:199
+msgid "wp-config.php permissions"
+msgstr "Rechte der wp-config.php"
+
+#. translators: %s: octal file mode, e.g. 0644
+#: includes/class-hardening.php:203
+#, php-format
+msgid "Mode %s"
+msgstr "Modus %s"
+
+#: includes/class-hardening.php:207
+msgid ""
+"The file holds the database credentials and every authentication salt, and "
+"it is readable by other accounts on this server. The guide suggests 0400 or "
+"0440 — readable by you, and by the web server only if your setup needs it."
+msgstr "Die Datei enthält die Datenbank-Zugangsdaten und sämtliche Authentifizierungs-Salts und ist für andere Konten auf diesem Server lesbar. Der Leitfaden schlägt 0400 oder 0440 vor — lesbar für dich, und für den Webserver nur, wenn deine Umgebung es braucht."
+
+#: includes/class-hardening.php:217
+msgid "Authentication keys and salts"
+msgstr "Authentifizierungsschlüssel und Salts"
+
+#: includes/class-hardening.php:220
+msgid "All eight keys and salts are defined, unique and long."
+msgstr "Alle acht Schlüssel und Salts sind definiert, eindeutig und lang."
+
+#: includes/class-hardening.php:224
+msgid ""
+"Generate a fresh set at https://api.wordpress.org/secret-key/1.1/salt/ and "
+"paste them into wp-config.php. Weak or shared salts mean session cookies can "
+"be forged without ever knowing a password. Everyone, including you, is "
+"signed out when they change — and on this site the two-factor secrets stop "
+"decrypting, so users fall back to their recovery codes."
+msgstr "Erzeuge einen neuen Satz unter https://api.wordpress.org/secret-key/1.1/salt/ und trage ihn in die wp-config.php ein. Schwache oder mehrfach verwendete Salts bedeuten, dass Sitzungs-Cookies gefälscht werden können, ohne je ein Passwort zu kennen. Beim Wechsel werden alle abgemeldet, auch du — und auf dieser Website lassen sich danach die Zwei-Faktor-Geheimnisse nicht mehr entschlüsseln, die Benutzer weichen also auf ihre Wiederherstellungscodes aus."
+
+#: includes/class-hardening.php:233
+msgid "Error output"
+msgstr "Fehlerausgabe"
+
+#: includes/class-hardening.php:236
+msgid ""
+"WP_DEBUG and WP_DEBUG_DISPLAY are both on: PHP errors are being printed to "
+"visitors."
+msgstr "WP_DEBUG und WP_DEBUG_DISPLAY sind beide aktiv: PHP-Fehler werden den Besuchern angezeigt."
+
+#: includes/class-hardening.php:237
+msgid "Errors are not printed to the page."
+msgstr "Fehler werden nicht auf der Seite ausgegeben."
+
+#: includes/class-hardening.php:239
+msgid ""
+"Set define( 'WP_DEBUG_DISPLAY', false ); and log to a file instead. Error "
+"output hands out absolute paths, database structure and sometimes "
+"credentials, and it is indexed by search engines like any other text."
+msgstr "Setze define( 'WP_DEBUG_DISPLAY', false ); und protokolliere stattdessen in eine Datei. Fehlerausgaben verraten absolute Pfade, Datenbankstrukturen und manchmal Zugangsdaten — und sie werden von Suchmaschinen indexiert wie jeder andere Text."
+
+#: includes/class-hardening.php:250
+msgid "Database table prefix"
+msgstr "Datenbank-Tabellenpräfix"
+
+#. translators: %s: database table prefix
+#: includes/class-hardening.php:254
+#, php-format
+msgid "Tables are prefixed %s"
+msgstr "Die Tabellen haben das Präfix %s"
+
+#: includes/class-hardening.php:258
+msgid ""
+"Changing it is often recommended and rarely worth it. The guide files this "
+"under security through obscurity: it does not stop an attacker who can "
+"already run SQL, and the migration itself can break a working site. Left as "
+"it is, it costs you nothing."
+msgstr "Es zu ändern wird oft empfohlen und lohnt sich selten. Der Leitfaden führt das unter Sicherheit durch Verschleierung: Es hält niemanden auf, der ohnehin schon SQL ausführen kann, und die Umstellung selbst kann eine laufende Website zerlegen. So gelassen, kostet es dich nichts."
+
+#: includes/class-hardening.php:259
+msgid ""
+"Non-default. This is obscurity rather than security, so it changes little "
+"either way — but it costs nothing now that it is done."
+msgstr "Nicht der Standard. Das ist Verschleierung und nicht Sicherheit, ändert also so oder so wenig — kostet jetzt, wo es getan ist, aber auch nichts."
+
+#: includes/class-hardening.php:291
+msgid "WordPress version"
+msgstr "WordPress-Version"
+
+#. translators: %s: WordPress version
+#: includes/class-hardening.php:296
+#, php-format
+msgid "Running %s, which is current."
+msgstr "Läuft auf %s, und das ist aktuell."
+
+#. translators: 1: installed version, 2: available version
+#: includes/class-hardening.php:301
+#, php-format
+msgid "Running %1$s; %2$s is available."
+msgstr "Läuft auf %1$s; %2$s ist verfügbar."
+
+#: includes/class-hardening.php:307
+msgid ""
+"Update now. Once a release is out, the information needed to exploit what it "
+"fixed is effectively public — which is exactly what makes an old version "
+"worth attacking."
+msgstr "Jetzt aktualisieren. Sobald eine Version veröffentlicht ist, sind die Informationen zum Ausnutzen des behobenen Fehlers faktisch öffentlich — genau das macht eine alte Version zum lohnenden Ziel."
+
+#: includes/class-hardening.php:318
+msgid "Automatic core updates"
+msgstr "Automatische Kern-Updates"
+
+#: includes/class-hardening.php:321
+msgid "AUTOMATIC_UPDATER_DISABLED is set: nothing updates itself."
+msgstr "AUTOMATIC_UPDATER_DISABLED ist gesetzt: Es aktualisiert sich nichts von selbst."
+
+#. translators: %s: the configured value of WP_AUTO_UPDATE_CORE
+#: includes/class-hardening.php:324
+#, php-format
+msgid "WP_AUTO_UPDATE_CORE is %s."
+msgstr "WP_AUTO_UPDATE_CORE steht auf %s."
+
+#: includes/class-hardening.php:329
+msgid ""
+"Minor releases are almost entirely security and bug fixes, and WordPress has "
+"shipped them automatically since 3.7. Unless something downstream depends on "
+"a pinned version, let them through — a site that waits for someone to notice "
+"a release is a site that stays vulnerable for as long as nobody looks."
+msgstr "Minor-Releases enthalten fast ausschliesslich Sicherheits- und Fehlerkorrekturen, und WordPress liefert sie seit 3.7 automatisch aus. Solange nichts nachgelagert auf einer festgenagelten Version beruht, lass sie durch — eine Website, die darauf wartet, dass jemand eine Veröffentlichung bemerkt, bleibt so lange verwundbar, wie niemand hinsieht."
+
+#: includes/class-hardening.php:340
+msgid "Plugin and theme updates"
+msgstr "Plugin- und Theme-Updates"
+
+#: includes/class-hardening.php:343
+msgid "Everything is up to date."
+msgstr "Alles ist aktuell."
+
+#. translators: 1: number of plugins, 2: number of themes
+#: includes/class-hardening.php:346
+#, php-format
+msgid "%1$d plugin and %2$d theme updates waiting."
+msgstr "%1$d Plugin- und %2$d Theme-Updates stehen an."
+
+#: includes/class-hardening.php:352
+msgid ""
+"Outdated extensions are the most common way a WordPress site is taken over — "
+"far more common than a flaw in core. Every update this plugin sees is "
+"written to the event log, so you can tell an update you made from one you "
+"did not."
+msgstr "Veraltete Erweiterungen sind der häufigste Weg, auf dem eine WordPress-Website übernommen wird — weit häufiger als eine Lücke im Kern. Jedes Update, das dieses Plugin sieht, wird ins Ereignisprotokoll geschrieben, damit du ein Update von dir von einem anderen unterscheiden kannst."
+
+#: includes/class-hardening.php:361
+msgid "Unused plugins and themes"
+msgstr "Ungenutzte Plugins und Themes"
+
+#: includes/class-hardening.php:364
+msgid "Nothing installed that is not in use."
+msgstr "Es ist nichts installiert, was nicht in Gebrauch ist."
+
+#. translators: 1: number of inactive plugins, 2: number of inactive themes
+#: includes/class-hardening.php:367
+#, php-format
+msgid "%1$d inactive plugins, %2$d unused themes."
+msgstr "%1$d inaktive Plugins, %2$d ungenutzte Themes."
+
+#: includes/class-hardening.php:373
+msgid ""
+"Delete what you are not using. Deactivated code still sits on disk, is still "
+"reachable by a direct request in some cases, and still stops getting updates "
+"the moment you forget it is there. The guide is blunt about it: if you are "
+"not using a plugin, remove it."
+msgstr "Lösche, was du nicht brauchst. Deaktivierter Code liegt weiterhin auf der Platte, ist in manchen Fällen weiterhin per direktem Aufruf erreichbar — und bekommt in dem Moment keine Updates mehr, in dem du vergisst, dass es ihn gibt. Der Leitfaden sagt es deutlich: Wenn du ein Plugin nicht benutzt, entferne es."
+
+#: includes/class-hardening.php:396
+msgid "Administrator accounts"
+msgstr "Administrator-Konten"
+
+#. translators: %d: number of administrator accounts
+#: includes/class-hardening.php:400
+#, php-format
+msgid "%d account can manage options."
+msgid_plural "%d accounts can manage options."
+msgstr[0] "%d Konto darf Optionen verwalten."
+msgstr[1] "%d Konten dürfen Optionen verwalten."
+
+#: includes/class-hardening.php:404
+msgid ""
+"Every administrator is a full compromise of the site if their password "
+"leaks. Demote the ones who only need to write, and delete the ones nobody "
+"uses — an account that nobody logs into is an account nobody notices being "
+"used."
+msgstr "Jeder Administrator bedeutet die vollständige Übernahme der Website, sobald sein Passwort abfliesst. Stufe diejenigen herunter, die nur schreiben müssen, und lösche die, die niemand benutzt — ein Konto, in das sich niemand einloggt, ist ein Konto, dessen Benutzung niemandem auffällt."
+
+#: includes/class-hardening.php:405
+msgid ""
+"Keep it that way. Editors and authors can do their work without being able "
+"to install code."
+msgstr "Halte es so. Redakteure und Autoren können ihre Arbeit tun, ohne Code installieren zu können."
+
+#: includes/class-hardening.php:414
+msgid "The \"admin\" username"
+msgstr "Der Benutzername «admin»"
+
+#: includes/class-hardening.php:417
+msgid "An account called \"admin\" exists."
+msgstr "Es gibt ein Konto namens «admin»."
+
+#: includes/class-hardening.php:418
+msgid "No account is called \"admin\"."
+msgstr "Kein Konto heisst «admin»."
+
+#: includes/class-hardening.php:420
+msgid ""
+"Renaming it is obscurity, not security — but it does mean every automated "
+"brute-force run has to guess the name as well as the password, and those "
+"runs overwhelmingly try \"admin\" first. On this site those attempts are "
+"recorded as login.failed, so you can see for yourself how much of it there "
+"is."
+msgstr "Ihn umzubenennen ist Verschleierung, nicht Sicherheit — aber es bedeutet, dass jeder automatisierte Brute-Force-Lauf auch den Namen erraten muss und nicht nur das Passwort, und diese Läufe probieren ganz überwiegend zuerst «admin». Auf dieser Website werden solche Versuche als login.failed festgehalten, du kannst dir also selbst ansehen, wie viel davon läuft."
+
+#: includes/class-hardening.php:432
+msgid "Open registration"
+msgstr "Offene Registrierung"
+
+#. translators: %s: role slug new users receive
+#: includes/class-hardening.php:437
+#, php-format
+msgid "Anyone can register, and new accounts get the \"%s\" role."
+msgstr "Jeder kann sich registrieren, und neue Konten erhalten die Rolle «%s»."
+
+#: includes/class-hardening.php:440
+msgid "Registration is closed."
+msgstr "Die Registrierung ist geschlossen."
+
+#: includes/class-hardening.php:442
+msgid ""
+"This is a self-service route to a privileged account. Set the default role "
+"back to Subscriber, or close registration. Both options are on Settings → "
+"General, and this plugin alerts immediately if either one changes."
+msgstr "Das ist ein Selbstbedienungsweg zu einem privilegierten Konto. Setze die Standardrolle zurück auf Abonnent oder schliesse die Registrierung. Beide Optionen findest du unter Einstellungen → Allgemein, und dieses Plugin alarmiert sofort, wenn sich eine davon ändert."
+
+#: includes/class-hardening.php:453
+msgid "Administration over HTTPS"
+msgstr "Administration über HTTPS"
+
+#: includes/class-hardening.php:456
+msgid "The site and the dashboard are served over HTTPS."
+msgstr "Website und Dashboard werden über HTTPS ausgeliefert."
+
+#: includes/class-hardening.php:457
+msgid "The dashboard is reachable over plain HTTP."
+msgstr "Das Dashboard ist über unverschlüsseltes HTTP erreichbar."
+
+#: includes/class-hardening.php:460
+msgid ""
+"Get a certificate, move the site to https:// and add "
+"define( 'FORCE_SSL_ADMIN', true ); to wp-config.php. Without it the session "
+"cookie crosses every network between the browser and the server in the "
+"clear, and a second factor does not help — the cookie is what gets stolen, "
+"not the password."
+msgstr "Besorge ein Zertifikat, stelle die Website auf https:// um und trage define( 'FORCE_SSL_ADMIN', true ); in die wp-config.php ein. Ohne das läuft das Sitzungs-Cookie im Klartext über jedes Netz zwischen Browser und Server, und ein zweiter Faktor hilft nicht — gestohlen wird das Cookie, nicht das Passwort."
+
+#. translators: 1: administrators with a second factor, 2: total administrators
+#: includes/class-hardening.php:481
+#, php-format
+msgid "%1$d of %2$d administrators have a second factor."
+msgstr "%1$d von %2$d Administratoren haben einen zweiten Faktor."
+
+#: includes/class-hardening.php:487
+msgid ""
+"The guide recommends a second factor alongside a strong password, and it is "
+"the one control that survives a password being stolen outright. Set it up on "
+"the Two-factor screen, or require it for administrators on Settings → Two-"
+"Factor."
+msgstr "Der Leitfaden empfiehlt neben einem starken Passwort einen zweiten Faktor — die einzige Massnahme, die auch dann noch greift, wenn ein Passwort komplett gestohlen wurde. Richte ihn auf der Seite «Zwei-Faktor» ein oder verlange ihn für Administratoren unter Einstellungen → Zwei-Faktor."
+
+#: includes/class-hardening.php:496
+msgid "XML-RPC"
+msgstr "XML-RPC"
+
+#: includes/class-hardening.php:499
+msgid "Enabled."
+msgstr "Aktiviert."
+
+#: includes/class-hardening.php:500
+msgid "Disabled."
+msgstr "Deaktiviert."
+
+#: includes/class-hardening.php:502
+msgid ""
+"It is a second front door for authentication, and one that can test many "
+"passwords in a single request. Turn it off unless something needs it — the "
+"Jetpack plugin and the official mobile apps do. This plugin alerts if the "
+"setting changes either way."
+msgstr "Es ist eine zweite Haustür zur Authentifizierung — und eine, die in einer einzigen Anfrage viele Passwörter durchprobieren kann. Schalte es aus, sofern nichts es braucht; das Jetpack-Plugin und die offiziellen Mobil-Apps tun das. Dieses Plugin alarmiert, wenn sich die Einstellung in die eine oder andere Richtung ändert."
+
+#: includes/class-hardening.php:525
+msgid "Somewhere for alerts to go"
+msgstr "Ein Ziel für die Alarme"
+
+#: includes/class-hardening.php:528
+msgid "No alert recipients are configured."
+msgstr "Es sind keine Alarm-Empfänger konfiguriert."
+
+#. translators: %d: number of alert recipients
+#: includes/class-hardening.php:531
+#, php-format
+msgid "%d recipient configured."
+msgid_plural "%d recipients configured."
+msgstr[0] "%d Empfänger konfiguriert."
+msgstr[1] "%d Empfänger konfiguriert."
+
+#: includes/class-hardening.php:535
+msgid ""
+"Everything is still being written to the log, but nothing will reach you. "
+"Add at least one address on Settings → General and send yourself a test "
+"message — an alerting system nobody has ever seen work is not an alerting "
+"system."
+msgstr "Es wird zwar weiterhin alles protokolliert, aber nichts erreicht dich. Trage unter Einstellungen → Allgemein mindestens eine Adresse ein und schicke dir eine Testnachricht — ein Alarmsystem, das noch nie jemand hat funktionieren sehen, ist kein Alarmsystem."
+
+#: includes/class-hardening.php:546
+msgid "Watching the filesystem"
+msgstr "Überwachung des Dateisystems"
+
+#: includes/class-hardening.php:549
+msgid "Core checksums, mu-plugins and uploads are all being scanned."
+msgstr "Kern-Prüfsummen, mu-plugins und uploads werden alle geprüft."
+
+#: includes/class-hardening.php:550
+msgid "Some filesystem checks are switched off."
+msgstr "Einige Dateisystem-Prüfungen sind ausgeschaltet."
+
+#: includes/class-hardening.php:553
+msgid ""
+"The guide treats file monitoring as a core part of hardening, because a "
+"backdoor that nobody looks for stays for years. Switch the missing scans "
+"back on under Settings → File Integrity."
+msgstr "Der Leitfaden behandelt die Dateiüberwachung als festen Bestandteil der Härtung, denn eine Hintertür, nach der niemand sucht, bleibt jahrelang liegen. Schalte die fehlenden Prüfungen unter Einstellungen → Dateiintegrität wieder ein."
+
+#: includes/class-hardening.php:562
+msgid "Scans actually running"
+msgstr "Laufen die Prüfungen wirklich?"
+
+#: includes/class-hardening.php:565
+msgid "Every scheduled job is on time."
+msgstr "Alle geplanten Aufgaben sind pünktlich."
+
+#. translators: %d: number of overdue scheduled jobs
+#: includes/class-hardening.php:568
+#, php-format
+msgid "%d scheduled job is overdue."
+msgid_plural "%d scheduled jobs are overdue."
+msgstr[0] "%d geplante Aufgabe ist überfällig."
+msgstr[1] "%d geplante Aufgaben sind überfällig."
+
+#: includes/class-hardening.php:573
+msgid ""
+"WP-Cron only fires when someone visits the site, so a quiet site scans late "
+"— and a site that has stopped receiving visitors is exactly when you want "
+"the scan to run. Drive wp-cron.php from a real system cron. The Status "
+"screen lists which jobs are behind."
+msgstr "WP-Cron läuft nur, wenn jemand die Website besucht; eine ruhige Website prüft also verspätet — und ausgerechnet dann, wenn eine Website keine Besucher mehr bekommt, soll die Prüfung laufen. Rufe wp-cron.php über einen echten System-Cron auf. Die Statusseite zeigt, welche Aufgaben hinterherhinken."
+
+#: includes/class-hardening.php:580
+msgid "Backups"
+msgstr "Backups"
+
+#: includes/class-hardening.php:582
+msgid "Not something this plugin can see."
+msgstr "Das kann dieses Plugin nicht sehen."
+
+#: includes/class-hardening.php:583
+msgid ""
+"No security plugin can tell you whether your backups work — only a restore "
+"can. The guide puts backups alongside hardening for a reason: everything "
+"here reduces the odds of a compromise, and none of it helps you recover from "
+"one. Keep backups off this server, and restore one somewhere harmless from "
+"time to time to prove they are real."
+msgstr "Kein Sicherheits-Plugin kann dir sagen, ob deine Backups funktionieren — das kann nur eine Wiederherstellung. Der Leitfaden stellt Backups aus gutem Grund neben die Härtung: Alles hier senkt die Wahrscheinlichkeit einer Kompromittierung, und nichts davon hilft dir, dich von einer zu erholen. Bewahre Backups ausserhalb dieses Servers auf und stelle von Zeit zu Zeit eines an einem harmlosen Ort wieder her, um zu belegen, dass sie echt sind."
+
+#. translators: %s: comma-separated constant names
+#: includes/class-hardening.php:676
+#, php-format
+msgid "Not defined: %s."
+msgstr "Nicht definiert: %s."
+
+#. translators: %s: comma-separated constant names
+#: includes/class-hardening.php:684
+#, php-format
+msgid "Still the sample value, empty or too short: %s."
+msgstr "Noch der Beispielwert, leer oder zu kurz: %s."
+
+#: includes/class-hardening.php:690
+msgid ""
+"Two or more of them are identical, which defeats the point of having eight."
+msgstr "Zwei oder mehr davon sind identisch, was den Sinn von acht Stück zunichtemacht."
+
+#: includes/class-installer.php:131
+msgid ""
+"WP Security Center does not support WordPress Multisite. It has not been "
+"activated."
+msgstr ""
+"WP Security Center unterstützt WordPress-Multisite nicht. Es wurde nicht "
+"aktiviert."
+
+#: includes/class-installer.php:132
 msgid "Multisite is not supported"
 msgstr "Multisite wird nicht unterstützt"
 
@@ -1017,8 +2303,12 @@ msgid "Alert settings:"
 msgstr "Alarm-Einstellungen:"
 
 #: includes/class-mailer.php:132
-msgid "Sent by WP Security Center. If this alert is noise, the event type can be switched to log-only on the settings screen."
-msgstr "Gesendet von WP Security Center. Falls dieser Alarm nur Rauschen ist, lässt sich der Ereignistyp in den Einstellungen auf „nur protokollieren“ umstellen."
+msgid ""
+"Sent by WP Security Center. If this alert is noise, the event type can be "
+"switched to log-only on the settings screen."
+msgstr ""
+"Gesendet von WP Security Center. Falls dieser Alarm nur Rauschen ist, lässt "
+"sich der Ereignistyp in den Einstellungen auf „nur protokollieren“ umstellen."
 
 #: includes/class-mailer.php:206
 #, php-format
@@ -1172,184 +2462,247 @@ msgstr "Anwendungspasswort widerrufen für %1$s"
 
 #: includes/class-mailer.php:236
 #, php-format
+msgid "Two-factor authentication switched on: %1$s"
+msgstr "Zwei-Faktor-Authentifizierung eingeschaltet: %1$s"
+
+#: includes/class-mailer.php:237
+#, php-format
+msgid "Two-factor authentication switched OFF: %1$s"
+msgstr "Zwei-Faktor-Authentifizierung AUSGESCHALTET: %1$s"
+
+#: includes/class-mailer.php:238
+#, php-format
+msgid "Two-factor authentication reset by an administrator: %1$s"
+msgstr ""
+"Zwei-Faktor-Authentifizierung durch einen Administrator zurückgesetzt: %1$s"
+
+#: includes/class-mailer.php:239
+#, php-format
+msgid "Second factor requested: %1$s"
+msgstr "Zweiter Faktor angefordert: %1$s"
+
+#: includes/class-mailer.php:240
+#, php-format
+msgid "Second factor accepted: %1$s"
+msgstr "Zweiter Faktor akzeptiert: %1$s"
+
+#: includes/class-mailer.php:241
+#, php-format
+msgid "Wrong second-factor code after a correct password: %1$s"
+msgstr "Falscher Zwei-Faktor-Code nach korrektem Passwort: %1$s"
+
+#: includes/class-mailer.php:242
+#, php-format
+msgid "Signed in with a two-factor recovery code: %1$s"
+msgstr "Anmeldung mit einem Zwei-Faktor-Wiederherstellungscode: %1$s"
+
+#: includes/class-mailer.php:243
+#, php-format
+msgid "New two-factor recovery codes generated: %1$s"
+msgstr "Neue Zwei-Faktor-Wiederherstellungscodes erzeugt: %1$s"
+
+#: includes/class-mailer.php:244
+#, php-format
+msgid "One-time sign-in code e-mailed: %1$s"
+msgstr "Einmaliger Anmeldecode per E-Mail versendet: %1$s"
+
+#: includes/class-mailer.php:245
+#, php-format
+msgid ""
+"Signed in with an e-mailed one-time code instead of an authenticator: %1$s"
+msgstr ""
+"Anmeldung mit einem per E-Mail versendeten Einmalcode statt mit einem "
+"Authenticator: %1$s"
+
+#: includes/class-mailer.php:246
+msgid "Two-factor policy changed"
+msgstr "Zwei-Faktor-Richtlinie geändert"
+
+#: includes/class-mailer.php:247
+#, php-format
+msgid "Failed login attempt: %1$s"
+msgstr "Fehlgeschlagener Anmeldeversuch: %1$s"
+
+#: includes/class-mailer.php:248
+#, php-format
 msgid "Login from a country that is not on the allow list: %1$s"
 msgstr "Login aus einem Land, das nicht auf der Positivliste steht: %1$s"
 
-#: includes/class-mailer.php:237
+#: includes/class-mailer.php:249
 #, php-format
 msgid "Login WOULD have been blocked (monitor mode): %1$s"
 msgstr "Login WÄRE gesperrt worden (Beobachtungsmodus): %1$s"
 
-#: includes/class-mailer.php:238
+#: includes/class-mailer.php:250
 #, php-format
 msgid "Login BLOCKED from a disallowed country: %1$s"
 msgstr "Login aus nicht erlaubtem Land GESPERRT: %1$s"
 
-#: includes/class-mailer.php:239
+#: includes/class-mailer.php:251
 #, php-format
 msgid "Login allowed by a bypass grant: %1$s"
 msgstr "Login durch eine Notfall-Freigabe erlaubt: %1$s"
 
-#: includes/class-mailer.php:240
+#: includes/class-mailer.php:252
 #, php-format
 msgid "Bypass link redeemed by %1$s"
 msgstr "Notfall-Link eingelöst von %1$s"
 
-#: includes/class-mailer.php:241
+#: includes/class-mailer.php:253
 #, php-format
 msgid "Login would have been blocked but the kill switch is active: %1$s"
 msgstr "Login wäre gesperrt worden, aber die Notabschaltung ist aktiv: %1$s"
 
-#: includes/class-mailer.php:242
+#: includes/class-mailer.php:254
 msgid "The site URL was changed"
 msgstr "Die Website-URL wurde geändert"
 
-#: includes/class-mailer.php:243
+#: includes/class-mailer.php:255
 msgid "The home URL was changed"
 msgstr "Die Startseiten-URL wurde geändert"
 
-#: includes/class-mailer.php:244
+#: includes/class-mailer.php:256
 msgid "The site administrator e-mail address was changed"
 msgstr "Die Administrator-E-Mail-Adresse der Website wurde geändert"
 
-#: includes/class-mailer.php:245
+#: includes/class-mailer.php:257
 msgid "A change of the administrator e-mail address was requested"
 msgstr "Eine Änderung der Administrator-E-Mail-Adresse wurde angefordert"
 
-#: includes/class-mailer.php:246
+#: includes/class-mailer.php:258
 msgid "Open user registration was changed"
 msgstr "Die offene Benutzerregistrierung wurde geändert"
 
-#: includes/class-mailer.php:247
+#: includes/class-mailer.php:259
 msgid "The default role for new users was changed"
 msgstr "Die Standardrolle für neue Benutzer wurde geändert"
 
-#: includes/class-mailer.php:248
+#: includes/class-mailer.php:260
 msgid "Search engine visibility was changed"
 msgstr "Die Sichtbarkeit für Suchmaschinen wurde geändert"
 
-#: includes/class-mailer.php:249
+#: includes/class-mailer.php:261
 msgid "Automatic update settings were changed"
 msgstr "Die Einstellungen für automatische Updates wurden geändert"
 
-#: includes/class-mailer.php:250
+#: includes/class-mailer.php:262
 msgid "The active plugin list was written directly"
 msgstr "Die Liste aktiver Plugins wurde direkt geschrieben"
 
-#: includes/class-mailer.php:251
+#: includes/class-mailer.php:263
 msgid "XML-RPC availability changed"
 msgstr "Die Verfügbarkeit von XML-RPC hat sich geändert"
 
-#: includes/class-mailer.php:252
+#: includes/class-mailer.php:264
 msgid "The file-editing configuration changed"
 msgstr "Die Konfiguration für die Dateibearbeitung hat sich geändert"
 
-#: includes/class-mailer.php:253
+#: includes/class-mailer.php:265
 #, php-format
 msgid "A file was edited through the built-in editor: %1$s"
 msgstr "Eine Datei wurde über den eingebauten Editor bearbeitet: %1$s"
 
-#: includes/class-mailer.php:254
+#: includes/class-mailer.php:266
 msgid "An automatic-update constant changed"
 msgstr "Eine Konstante für automatische Updates hat sich geändert"
 
-#: includes/class-mailer.php:255
+#: includes/class-mailer.php:267
 #, php-format
 msgid "New scheduled task: %1$s"
 msgstr "Neue geplante Aufgabe: %1$s"
 
-#: includes/class-mailer.php:256
+#: includes/class-mailer.php:268
 #, php-format
 msgid "Scheduled task removed: %1$s"
 msgstr "Geplante Aufgabe entfernt: %1$s"
 
-#: includes/class-mailer.php:257
+#: includes/class-mailer.php:269
 #, php-format
 msgid "New must-use plugin appeared: %1$s"
 msgstr "Neues Must-Use-Plugin aufgetaucht: %1$s"
 
-#: includes/class-mailer.php:258
+#: includes/class-mailer.php:270
 msgid "wp-config.php was modified"
 msgstr "wp-config.php wurde verändert"
 
-#: includes/class-mailer.php:259
+#: includes/class-mailer.php:271
 msgid ".htaccess was modified"
 msgstr ".htaccess wurde verändert"
 
-#: includes/class-mailer.php:260
+#: includes/class-mailer.php:272
 #, php-format
 msgid "New file in mu-plugins: %1$s"
 msgstr "Neue Datei in mu-plugins: %1$s"
 
-#: includes/class-mailer.php:261
+#: includes/class-mailer.php:273
 #, php-format
 msgid "Changed file in mu-plugins: %1$s"
 msgstr "Geänderte Datei in mu-plugins: %1$s"
 
-#: includes/class-mailer.php:262
+#: includes/class-mailer.php:274
 #, php-format
 msgid "PHP file found in the uploads directory: %1$s"
 msgstr "PHP-Datei im Upload-Verzeichnis gefunden: %1$s"
 
-#: includes/class-mailer.php:263
+#: includes/class-mailer.php:275
 #, php-format
 msgid ".htaccess in the uploads directory changed: %1$s"
 msgstr ".htaccess im Upload-Verzeichnis geändert: %1$s"
 
-#: includes/class-mailer.php:264
+#: includes/class-mailer.php:276
 #, php-format
 msgid "Known PHP file in uploads changed: %1$s"
 msgstr "Bekannte PHP-Datei in uploads geändert: %1$s"
 
-#: includes/class-mailer.php:265
+#: includes/class-mailer.php:277
 #, php-format
 msgid "Possible backdoor signature: %1$s"
 msgstr "Mögliche Backdoor-Signatur: %1$s"
 
-#: includes/class-mailer.php:266
+#: includes/class-mailer.php:278
 #, php-format
 msgid "Modified WordPress core file: %1$s"
 msgstr "Veränderte WordPress-Kerndatei: %1$s"
 
-#: includes/class-mailer.php:267
+#: includes/class-mailer.php:279
 #, php-format
 msgid "Missing WordPress core file: %1$s"
 msgstr "Fehlende WordPress-Kerndatei: %1$s"
 
-#: includes/class-mailer.php:268
+#: includes/class-mailer.php:280
 #, php-format
 msgid "Unrecognised file in a core directory: %1$s"
 msgstr "Unbekannte Datei in einem Kernverzeichnis: %1$s"
 
-#: includes/class-mailer.php:269
+#: includes/class-mailer.php:281
 msgid "The GeoIP database could not be updated"
 msgstr "Die GeoIP-Datenbank konnte nicht aktualisiert werden"
 
-#: includes/class-mailer.php:270
+#: includes/class-mailer.php:282
 msgid "The GeoIP database is missing"
 msgstr "Die GeoIP-Datenbank fehlt"
 
-#: includes/class-mailer.php:271
+#: includes/class-mailer.php:283
 msgid "Login blocking was automatically disarmed"
 msgstr "Die Login-Sperre wurde automatisch entschärft"
 
-#: includes/class-mailer.php:272
+#: includes/class-mailer.php:284
 msgid "Alert e-mails are being throttled"
 msgstr "Alarm-E-Mails werden gedrosselt"
 
-#: includes/class-mailer.php:273
+#: includes/class-mailer.php:285
 msgid "WP Security Center was activated"
 msgstr "WP Security Center wurde aktiviert"
 
-#: includes/class-mailer.php:274
+#: includes/class-mailer.php:286
 msgid "WP Security Center was deactivated"
 msgstr "WP Security Center wurde deaktiviert"
 
-#: includes/class-updater.php:128
+#: includes/class-updater.php:167
 msgid "See the GitHub release notes for details."
 msgstr "Einzelheiten stehen in den GitHub-Release-Notes."
 
-#: includes/class-updater.php:178
+#: includes/class-updater.php:247
 msgid "Could not rename the downloaded update folder."
 msgstr "Der heruntergeladene Update-Ordner konnte nicht umbenannt werden."
 
@@ -1369,36 +2722,37 @@ msgstr "Traefik / Docker / private Netze"
 msgid "Loopback only"
 msgstr "Nur Loopback"
 
-#: includes/geo/class-country-resolver.php:260
+#: includes/geo/class-country-resolver.php:264
 msgid "Local network"
 msgstr "Lokales Netz"
 
-#: includes/geo/class-geoip-database.php:125
+#: includes/geo/class-geoip-database.php:155
 msgid "No MaxMind licence key is configured."
 msgstr "Es ist kein MaxMind-Lizenzschlüssel eingetragen."
 
-#: includes/geo/class-geoip-database.php:134
+#: includes/geo/class-geoip-database.php:164
 msgid "The uploads directory is not writable."
 msgstr "Das Upload-Verzeichnis ist nicht beschreibbar."
 
-#: includes/geo/class-geoip-database.php:179
+#: includes/geo/class-geoip-database.php:215
 msgid "The downloaded database failed its checksum verification."
-msgstr "Die heruntergeladene Datenbank hat die Prüfsummenkontrolle nicht bestanden."
+msgstr ""
+"Die heruntergeladene Datenbank hat die Prüfsummenkontrolle nicht bestanden."
 
-#: includes/geo/class-geoip-database.php:197
+#: includes/geo/class-geoip-database.php:233
 msgid "The extracted file does not look like a MaxMind database."
 msgstr "Die entpackte Datei sieht nicht wie eine MaxMind-Datenbank aus."
 
-#: includes/geo/class-geoip-database.php:204
+#: includes/geo/class-geoip-database.php:240
 msgid "The new database could not replace the existing one."
 msgstr "Die neue Datenbank konnte die bestehende nicht ersetzen."
 
-#: includes/geo/class-geoip-database.php:241
+#: includes/geo/class-geoip-database.php:277
 msgid "MaxMind rejected the licence key."
 msgstr "MaxMind hat den Lizenzschlüssel abgelehnt."
 
 #. translators: %d: HTTP status code
-#: includes/geo/class-geoip-database.php:246
+#: includes/geo/class-geoip-database.php:282
 #, php-format
 msgid "MaxMind returned HTTP %d."
 msgstr "MaxMind antwortete mit HTTP %d."
@@ -1425,7 +2779,8 @@ msgstr "Das heruntergeladene Archiv ist unvollständig."
 
 #: includes/geo/class-tar-reader.php:92
 msgid "The extracted database could not be written to disk."
-msgstr "Die entpackte Datenbank konnte nicht auf die Festplatte geschrieben werden."
+msgstr ""
+"Die entpackte Datenbank konnte nicht auf die Festplatte geschrieben werden."
 
 #: includes/geo/class-tar-reader.php:103
 msgid "The archive did not contain the expected database file."
@@ -1451,3 +2806,51 @@ msgstr "Anzeigename"
 msgid "roles"
 msgstr "Rollen"
 
+#. Description of the plugin
+#: wp-security-center.php
+msgid ""
+"Security monitoring and alerting for WordPress. Logs and alerts on plugin/"
+"theme changes, administrator and role changes, configuration changes, "
+"filesystem integrity and logins from countries outside your allow list — "
+"with optional login blocking and two-factor authentication. Administrator-"
+"only, with immediate e-mail alerts."
+msgstr ""
+"Sicherheitsüberwachung und Alarmierung für WordPress. Protokolliert und "
+"meldet Änderungen an Plugins und Themes, an Administratoren und Rollen, an "
+"der Konfiguration und am Dateibestand sowie Logins aus Ländern ausserhalb "
+"deiner Positivliste — mit optionaler Login-Sperre und Zwei-Faktor-"
+"Authentifizierung. Nur für Administratoren sichtbar, mit sofortigen E-Mail-"
+"Alarmen."
+
+#. Author of the plugin
+#: wp-security-center.php
+msgid "Steven Glogger"
+msgstr ""
+
+#. Plugin Name of the plugin
+#: wp-security-center.php
+msgid "WP Security Center"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: wp-security-center.php
+msgid "https://github.com/sglogger/wp-security-center"
+msgstr ""
+
+#. Author URI of the plugin
+#: wp-security-center.php
+msgid "https://www.glogger.ch"
+msgstr ""
+
+#~ msgid ""
+#~ "Security monitoring and alerting for WordPress. Logs and alerts on plugin/"
+#~ "theme changes, administrator and role changes, configuration changes, "
+#~ "filesystem integrity and logins from countries outside your allow list — "
+#~ "with optional login blocking. Administrator-only, with immediate e-mail "
+#~ "alerts."
+#~ msgstr ""
+#~ "Sicherheitsüberwachung und Alarmierung für WordPress. Protokolliert und "
+#~ "meldet Änderungen an Plugins und Themes, an Administratoren und Rollen, "
+#~ "an der Konfiguration und am Dateibestand sowie Logins aus Ländern "
+#~ "ausserhalb deiner Positivliste — mit optionaler Login-Sperre. Nur für "
+#~ "Administratoren sichtbar, mit sofortigen E-Mail-Alarmen."

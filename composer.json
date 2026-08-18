@@ -1,6 +1,6 @@
 {
 	"name": "sglogger/wp-security-center",
-	"description": "Security monitoring and alerting for WordPress: plugin/theme changes, administrator and role changes, configuration changes, filesystem integrity and geo-aware login control.",
+	"description": "Security monitoring and alerting for WordPress: plugin/theme changes, administrator and role changes, configuration changes, filesystem integrity, two-factor authentication and geo-aware login control.",
 	"type": "wordpress-plugin",
 	"license": "GPL-2.0-or-later",
 	"authors": [

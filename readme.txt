@@ -1,14 +1,14 @@
 === WP Security Center ===
 Contributors: glogger
-Tags: security, activity log, audit log, geoblocking, file integrity
+Tags: security, activity log, audit log, two-factor, file integrity
 Requires at least: 6.5
 Tested up to: 6.9
 Requires PHP: 8.1
-Stable tag: 1.1.1
+Stable tag: 1.2.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Security monitoring and alerting for WordPress: plugin and theme changes, administrator and role changes, configuration changes, filesystem integrity, and geo-aware login control.
+Security monitoring and alerting for WordPress: plugin and theme changes, administrator and role changes, configuration changes, filesystem integrity, two-factor authentication, and geo-aware login control.
 
 == Description ==
 
@@ -27,7 +27,15 @@ It is built around two goals that pull against each other: miss as little as pos
 * Logins: failed attempts, successful logins, and a login from a country outside your allow list — with optional blocking.
 * Two-factor authentication: who switched it on or off, wrong codes submitted after a correct password, and every use of a recovery code or the e-mail fallback.
 
+A separate Hardening screen reports the current posture — file editor, permissions, salts, updates, HTTPS, two-factor coverage and more — against the official WordPress hardening guide, linking to it at each point.
+
 **The plugin never modifies, quarantines or deletes a scanned file.** It reports, and leaves recovery to you.
+
+**Hardening report**
+
+A read-only screen grading this installation against the official WordPress hardening guide, with a link to the relevant section of that guide on every check. Twenty-two checks covering the dashboard file editor and DISALLOW_FILE_MODS, file permissions, wp-config.php location and permissions, authentication salts, error output, core and extension updates, unused plugins and themes, administrator count, open registration, HTTPS, two-factor coverage, XML-RPC, alerting, file monitoring and backups.
+
+Checks are graded Good, Fix this, Worth fixing — or "Your call", for the ones that genuinely depend on how the site is run rather than having a right answer. Nothing on the page changes anything.
 
 **Two-factor authentication**
 
@@ -95,6 +103,16 @@ No. Activation on a network stops with a message rather than misbehaving quietly
 
 == Changelog ==
 
+= 1.2.0 =
+* Added: a Hardening screen. Twenty-two read-only checks graded against the official WordPress hardening guide, each linking to the section it comes from. Verdicts include "Your call" for the decisions that depend on how the site is run — DISALLOW_FILE_MODS being the clearest, since it blocks plugin installation and every security update alike.
+* Added: two-factor authentication (TOTP). A one-time code from any authenticator app, asked for after the password is accepted; the session is only issued once that code is right. Enrolment is per account and voluntary by default, with a site setting to require it for administrators after a grace period.
+* Added: recovery for a lost authenticator — ten single-use recovery codes shown once at enrolment, an optional one-time code by e-mail (off by default, because it reduces the second factor to whoever reads the mailbox), and a reset by another administrator as the last resort.
+* Added: failed login attempts are recorded as login.failed, at Info and log only. Nothing is enforced on a failure; rate limiting still belongs in your firewall or CDN.
+* Fixed: the file scanner reported the plugin's own GeoIP guard files under uploads as a critical find. The GeoIP refresh was overwriting the recorded path of its own directory, which is what the scanner used to recognise them.
+* Fixed: a .htaccess in the uploads directory was reported as "an executable file … should never contain PHP", which is wrong on both counts. It is now its own finding, with the event the registry already defined for it.
+* Fixed: on a localised WordPress, wp-includes/version.php was reported as modified on every scan. The checksum manifest is now chosen by the package the core was built from rather than by the site's current language.
+* Fixed: the "View details" link vanished from the plugins list whenever GitHub could not be reached. The plugin now always registers itself in the update transient, and the details modal no longer offers a WordPress.org page that does not exist.
+
 = 1.1.1 =
 * Fixed: updating from a private GitHub repository failed after the update had already been offered. The release asset was fetched from its browser URL, which cannot carry a token; it is now fetched from the API asset URL with the token and the correct Accept header. Public repositories were unaffected.
 
@@ -115,6 +133,9 @@ No. Activation on a network stops with a message rather than misbehaving quietly
 * Initial scaffolding release.
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+Start at Security Center → Hardening: it grades this installation against the official WordPress hardening guide and says what to change and where. Fixes three sources of false alarms: the scanner reporting its own files under uploads, a .htaccess reported as executable PHP, and wp-includes/version.php reported as modified on every localised install. Adds optional two-factor authentication — nothing changes for anyone until a user enrols, or until you require it for administrators in Settings.
 
 = 1.1.1 =
 Required if your copy of this plugin is hosted in a private GitHub repository: without it, automatic updates are detected but cannot be downloaded. Install this version once by hand, and every later update will work on its own.

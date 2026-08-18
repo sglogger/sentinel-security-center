@@ -188,10 +188,33 @@ jobs:
           zip -rq "$GITHUB_WORKSPACE/$SLUG.zip" "$SLUG"
           unzip -l "$GITHUB_WORKSPACE/$SLUG.zip" | tail -1
 
+      # The release body is not decoration: it is the ONLY description of a new
+      # version that an un-updated site can see. WordPress renders it in the
+      # "View version X details" modal, because the readme.txt on that site
+      # still describes the version it already has. Left to the auto-generated
+      # notes, that modal shows a compare link and nothing else.
+      - name: Build release notes from readme.txt
+        run: |
+          VERSION="${{ steps.ver.outputs.version }}"
+          awk -v v="= $VERSION =" '
+            $0 == v { f = 1; next }
+            f && /^= [0-9]/ { exit }
+            f { print }
+          ' readme.txt > release-notes.md
+
+          if [ ! -s release-notes.md ]; then
+            echo "::warning::readme.txt has no '= $VERSION =' section; the details modal will have nothing to show for this release."
+            printf 'See CHANGELOG.md for what changed in %s.\n' "$VERSION" > release-notes.md
+          fi
+
+          echo "--- release notes ---"
+          cat release-notes.md
+
       - name: Create / update GitHub release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.ver.outputs.tag }}
           files: wp-security-center.zip
+          body_path: release-notes.md
           generate_release_notes: true
           fail_on_unmatched_files: true

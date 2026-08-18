@@ -9,6 +9,21 @@ When a release goes out, the same summary must also be added to the
 `== Changelog ==` section of `readme.txt` — that is what WordPress shows in the
 plugin details modal.
 
+## [1.5.0] - 2026-08-18
+
+### Fixed
+
+- **`Tested up to` in readme.txt carried a patch number.** The field is defined
+  as a WordPress *major* version, so `7.0.4` is rejected by the plugin review
+  checks rather than merely tidied up. It now reads `7.0`.
+
+- **The release ZIP shipped `vendor/` without `composer.json`.** The packaging
+  step deliberately excluded every tooling config from the plugin root, but
+  `vendor/` is installed by Composer and does ship, and a Composer-built
+  dependency tree with no manifest describing it is flagged by the review
+  tooling. `composer.json` is now staged into the ZIP with the rest of the
+  plugin; `composer.lock` and the remaining dev configs stay out.
+
 ## [1.4.0] - 2026-08-18
 
 ### Changed

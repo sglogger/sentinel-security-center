@@ -99,10 +99,10 @@ jobs:
       # config) silently ends up in the shipped plugin. With an allow list it
       # cannot: anything not named here is simply never copied.
       #
-      # Shipped: the bootstrap, the code, the assets, and the two files
-      # WordPress itself consumes — readme.txt (the plugin details modal is
-      # rendered from it) and LICENSE.txt (the GPL requires it to accompany
-      # distribution). Nothing else is needed at runtime.
+      # Shipped: the bootstrap, the code, the assets, the two files WordPress
+      # itself consumes — readme.txt (the plugin details modal is rendered from
+      # it) and LICENSE.txt (the GPL requires it to accompany distribution) —
+      # and composer.json, which describes the vendor/ tree that ships with it.
       - name: Stage plugin files
         run: |
           SLUG=sentinel-security-center
@@ -110,12 +110,18 @@ jobs:
           rm -rf "$STAGE"
           mkdir -p "$STAGE"
 
+          # composer.json ships on purpose. vendor/ is a Composer-built tree
+          # and it is part of the plugin, so the manifest that describes it has
+          # to travel with it — Plugin Check flags a vendor/ directory whose
+          # composer.json is missing. composer.lock stays out: it pins dev
+          # packages that are not in the ZIP.
           for path in \
             sentinel-security-center.php \
             uninstall.php \
             index.php \
             readme.txt \
-            LICENSE.txt
+            LICENSE.txt \
+            composer.json
           do
             test -f "$path" || { echo "::error::required file $path is missing"; exit 1; }
             cp "$path" "$STAGE/"
@@ -157,7 +163,7 @@ jobs:
           # Tooling config is only forbidden at the plugin root. A vendored
           # package legitimately carries its own composer.json, and deleting
           # files from inside a dependency is how you break it.
-          for unwanted in composer.json composer.lock phpunit.xml.dist phpcs.xml.dist docker-compose.yml-example .env.example README.md CHANGELOG.md; do
+          for unwanted in composer.lock phpunit.xml.dist phpcs.xml.dist docker-compose.yml-example .env.example README.md CHANGELOG.md; do
             if [ -e "$STAGE/$unwanted" ]; then
               echo "::error::$unwanted must not ship inside the plugin"
               exit 1
@@ -177,6 +183,7 @@ jobs:
             || { echo "::error::plugin header missing from the staged bootstrap"; exit 1; }
 
           test -f "$STAGE/vendor/autoload.php" || { echo "::error::vendor/autoload.php missing from the staged plugin"; exit 1; }
+          test -f "$STAGE/composer.json" || { echo "::error::composer.json missing from the staged plugin — vendor/ ships, so its manifest must too"; exit 1; }
 
           echo "--- staged size ---"
           du -sh "$STAGE"

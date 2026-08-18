@@ -2,9 +2,9 @@
 Contributors: glogger
 Tags: security, activity log, audit log, two-factor, file integrity
 Requires at least: 6.5
-Tested up to: 7.0.4
+Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 1.4.0
+Stable tag: 1.5.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,6 +103,10 @@ No. Activation on a network stops with a message rather than misbehaving quietly
 
 == Changelog ==
 
+= 1.5.0 =
+* Fixed: readme.txt declared "Tested up to: 7.0.4". That field takes a WordPress major version only, and a patch number in it is an error at review time, so it now reads 7.0.
+* Fixed: the release ZIP shipped a vendor/ directory built by Composer without the composer.json that describes it, which the plugin review tooling flags. composer.json is now packaged alongside it.
+
 = 1.4.0 =
 * Changed: the plugin is now called Sentinel Security Center. WordPress.org does not allow a plugin name or permalink to begin with "wp", so the name, the slug and the text domain changed from wp-security-center to sentinel-security-center, and the main plugin file was renamed to match.
 * Changed: the GitHub repository moved to sglogger/sentinel-security-center and the updater now queries it. The old URLs redirect.
@@ -151,6 +155,9 @@ No. Activation on a network stops with a message rather than misbehaving quietly
 * Initial scaffolding release.
 
 == Upgrade Notice ==
+
+= 1.5.0 =
+Packaging and metadata only: no functional change, and nothing to do after updating.
 
 = 1.4.0 =
 A rename, and nothing else: WP Security Center is now Sentinel Security Center, because WordPress.org does not allow a plugin name to begin with "wp". Your settings, log and baselines are all preserved. One manual step is required: WordPress cannot reactivate the plugin itself, because the main plugin file has been renamed, so it will be left switched off after the update. Activate it on the Plugins screen and monitoring resumes exactly as before. Nothing is monitored until you do.

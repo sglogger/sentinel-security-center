@@ -134,8 +134,14 @@ final class Ip_Matcher {
 
 		$bits = (int) $bits;
 
+		// inet_pton() emits a warning for anything it cannot parse, and what
+		// arrives here is a hand-typed deny list or proxy range: malformed input
+		// is expected rather than exceptional. The false return is checked on the
+		// next line, which is the whole error handling this needs.
+		// phpcs:disable WordPress.PHP.NoSilencedErrors -- a malformed address is answered by the false return below, not by a warning in someone's error log.
 		$ip_bin     = @inet_pton( $ip );
 		$subnet_bin = @inet_pton( $subnet );
+		// phpcs:enable WordPress.PHP.NoSilencedErrors
 
 		if ( false === $ip_bin || false === $subnet_bin ) {
 			return false;

@@ -50,6 +50,7 @@ final class Logger {
 			// A typo in an event name must be loud in development and harmless
 			// in production, never a silent no-op that hides a real event.
 			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error -- not debug output: a typo in an event name would otherwise be a silent no-op that hides a real security event. Raised only under WP_DEBUG, so a production site never sees it.
 				trigger_error(
 					esc_html( 'Sentinel Security Center: unknown event type "' . $type . '"' ),
 					E_USER_WARNING
@@ -209,10 +210,11 @@ final class Logger {
 		// Bounded so a pathological table cannot spin here forever; whatever is
 		// left is picked up by tomorrow's run.
 		for ( $i = 0; $i < 40; $i++ ) {
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery -- table name from $wpdb->prefix; the value IS prepared.
+			// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter -- table name from $wpdb->prefix; the value IS prepared.
 			$rows = (int) $wpdb->query(
 				$wpdb->prepare( "DELETE FROM `{$table}` WHERE event_time < %s LIMIT 5000", $cutoff )
 			);
+			// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 
 			$deleted += $rows;
 

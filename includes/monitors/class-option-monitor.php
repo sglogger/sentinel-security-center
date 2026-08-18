@@ -28,13 +28,13 @@ final class Option_Monitor {
 	 */
 	private function watchlist(): array {
 		return [
-			'siteurl'                => 'option.siteurl_changed',
-			'home'                   => 'option.home_changed',
-			'admin_email'            => 'option.admin_email_changed',
-			'new_admin_email'        => 'option.admin_email_change_requested',
-			'users_can_register'     => 'option.users_can_register_changed',
-			'default_role'           => 'option.default_role_changed',
-			'blog_public'            => 'option.blog_public_changed',
+			'siteurl'            => 'option.siteurl_changed',
+			'home'               => 'option.home_changed',
+			'admin_email'        => 'option.admin_email_changed',
+			'new_admin_email'    => 'option.admin_email_change_requested',
+			'users_can_register' => 'option.users_can_register_changed',
+			'default_role'       => 'option.default_role_changed',
+			'blog_public'        => 'option.blog_public_changed',
 		];
 	}
 

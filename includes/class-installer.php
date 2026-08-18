@@ -232,7 +232,7 @@ final class Installer {
 		$table = self::table_file_baseline();
 		$like  = '%' . $wpdb->esc_like( 'wpsec-geoip-' ) . '%';
 
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- table name from $wpdb->prefix; the pattern IS bound through prepare().
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- table name from $wpdb->prefix; the pattern IS bound through prepare().
 		$wpdb->query( $wpdb->prepare( "DELETE FROM `{$table}` WHERE path LIKE %s", $like ) );
 	}
 
@@ -273,7 +273,7 @@ final class Installer {
 		}
 
 		foreach ( [ self::table_log(), self::table_user_baseline(), self::table_file_baseline() ] as $table ) {
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery -- a table name cannot be a placeholder; the value is built from $wpdb->prefix and our own constant.
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter -- a table name cannot be a placeholder; the value is built from $wpdb->prefix and our own constant.
 			$wpdb->query( "DROP TABLE IF EXISTS `{$table}`" );
 		}
 	}

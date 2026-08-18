@@ -488,6 +488,7 @@ final class Hardening {
 			'passwords'
 		);
 
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- xmlrpc_enabled is a WordPress core filter, not a hook of ours. The hardening report has to read the effective value, whoever set it.
 		$xmlrpc = (bool) apply_filters( 'xmlrpc_enabled', true );
 
 		$checks[] = self::check(

@@ -44,11 +44,11 @@ final class Plugin {
 		}
 		$this->booted = true;
 
-		load_plugin_textdomain(
-			'sentinel-security-center',
-			false,
-			dirname( WPSEC_BASENAME ) . '/languages'
-		);
+		// No load_plugin_textdomain() call. Since WordPress 4.6 a translation is
+		// loaded just in time on the first __() for the domain, and for a plugin
+		// hosted on WordPress.org the .mo files are delivered into WP_LANG_DIR
+		// and picked up from there. Calling it explicitly is discouraged and
+		// Plugin Check flags it.
 
 		// Converge the schema and options even when the plugin was updated by
 		// uploading files rather than through the WordPress.org updater.

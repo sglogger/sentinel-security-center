@@ -42,6 +42,7 @@ final class Tar_Reader {
 			return new \WP_Error( 'wpsec_tar_empty', __( 'The downloaded archive was empty.', 'sentinel-security-center' ) );
 		}
 
+		// phpcs:ignore WordPress.PHP.NoSilencedErrors -- gzdecode() warns on anything that is not gzip, and a truncated or error-page download is exactly what we are testing for. The false return becomes the WP_Error below.
 		$tar = @gzdecode( $raw );
 
 		if ( false === $tar ) {

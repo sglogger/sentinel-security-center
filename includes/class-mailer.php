@@ -203,56 +203,106 @@ final class Mailer {
 	 */
 	private static function descriptions(): array {
 		return [
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'plugin.installed'                    => __( 'Plugin installed: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'plugin.activated'                    => __( 'Plugin activated: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'plugin.deactivated'                  => __( 'Plugin deactivated: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'plugin.updated'                      => __( 'Plugin updated: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'plugin.deleted'                      => __( 'Plugin deleted: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'plugin.auto_updated'                 => __( 'Plugin auto-updated: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'plugin.appeared_out_of_band'         => __( 'Plugin appeared without an install: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'plugin.update_available'             => __( 'Plugin update available: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'theme.installed'                     => __( 'Theme installed: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'theme.activated'                     => __( 'Theme activated: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'theme.updated'                       => __( 'Theme updated: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'theme.deleted'                       => __( 'Theme deleted: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'user.created'                        => __( 'New user created: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'user.created_admin'                  => __( 'New ADMINISTRATOR created: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'user.deleted'                        => __( 'User deleted: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'user.deleted_admin'                  => __( 'ADMINISTRATOR deleted: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'user.role_changed'                   => __( 'Role changed for %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'user.promoted_admin'                 => __( '%1$s was promoted to ADMINISTRATOR', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'user.demoted_admin'                  => __( '%1$s was demoted from administrator', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'user.email_changed'                  => __( 'E-mail address changed for %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'user.email_change_requested'         => __( 'E-mail change requested for %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'user.password_changed'               => __( 'Password changed for %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'user.password_reset_requested'       => __( 'Password reset requested for %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'user.password_reset_completed'       => __( 'Password reset completed for %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'user.self_admin_modified'            => __( 'Administrator %1$s modified their own account', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'user.login_changed'                  => __( 'Login name changed: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'user.db_created_out_of_band'         => __( 'User created directly in the database: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'user.db_deleted_out_of_band'         => __( 'User deleted directly in the database: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'user.db_modified_out_of_band'        => __( 'User modified directly in the database: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'apppass.created'                     => __( 'Application password created for %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'apppass.revoked'                     => __( 'Application password revoked for %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'2fa.enabled'                         => __( 'Two-factor authentication switched on: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'2fa.disabled'                        => __( 'Two-factor authentication switched OFF: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'2fa.reset_by_admin'                  => __( 'Two-factor authentication reset by an administrator: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'2fa.challenge_issued'                => __( 'Second factor requested: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'2fa.challenge_passed'                => __( 'Second factor accepted: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'2fa.challenge_failed'                => __( 'Wrong second-factor code after a correct password: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'2fa.api_auth_refused'                => __( 'API login with the account password refused (two-factor active): %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'2fa.recovery_code_used'              => __( 'Signed in with a two-factor recovery code: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'2fa.recovery_codes_regenerated'      => __( 'New two-factor recovery codes generated: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'2fa.email_code_sent'                 => __( 'One-time sign-in code e-mailed: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'2fa.email_code_used'                 => __( 'Signed in with an e-mailed one-time code instead of an authenticator: %1$s', 'sentinel-security-center' ),
 			'2fa.policy_changed'                  => __( 'Two-factor policy changed', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'login.failed'                        => __( 'Failed login attempt: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'login.foreign_allowed'               => __( 'Login from a country that is not on the allow list: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'login.would_block_geo'               => __( 'Login WOULD have been blocked (monitor mode): %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'login.blocked_geo'                   => __( 'Login BLOCKED from a disallowed country: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'login.blocked_denylist'              => __( 'Login BLOCKED from an address on the deny list: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'login.allowed_by_bypass'             => __( 'Login allowed by a bypass grant: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'login.bypass_redeemed'               => __( 'Bypass link redeemed by %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'login.blocking_kill_switch'          => __( 'Login would have been blocked but the kill switch is active: %1$s', 'sentinel-security-center' ),
 			'option.siteurl_changed'              => __( 'The site URL was changed', 'sentinel-security-center' ),
 			'option.home_changed'                 => __( 'The home URL was changed', 'sentinel-security-center' ),
@@ -264,21 +314,34 @@ final class Mailer {
 			'option.active_plugins_direct'        => __( 'The active plugin list was written directly', 'sentinel-security-center' ),
 			'config.xmlrpc_changed'               => __( 'XML-RPC availability changed', 'sentinel-security-center' ),
 			'config.file_edit_constant_changed'   => __( 'The file-editing configuration changed', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'config.file_editor_used'             => __( 'A file was edited through the built-in editor: %1$s', 'sentinel-security-center' ),
 			'config.autoupdate_constant_changed'  => __( 'An automatic-update constant changed', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'config.cron_job_added'               => __( 'New scheduled task: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'config.cron_job_removed'             => __( 'Scheduled task removed: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'config.muplugin_appeared'            => __( 'New must-use plugin appeared: %1$s', 'sentinel-security-center' ),
 			'config.wpconfig_changed'             => __( 'wp-config.php was modified', 'sentinel-security-center' ),
 			'config.htaccess_changed'             => __( '.htaccess was modified', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'file.new_in_muplugins'               => __( 'New file in mu-plugins: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'file.changed_in_muplugins'           => __( 'Changed file in mu-plugins: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'file.php_in_uploads'                 => __( 'PHP file found in the uploads directory: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'file.uploads_htaccess_changed'       => __( '.htaccess in the uploads directory changed: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'file.changed_in_uploads'             => __( 'Known PHP file in uploads changed: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'file.backdoor_signature'             => __( 'Possible backdoor signature: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'core.file_modified'                  => __( 'Modified WordPress core file: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'core.file_missing'                   => __( 'Missing WordPress core file: %1$s', 'sentinel-security-center' ),
+			/* translators: %1$s: the plugin, theme, user, file or setting that the event concerns. */
 			'core.unknown_file'                   => __( 'Unrecognised file in a core directory: %1$s', 'sentinel-security-center' ),
 			'geoip.db_update_failed'              => __( 'The GeoIP database could not be updated', 'sentinel-security-center' ),
 			'geoip.db_missing'                    => __( 'The GeoIP database is missing', 'sentinel-security-center' ),

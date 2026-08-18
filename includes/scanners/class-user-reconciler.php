@@ -49,7 +49,7 @@ final class User_Reconciler {
 		$table    = Installer::table_user_baseline();
 		$findings = 0;
 
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery -- table name from $wpdb->prefix, no user input.
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter -- table name from $wpdb->prefix, no user input.
 		$baseline = $wpdb->get_results( "SELECT * FROM `{$table}`", ARRAY_A );
 		$baseline = is_array( $baseline ) ? $baseline : [];
 
@@ -317,6 +317,7 @@ final class User_Reconciler {
 	private static function store( array $snapshot ): void {
 		global $wpdb;
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- our own baseline table, and caching it would defeat the purpose: this row is the record of what the user looked like last time, which must come from storage rather than from a cache written by the same process.
 		$wpdb->replace(
 			Installer::table_user_baseline(),
 			[

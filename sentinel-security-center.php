@@ -3,7 +3,7 @@
  * Plugin Name:       Sentinel Security Center
  * Plugin URI:        https://github.com/sglogger/sentinel-security-center
  * Description:       Security monitoring and alerting for WordPress. Logs and alerts on plugin/theme changes, administrator and role changes, configuration changes, filesystem integrity and logins from countries outside your allow list — with optional login blocking and two-factor authentication. Administrator-only, with immediate e-mail alerts.
- * Version:           1.6.5
+ * Version:           1.6.6
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Author:            Steven Glogger
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // -----------------------------------------------------------------------------
 // Plugin constants
 // -----------------------------------------------------------------------------
-define( 'WPSEC_VERSION', '1.6.5' );
+define( 'WPSEC_VERSION', '1.6.6' );
 define( 'WPSEC_FILE', __FILE__ );
 define( 'WPSEC_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WPSEC_URL', plugin_dir_url( __FILE__ ) );

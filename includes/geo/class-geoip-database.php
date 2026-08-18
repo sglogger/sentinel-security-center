@@ -134,7 +134,7 @@ final class Geoip_Database {
 
 		foreach ( $files as $name => $contents ) {
 			if ( ! file_exists( $dir . $name ) ) {
-				// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents -- our own private directory; runs during cron where WP_Filesystem is unavailable.
+				// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents, WordPress.PHP.NoSilencedErrors -- our own private directory; runs during cron where WP_Filesystem is unavailable. Silenced because a directory we cannot write to is answered by the guard files simply not being there, which the caller already copes with.
 				@file_put_contents( $dir . $name, $contents );
 			}
 		}
@@ -197,7 +197,7 @@ final class Geoip_Database {
 		$error = self::response_error( $response );
 
 		if ( null !== $error ) {
-			@unlink( $tmp );
+			wp_delete_file( $tmp );
 			return self::fail( $state, $error );
 		}
 
@@ -211,7 +211,7 @@ final class Geoip_Database {
 			$actual   = hash_file( 'sha256', $tmp );
 
 			if ( is_string( $expected ) && '' !== $expected && ! hash_equals( $expected, (string) $actual ) ) {
-				@unlink( $tmp );
+				wp_delete_file( $tmp );
 				return self::fail( $state, __( 'The downloaded database failed its checksum verification.', 'sentinel-security-center' ) );
 			}
 		}
@@ -221,22 +221,23 @@ final class Geoip_Database {
 		$staged = $dir . self::FILE . '.new';
 		$result = Tar_Reader::extract_member( $tmp, self::FILE, $staged );
 
-		@unlink( $tmp );
+		wp_delete_file( $tmp );
 
 		if ( is_wp_error( $result ) ) {
-			@unlink( $staged );
+			wp_delete_file( $staged );
 			return self::fail( $state, $result->get_error_message() );
 		}
 
 		if ( ! self::looks_valid( $staged ) ) {
-			@unlink( $staged );
+			wp_delete_file( $staged );
 			return self::fail( $state, __( 'The extracted file does not look like a MaxMind database.', 'sentinel-security-center' ) );
 		}
 
 		$live = $dir . self::FILE;
 
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.rename_rename, WordPress.PHP.NoSilencedErrors -- rename() within one filesystem is atomic, which is the whole point here: a login looking up a country while this runs must see either the old database or the new one, never a half-written file. WP_Filesystem::move() gives no such guarantee and is not initialised during cron, which is when this runs.
 		if ( ! @rename( $staged, $live ) ) {
-			@unlink( $staged );
+			wp_delete_file( $staged );
 			return self::fail( $state, __( 'The new database could not replace the existing one.', 'sentinel-security-center' ) );
 		}
 
@@ -320,6 +321,12 @@ final class Geoip_Database {
 		}
 
 		// The MaxMind metadata marker lives near the end of the file.
+		//
+		// Read directly rather than through WP_Filesystem: the database is tens
+		// of megabytes and WP_Filesystem can only return a file whole, so using
+		// it would mean loading all of it into memory to look at the last 128 KB
+		// — on exactly the shared hosts whose memory limit makes that fail.
+		// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fopen, WordPress.WP.AlternativeFunctions.file_system_operations_fread, WordPress.WP.AlternativeFunctions.file_system_operations_fclose, WordPress.PHP.NoSilencedErrors
 		$handle = @fopen( $path, 'rb' );
 
 		if ( ! $handle ) {
@@ -329,6 +336,7 @@ final class Geoip_Database {
 		fseek( $handle, max( 0, $size - 131072 ) );
 		$tail = (string) fread( $handle, 131072 );
 		fclose( $handle );
+		// phpcs:enable WordPress.WP.AlternativeFunctions.file_system_operations_fopen, WordPress.WP.AlternativeFunctions.file_system_operations_fread, WordPress.WP.AlternativeFunctions.file_system_operations_fclose, WordPress.PHP.NoSilencedErrors
 
 		return false !== strpos( $tail, "\xAB\xCD\xEFMaxMind.com" );
 	}

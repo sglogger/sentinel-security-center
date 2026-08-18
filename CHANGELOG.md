@@ -9,6 +9,74 @@ When a release goes out, the same summary must also be added to the
 `== Changelog ==` section of `readme.txt` — that is what WordPress shows in the
 plugin details modal.
 
+## [1.6.6] - 2026-08-18
+
+### Added
+
+- **An "External services" section in `readme.txt`.** The plugin can contact two
+  services, and a reader had no way to know what either request carries. Both
+  are now spelled out: the MaxMind download at
+  `download.maxmind.com/app/geoip_download`, which sends the licence key you
+  configured and the edition name and is never called until you enter that key,
+  and the plain reads of `cloudflare.com/ips-v4` and `ips-v6`, which send
+  nothing beyond the request itself and are cached for a week. Neither is
+  contacted from the front end or during a login, and nothing about the site,
+  its users or its visitors is sent to either. Disclosure of external services
+  is required for a plugin hosted on WordPress.org.
+
+### Changed
+
+- **The GeoIP downloader deletes its temporary files through
+  `wp_delete_file()`.** The download, the staged extraction and the failure
+  paths all called `@unlink()` directly. The behaviour is the same; the
+  difference is that the deletions now pass through the filter WordPress
+  provides for them. The atomic `rename()` of the staged database over the live
+  one stays as it is, and now says why in place: a login resolving a country
+  while the swap runs must see either the old file or the new one, and
+  `WP_Filesystem::move()` neither guarantees that nor is initialised during
+  cron, which is when this runs.
+
+- **`load_plugin_textdomain()` is no longer called.** WordPress has loaded a
+  translation just in time on the first `__()` for the domain since 4.6, and for
+  a plugin hosted on WordPress.org the `.mo` files are delivered into
+  `WP_LANG_DIR` and picked up from there. The explicit call did nothing but run
+  earlier than it had to.
+
+- **The code-standards exemptions moved out of the project ruleset and onto the
+  statements they apply to.** `phpcs.xml.dist` is read by our own tooling and by
+  nothing else — the Plugin Check plugin runs its own ruleset and never sees it,
+  so a file-wide exemption there read as clean locally while the same code was
+  still flagged on review. Every suppression that applies to a single statement
+  is now an inline `phpcs:ignore`, or a `phpcs:disable`/`phpcs:enable` pair
+  where the statement spans several lines, each carrying its justification at
+  the point it applies to: the custom-table queries that interpolate a table
+  name while binding every value, the CSV export writing to `php://output`, the
+  direct filesystem access in the scanners and the GeoIP downloader — including
+  the tail read of a database too large to load whole — the handful of silenced
+  calls whose failure is ordinary and is answered by the return value that
+  follows, `xmlrpc_enabled` as a core filter rather than a hook of ours, and the
+  Cloudflare range URLs, which are data rather than offloaded assets. The fifty
+  event descriptions in `Mailer::descriptions()` each carry their own
+  `translators:` comment instead of one note on the method. Two of the old
+  file-wide exemptions turned out to cover nothing at all once the statements
+  were annotated, and are simply gone. Nothing about how the code behaves
+  changed; the reasoning is now visible where it matters and the automated
+  checks can see it too.
+
+- **The translation files caught up with the last three releases.** The `.pot`
+  had not been regenerated since 1.4.0, so it still offered translators three
+  strings belonging to the removed GitHub updater and the removed automatic-
+  update event, and offered them nothing at all for the two strings 1.6.5 added
+  — "Pending update check" and "Plugin update available". Both are now
+  translated in the German catalogue, which is complete again apart from the
+  plugin name, the author name and the two URLs, which are deliberately left
+  alone. The regenerated `.pot` also carries the fifty new `translators:`
+  comments, which is the point of writing them.
+
+- **Whitespace only: the option watchlist is aligned again.** Removing
+  `auto_update_plugin` in 1.6.5 left the remaining keys padded to the width of a
+  name that is no longer there.
+
 ## [1.6.5] - 2026-08-18
 
 ### Added

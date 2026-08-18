@@ -146,7 +146,7 @@ final class Log_Query {
 
 		$values = array_merge( $where['values'], [ $per_page, $offset ] );
 
-		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQLPlaceholders -- every value IS bound through prepare(); the interpolated parts are a $wpdb->prefix table name and a column/direction from a fixed whitelist, neither of which can be a placeholder.
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQLPlaceholders, PluginCheck.Security.DirectDB.UnescapedDBParameter -- every value IS bound through prepare(); the interpolated parts are a $wpdb->prefix table name and a column/direction from a fixed whitelist, neither of which can be a placeholder.
 		$rows = $wpdb->get_results( $wpdb->prepare( $sql, $values ), ARRAY_A );
 
 		return is_array( $rows ) ? $rows : [];
@@ -169,11 +169,11 @@ final class Log_Query {
 		$sql = "SELECT COUNT(*) FROM `{$table}` WHERE {$where['sql']}";
 
 		if ( empty( $where['values'] ) ) {
-			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery -- no user input in this branch.
+			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter -- no user input in this branch: $where produced no values, so $sql is the table name and a constant WHERE.
 			return (int) $wpdb->get_var( $sql );
 		}
 
-		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery -- placeholders bound here.
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter -- placeholders bound here.
 		return (int) $wpdb->get_var( $wpdb->prepare( $sql, $where['values'] ) );
 	}
 
@@ -223,7 +223,7 @@ final class Log_Query {
 
 		$table = Installer::table_log();
 
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery -- table name from $wpdb->prefix, no user input.
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter -- table name from $wpdb->prefix, no user input.
 		$types = $wpdb->get_col( "SELECT DISTINCT event_type FROM `{$table}` ORDER BY event_type ASC" );
 
 		return is_array( $types ) ? array_map( 'strval', $types ) : [];

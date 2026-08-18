@@ -44,36 +44,25 @@
 
 	<!-- Deliberate deviations, each for a reason rather than convenience.
 
+		 Anything suppressed here is invisible to the Plugin Check plugin, which
+		 runs its own ruleset and never reads this file. So a suppression lives
+		 here only when it applies to the project as a whole, to an entire file,
+		 or to the test suite; anything that turns on the circumstances of one
+		 statement is an inline phpcs:ignore (or a
+		 phpcs:disable/phpcs:enable pair, which is what a multi-line $wpdb call
+		 needs) carrying its justification at the point it applies to. That way
+		 the reasoning travels with the code and Plugin Check honours it too.
+
 		 DisallowShortTernary: `?:` is used throughout for "value or fallback"
 		 and reads better than repeating the expression.
-
-		 NoSilencedErrors / AlternativeFunctions: the scanners and the GeoIP
-		 downloader touch the filesystem directly and on purpose. WP_Filesystem
-		 is not initialised during cron, which is exactly when these run, and a
-		 file vanishing mid-scan is normal rather than exceptional — it must not
-		 raise a warning into someone\'s error log.
 
 		 UnusedFunctionParameter: hook callbacks have to match the signature
 		 WordPress passes, whether or not every argument is needed.
 
 		 NoReservedKeywordParameterNames: same reason — the names come from the
-		 core hook signatures.
-
-		 MissingTranslatorsComment in class-mailer.php: that file holds one flat
-		 table of event descriptions where %1$s is always the object or affected
-		 user and %2$s always the acting user. The rule is documented once on the
-		 method rather than repeated fifty times. -->
+		 core hook signatures. -->
 	<rule ref="Universal.Operators.DisallowShortTernary">
 		<severity>0</severity>
-	</rule>
-	<rule ref="WordPress.PHP.NoSilencedErrors">
-		<severity>0</severity>
-	</rule>
-	<rule ref="WordPress.WP.AlternativeFunctions">
-		<exclude-pattern>/includes/scanners/*</exclude-pattern>
-		<exclude-pattern>/includes/geo/class-geoip-database.php</exclude-pattern>
-		<exclude-pattern>/includes/geo/class-tar-reader.php</exclude-pattern>
-		<exclude-pattern>/includes/class-installer.php</exclude-pattern>
 	</rule>
 	<rule ref="Generic.CodeAnalysis.UnusedFunctionParameter">
 		<severity>0</severity>
@@ -81,49 +70,28 @@
 	<rule ref="Universal.NamingConventions.NoReservedKeywordParameterNames">
 		<severity>0</severity>
 	</rule>
-	<rule ref="WordPress.WP.I18n.MissingTranslatorsComment">
-		<exclude-pattern>/includes/class-mailer.php</exclude-pattern>
-	</rule>
+	<!-- Direct filesystem access is annotated inline, not exempted here.
 
-	<!-- Custom-table SQL.
+		 The scanners and the GeoIP downloader read and write files directly and
+		 on purpose: WP_Filesystem is not initialised during cron, which is
+		 exactly when they run, and it can only hand back a file whole, which a
+		 database of tens of megabytes rules out. Errors are silenced in the same
+		 few places for the same kind of reason — a file vanishing mid-scan, or a
+		 hand-typed address failing to parse, is ordinary rather than
+		 exceptional, and is answered by the return value that follows rather
+		 than by a warning in someone's error log. Each of those statements says
+		 so where it stands.
 
-		 Every query in these files follows the same shape: the table name is
-		 built from $wpdb->prefix (a table name cannot be a placeholder, so it
-		 has to be interpolated) while every VALUE goes through prepare(). The
-		 sniff cannot tell the two apart, and inline ignores do not survive
-		 multi-line statements, so the exemption is recorded here instead —
-		 narrowed to the files that own those tables.
+		 Custom-table SQL is annotated inline too.
 
-		 If you add a query to one of these files, the rule still stands: table
+		 Every query against one of our own tables follows the same shape: the
+		 table name is built from $wpdb->prefix (a table name cannot be a
+		 placeholder, so it has to be interpolated) while every VALUE goes
+		 through prepare(). The sniff cannot tell the two apart, so each of those
+		 statements carries its own phpcs:disable/phpcs:enable pair saying so.
+
+		 If you add a query to one of those files the rule still stands: table
 		 name interpolated, values bound. Never interpolate a value. -->
-	<rule ref="WordPress.DB.PreparedSQL">
-		<exclude-pattern>/includes/class-log-query.php</exclude-pattern>
-		<exclude-pattern>/includes/class-logger.php</exclude-pattern>
-		<exclude-pattern>/includes/scanners/class-file-scanner.php</exclude-pattern>
-		<exclude-pattern>/includes/scanners/class-config-scanner.php</exclude-pattern>
-	</rule>
-
-	<!-- The exporter streams to php://output, which WP_Filesystem cannot do. -->
-	<rule ref="WordPress.WP.AlternativeFunctions">
-		<exclude-pattern>/admin/class-csv-exporter.php</exclude-pattern>
-	</rule>
-
-	<!-- Config_Scanner and Hardening read core state: xmlrpc_enabled is a core
-		 filter, not a hook of ours, and var_export renders a constant that may
-		 be bool or string for comparison rather than for debugging. -->
-	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound">
-		<exclude-pattern>/includes/scanners/class-config-scanner.php</exclude-pattern>
-		<exclude-pattern>/includes/class-hardening.php</exclude-pattern>
-	</rule>
-	<rule ref="WordPress.PHP.DevelopmentFunctions.error_log_var_export">
-		<exclude-pattern>/includes/scanners/class-config-scanner.php</exclude-pattern>
-	</rule>
-
-	<!-- Logger warns loudly about an unregistered event type, but only ever
-		 under WP_DEBUG. -->
-	<rule ref="WordPress.PHP.DevelopmentFunctions.error_log_trigger_error">
-		<exclude-pattern>/includes/class-logger.php</exclude-pattern>
-	</rule>
 
 	<!-- In templates, whitespace inside tags such as <textarea> is significant.
 		 These sniffs reformat embedded PHP onto its own lines, which silently

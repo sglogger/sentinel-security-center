@@ -76,6 +76,12 @@ final class Csv_Exporter {
 
 		// UTF-8 BOM so Excel opens the file with the right encoding instead of
 		// mangling every non-ASCII character.
+		//
+		// php://output is the response body, not a file on disk, so WP_Filesystem
+		// has nothing to offer here — and the export streams row by row precisely
+		// so that a log with hundreds of thousands of rows never has to exist in
+		// memory as one string.
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fwrite -- writing to the response body, not to a file.
 		fwrite( $out, "\xEF\xBB\xBF" );
 
 		fputcsv(
@@ -137,6 +143,7 @@ final class Csv_Exporter {
 			}
 		);
 
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- closing the response stream opened above, not a file.
 		fclose( $out );
 		exit;
 	}

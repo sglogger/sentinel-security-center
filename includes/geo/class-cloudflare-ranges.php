@@ -19,8 +19,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class Cloudflare_Ranges {
 
+	// Not offloaded assets: these are Cloudflare's published lists of its own
+	// address ranges, read as data so the trusted-proxy list can be offered as a
+	// preset instead of pasted in by hand. Nothing is fetched for the browser to
+	// load, nothing is executed, and the result is validated as CIDR notation in
+	// fetch() below before it is shown. Disclosed under "External services" in
+	// readme.txt.
+	// phpcs:disable PluginCheck.CodeAnalysis.Offloading.OffloadedContent
 	private const V4_URL = 'https://www.cloudflare.com/ips-v4';
 	private const V6_URL = 'https://www.cloudflare.com/ips-v6';
+	// phpcs:enable PluginCheck.CodeAnalysis.Offloading.OffloadedContent
 
 	/**
 	 * Cached ranges, refetched when older than a week.

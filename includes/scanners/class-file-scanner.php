@@ -325,7 +325,7 @@ final class File_Scanner {
 			$signatures = [];
 
 			if ( $heuristics && self::is_php( $path ) && $size <= $max_bytes ) {
-				// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- read-only inspection of a local file; WP_Filesystem adds nothing here and is unavailable during cron.
+				// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents, WordPress.PHP.NoSilencedErrors -- read-only inspection of a local file; WP_Filesystem adds nothing here and is unavailable during cron. Silenced because a file may vanish between being listed and being read, which the empty string handles.
 				$code = (string) @file_get_contents( $path );
 				$scan = Signature_Scanner::scan( $code );
 
@@ -457,11 +457,12 @@ final class File_Scanner {
 		$table = Installer::table_file_baseline();
 		$stamp = gmdate( 'Y-m-d H:i:s', time() - 300 );
 
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- table name from $wpdb->prefix; the timestamp IS bound through prepare().
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- table name from $wpdb->prefix; the timestamp IS bound through prepare().
 		$gone = $wpdb->get_results(
 			$wpdb->prepare( "SELECT path, path_hash, scope FROM `{$table}` WHERE last_seen < %s", $stamp ),
 			ARRAY_A
 		);
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 
 		if ( empty( $gone ) ) {
 			return;
@@ -482,7 +483,7 @@ final class File_Scanner {
 			);
 		}
 
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery -- our own table; value prepared.
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter -- our own table; value prepared.
 		$wpdb->query( $wpdb->prepare( "DELETE FROM `{$table}` WHERE last_seen < %s", $stamp ) );
 	}
 
@@ -498,11 +499,12 @@ final class File_Scanner {
 
 		$table = Installer::table_file_baseline();
 
-		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- table name from $wpdb->prefix; the path hash IS bound through prepare().
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- table name from $wpdb->prefix; the path hash IS bound through prepare().
 		$row = $wpdb->get_row(
 			$wpdb->prepare( "SELECT * FROM `{$table}` WHERE path_hash = %s", hash( 'sha256', $relative ) ),
 			ARRAY_A
 		);
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 
 		return is_array( $row ) ? $row : null;
 	}
@@ -515,7 +517,7 @@ final class File_Scanner {
 
 		$now = gmdate( 'Y-m-d H:i:s' );
 
-		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery -- the table name is built from $wpdb->prefix and cannot be a placeholder; every value below is one.
+		// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.PHP.NoSilencedErrors -- the table name is built from $wpdb->prefix and cannot be a placeholder; every value below is one. filesize() and filemtime() are silenced because a file can be gone between the scan listing it and this row being written, which is ordinary on a live site and is answered by the cast to int.
 		$wpdb->query(
 			$wpdb->prepare(
 				'INSERT INTO `' . Installer::table_file_baseline() . '` '
@@ -535,6 +537,7 @@ final class File_Scanner {
 				$now
 			)
 		);
+		// phpcs:enable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.PHP.NoSilencedErrors
 	}
 
 	private static function touch( string $relative ): void {

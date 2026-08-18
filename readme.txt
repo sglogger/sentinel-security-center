@@ -4,11 +4,11 @@ Tags: security, activity log, audit log, two-factor, file integrity
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 1.6.5
+Stable tag: 1.6.6
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Security monitoring and alerting for WordPress: plugin and theme changes, administrator and role changes, configuration changes, filesystem integrity, two-factor authentication, and geo-aware login control.
+Security monitoring and alerting: plugin, user, role and configuration changes, file integrity, two-factor authentication and geo-aware logins.
 
 == Description ==
 
@@ -54,6 +54,30 @@ Because locking yourself out is the real risk, there are four independent ways b
 **Administrator-only**
 
 The plugin adds no front-end output, no REST routes and no shortcodes. Its menu, notices, assets and actions all require the manage_options capability, and a blocked login is indistinguishable from an ordinary wrong password. The one exception is two-factor enrolment: that belongs to the account holder, so the setup screen is reachable by any signed-in user from their own profile — without appearing in the menu for anyone who cannot otherwise see the plugin.
+
+== External services ==
+
+This plugin contacts two external services. Both are optional, neither is contacted from the front end or during a login, and no information about your site, your users or your visitors is sent to either.
+
+**MaxMind GeoLite2**
+
+Used to resolve the country a login came from. The lookup itself happens locally against a downloaded database file, which is why no API is called while anyone signs in — but the database has to be fetched in the first place, and refreshed as it is reissued.
+
+What is sent: a download request to `https://download.maxmind.com/app/geoip_download` carrying the MaxMind licence key you configured and the edition name (`GeoLite2-Country`). MaxMind requires both to authorise the download. Nothing else is transmitted.
+
+When: only after you enter a MaxMind licence key under Security Center → Settings → Login & Location. Until you do, the service is never contacted. After that, when you press "Download the GeoIP database now", and weekly via a scheduled task.
+
+Service provided by MaxMind, Inc. — [GeoLite2 End User Licence Agreement](https://www.maxmind.com/en/geolite2/eula), [privacy policy](https://www.maxmind.com/en/privacy-policy).
+
+**Cloudflare IP ranges**
+
+Used to offer Cloudflare's own address ranges as a ready-made option for the trusted-proxy list, so you do not have to find and paste them yourself.
+
+What is sent: nothing beyond the HTTP request. The plugin performs a plain read of the public text files at `https://www.cloudflare.com/ips-v4` and `https://www.cloudflare.com/ips-v6`.
+
+When: when an administrator opens Security Center → Settings → Login & Location. The result is cached for a week, so the request is not repeated on every visit. The ranges are only ever offered as a suggestion — nothing is added to your trusted-proxy list until you click to merge them, and every line is validated as CIDR notation before it is shown.
+
+Service provided by Cloudflare, Inc. — [website terms of use](https://www.cloudflare.com/website-terms/), [privacy policy](https://www.cloudflare.com/privacypolicy/).
 
 == Installation ==
 
@@ -102,6 +126,13 @@ Not by default. Application passwords and XML-RPC authenticate through the same 
 No. Activation on a network stops with a message rather than misbehaving quietly.
 
 == Changelog ==
+
+= 1.6.6 =
+* Added: an "External services" section to this readme, documenting exactly what the MaxMind and Cloudflare requests send, and when. Neither is contacted until you configure it, and neither ever sees anything about your site or your visitors.
+* Changed: the GeoIP downloader now deletes its temporary files through WordPress rather than calling unlink() directly.
+* Changed: the plugin no longer calls load_plugin_textdomain(). WordPress has loaded translations on demand since 4.6 and does it for us.
+* Fixed: the German translation was missing the two strings added in 1.6.5, and the translation template still offered three strings from features that have been removed. Both are up to date again.
+* Housekeeping: no functional change otherwise. The code-standards exemptions moved from the project ruleset onto the statements they apply to, so the reasoning is visible where it matters and automated checks can see it.
 
 = 1.6.5 =
 * Added: a daily check for plugins with an update waiting, logged as its own event with the installed and available versions. It starts at log only — switch it to e-mail under Settings if you want to be told. An unpatched plugin is the most common way a site is taken over.
@@ -171,6 +202,9 @@ No. Activation on a network stops with a message rather than misbehaving quietly
 
 == Upgrade Notice ==
 
+= 1.6.6 =
+Documentation and housekeeping only, with no functional change and nothing to do after updating. The readme now spells out the two external services the plugin can contact, what each request sends, and when.
+
 = 1.6.5 =
 Adds an alert for plugins that have an update waiting. Nothing is e-mailed until you set that event to e-mail under Settings; until then it is written to the log like any other event.
 
@@ -178,7 +212,7 @@ Adds an alert for plugins that have an update waiting. Nothing is e-mailed until
 The plugin no longer updates itself from GitHub; updates come through WordPress.org from this version on. Install this one through the update offer as it stands, or by uploading the ZIP. WPSEC_GITHUB_TOKEN, if you set it, can be removed from wp-config.php.
 
 = 1.5.2 =
-Fixes "Check again" reporting no update for hours after one was published. Worth taking if you have ever wondered why the Updates screen was quiet. Note that the fix only takes effect once this version is installed: to see it now, use the plugin's update offer as it stands, or clear the wpsec_gh_release transient.
+Fixes "Check again" reporting no update for hours after one was published. The fix only takes effect once this version is installed: to see it now, use the plugin's update offer as it stands, or clear the wpsec_gh_release transient.
 
 = 1.5.1 =
 A build-tooling fix with no functional change from 1.5.0. Nothing to do after updating.
@@ -187,13 +221,13 @@ A build-tooling fix with no functional change from 1.5.0. Nothing to do after up
 Packaging and metadata only: no functional change, and nothing to do after updating.
 
 = 1.4.0 =
-A rename, and nothing else: WP Security Center is now Sentinel Security Center, because WordPress.org does not allow a plugin name to begin with "wp". Your settings, log and baselines are all preserved. One manual step is required: WordPress cannot reactivate the plugin itself, because the main plugin file has been renamed, so it will be left switched off after the update. Activate it on the Plugins screen and monitoring resumes exactly as before. Nothing is monitored until you do.
+A rename and nothing else: WP Security Center is now Sentinel Security Center. Settings, log and baselines are preserved. One manual step: the main plugin file was renamed, so WordPress leaves the plugin switched off after the update. Nothing is monitored until you activate it again.
 
 = 1.3.0 =
-Adds an IP deny list on the Login & Location tab. Nothing changes until you put an address in it. Also fixes the plugins screen offering an update that is already installed, and the details modal showing the changelog of the version you already had rather than the one on offer. Also makes the log search box find rows by event type, IP address and time, not only by description.
+Adds an IP deny list on the Login & Location tab; nothing changes until you put an address in it. Also fixes the plugins screen offering an update that is already installed, and lets the log search box find rows by event type, IP address and time rather than only by description.
 
 = 1.2.0 =
-Start at Security Center → Hardening: it grades this installation against the official WordPress hardening guide and says what to change and where. Fixes three sources of false alarms: the scanner reporting its own files under uploads, a .htaccess reported as executable PHP, and wp-includes/version.php reported as modified on every localised install. Adds optional two-factor authentication — nothing changes for anyone until a user enrols, or until you require it for administrators in Settings.
+Start at the Hardening screen: it grades this installation against the official WordPress hardening guide and says what to change. Adds optional two-factor authentication — nothing changes for anyone until a user enrols, or until you require it in Settings. Also fixes three false alarms.
 
 = 1.1.1 =
 Required if your copy of this plugin is hosted in a private GitHub repository: without it, automatic updates are detected but cannot be downloaded. Install this version once by hand, and every later update will work on its own.

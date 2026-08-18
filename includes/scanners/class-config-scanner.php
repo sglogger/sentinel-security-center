@@ -83,11 +83,13 @@ final class Config_Scanner {
 			'plugins'    => array_keys( get_plugins() ),
 			'mu_plugins' => array_keys( get_mu_plugins() ),
 			'cron'       => $map,
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- xmlrpc_enabled is a WordPress core filter, not a hook of ours. Reading it is the point: whatever a security plugin or the host has done to XML-RPC is exactly what this snapshot needs to record.
 			'xmlrpc'     => (bool) apply_filters( 'xmlrpc_enabled', true ),
 			'constants'  => [
 				'DISALLOW_FILE_EDIT'         => defined( 'DISALLOW_FILE_EDIT' ) ? (bool) DISALLOW_FILE_EDIT : false,
 				'DISALLOW_FILE_MODS'         => defined( 'DISALLOW_FILE_MODS' ) ? (bool) DISALLOW_FILE_MODS : false,
 				'AUTOMATIC_UPDATER_DISABLED' => defined( 'AUTOMATIC_UPDATER_DISABLED' ) ? (bool) AUTOMATIC_UPDATER_DISABLED : false,
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export -- not debug output: WP_AUTO_UPDATE_CORE may be bool or string, and this renders it to one comparable form so a change between `true` and `'minor'` is detected rather than lost to a cast.
 				'WP_AUTO_UPDATE_CORE'        => defined( 'WP_AUTO_UPDATE_CORE' ) ? (string) var_export( WP_AUTO_UPDATE_CORE, true ) : 'undefined',
 				'WP_DEBUG_DISPLAY'           => defined( 'WP_DEBUG_DISPLAY' ) ? (bool) WP_DEBUG_DISPLAY : false,
 			],
@@ -281,13 +283,14 @@ final class Config_Scanner {
 		$placeholders = implode( ',', array_fill( 0, count( $types ), '%s' ) );
 		$values       = array_merge( $types, [ gmdate( 'Y-m-d H:i:s', time() - $window ) ] );
 
-		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery -- table name from $wpdb->prefix; all values bound.
+		// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter -- table name from $wpdb->prefix; $placeholders is a generated run of %s, one per value, and all values are bound.
 		$rows = $wpdb->get_col(
 			$wpdb->prepare(
 				"SELECT object_id FROM `{$table}` WHERE event_type IN ({$placeholders}) AND event_time >= %s",
 				$values
 			)
 		);
+		// phpcs:enable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 
 		return is_array( $rows ) ? array_map( 'strval', $rows ) : [];
 	}

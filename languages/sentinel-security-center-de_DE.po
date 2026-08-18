@@ -3,15 +3,52 @@
 # This file is distributed under the same licence as the Sentinel Security Center plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Sentinel Security Center 1.4.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sentinel-security-center\n"
-"POT-Creation-Date: 2026-08-18T10:38:28+00:00\n"
+"Project-Id-Version: Sentinel Security Center 1.6.6\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sentinel-security-"
+"center\n"
+"POT-Creation-Date: 2026-08-18T15:50:59+00:00\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: sentinel-security-center\n"
+
+#. Plugin Name of the plugin
+#: sentinel-security-center.php
+msgid "Sentinel Security Center"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: sentinel-security-center.php
+msgid "https://github.com/sglogger/sentinel-security-center"
+msgstr ""
+
+#. Description of the plugin
+#: sentinel-security-center.php
+msgid ""
+"Security monitoring and alerting for WordPress. Logs and alerts on plugin/"
+"theme changes, administrator and role changes, configuration changes, "
+"filesystem integrity and logins from countries outside your allow list — "
+"with optional login blocking and two-factor authentication. Administrator-"
+"only, with immediate e-mail alerts."
+msgstr ""
+"Sicherheitsüberwachung und Alarmierung für WordPress. Protokolliert und "
+"meldet Änderungen an Plugins und Themes, an Administratoren und Rollen, an "
+"der Konfiguration und am Dateibestand sowie Logins aus Ländern ausserhalb "
+"deiner Positivliste — mit optionaler Login-Sperre und Zwei-Faktor-"
+"Authentifizierung. Nur für Administratoren sichtbar, mit sofortigen E-Mail-"
+"Alarmen."
+
+#. Author of the plugin
+#: sentinel-security-center.php
+msgid "Steven Glogger"
+msgstr ""
+
+#. Author URI of the plugin
+#: sentinel-security-center.php
+msgid "https://www.glogger.ch"
+msgstr ""
 
 #: admin/class-admin.php:50 admin/class-admin.php:51
 msgid "Security Center"
@@ -90,15 +127,15 @@ msgstr "Protokoll durchsuchen"
 msgid "You do not have permission to change these settings."
 msgstr "Du hast keine Berechtigung, diese Einstellungen zu ändern."
 
-#: admin/class-admin.php:695
+#: admin/class-admin.php:696
 msgid "Settings saved."
 msgstr "Einstellungen gespeichert."
 
-#: admin/class-admin.php:696
+#: admin/class-admin.php:697
 msgid "The GeoIP database was downloaded and installed."
 msgstr "Die GeoIP-Datenbank wurde heruntergeladen und installiert."
 
-#: admin/class-admin.php:697
+#: admin/class-admin.php:698
 msgid ""
 "The GeoIP database could not be downloaded. See the Status screen for the "
 "reason."
@@ -106,30 +143,30 @@ msgstr ""
 "Die GeoIP-Datenbank konnte nicht heruntergeladen werden. Den Grund zeigt die "
 "Status-Seite."
 
-#: admin/class-admin.php:698
+#: admin/class-admin.php:699
 msgid "The test alert was accepted for delivery. Check the recipient inbox."
 msgstr ""
 "Der Testalarm wurde zur Zustellung angenommen. Prüfe das Postfach des "
 "Empfängers."
 
-#: admin/class-admin.php:700
+#: admin/class-admin.php:701
 msgid "All scans have been run. Any findings are in the event log."
 msgstr ""
 "Alle Prüfungen wurden ausgeführt. Etwaige Funde stehen im Ereignisprotokoll."
 
-#: admin/class-admin.php:701
+#: admin/class-admin.php:702
 msgid ""
 "All sessions were destroyed. Everyone, including you, must sign in again."
 msgstr ""
 "Alle Sitzungen wurden beendet. Alle müssen sich neu anmelden, du "
 "eingeschlossen."
 
-#: admin/class-admin.php:728
+#: admin/class-admin.php:729
 msgid "Everything else was saved."
 msgstr "Alles Übrige wurde gespeichert."
 
 #. translators: %s: comma-separated list of IP addresses or CIDR blocks
-#: admin/class-admin.php:733
+#: admin/class-admin.php:734
 #, php-format
 msgid ""
 "Saved, but these deny-list entries match the address you are working from "
@@ -141,7 +178,7 @@ msgstr ""
 "selbst zu sperren hätte die Tür bei deiner nächsten Anmeldung zugezogen, "
 "wobei die laufende Sitzung es bis dahin verborgen hätte."
 
-#: admin/class-admin.php:747
+#: admin/class-admin.php:748
 msgid ""
 "The test alert could not be sent. Check that at least one recipient is "
 "configured."
@@ -150,7 +187,7 @@ msgstr ""
 "Empfänger eingetragen ist."
 
 #. translators: %s: error message from the mail layer
-#: admin/class-admin.php:752
+#: admin/class-admin.php:753
 #, php-format
 msgid "The test alert could not be sent: %s"
 msgstr "Der Testalarm konnte nicht gesendet werden: %s"
@@ -271,7 +308,7 @@ msgstr "CSV exportieren"
 #: admin/class-two-factor-admin.php:41 admin/class-two-factor-admin.php:281
 #: admin/views/page-two-factor.php:30
 #: includes/auth/class-two-factor-login.php:435
-#: includes/class-event-registry.php:262 includes/class-hardening.php:477
+#: includes/class-event-registry.php:266 includes/class-hardening.php:477
 msgid "Two-factor authentication"
 msgstr "Zwei-Faktor-Authentifizierung"
 
@@ -397,12 +434,12 @@ msgid "Forwarded-for chain"
 msgstr "Forwarded-For-Kette"
 
 #: admin/views/page-diagnostics.php:80
-msgid "(not trusted)"
-msgstr "(nicht vertrauenswürdig)"
-
-#: admin/views/page-diagnostics.php:80
 msgid "(trusted proxy)"
 msgstr "(vertrauenswürdiger Proxy)"
+
+#: admin/views/page-diagnostics.php:80
+msgid "(not trusted)"
+msgstr "(nicht vertrauenswürdig)"
 
 #: admin/views/page-diagnostics.php:86 admin/views/page-diagnostics.php:164
 msgid "Country"
@@ -454,7 +491,7 @@ msgstr "Testen"
 msgid "That is not a valid IP address."
 msgstr "Das ist keine gültige IP-Adresse."
 
-#: admin/views/page-diagnostics.php:163 admin/views/page-status.php:246
+#: admin/views/page-diagnostics.php:163 admin/views/page-status.php:247
 msgid "Address"
 msgstr "Adresse"
 
@@ -1191,12 +1228,12 @@ msgid "Login protection"
 msgstr "Login-Schutz"
 
 #: admin/views/page-status.php:53
-msgid "Disabled"
-msgstr "Deaktiviert"
-
-#: admin/views/page-status.php:53
 msgid "Enabled"
 msgstr "Aktiviert"
+
+#: admin/views/page-status.php:53
+msgid "Disabled"
+msgstr "Deaktiviert"
 
 #: admin/views/page-status.php:57
 msgid "Action on a disallowed country"
@@ -1227,12 +1264,12 @@ msgid "Country lookup"
 msgstr "Länderermittlung"
 
 #: admin/views/page-status.php:76
-msgid "Unavailable"
-msgstr "Nicht verfügbar"
-
-#: admin/views/page-status.php:76
 msgid "Working"
 msgstr "Funktioniert"
+
+#: admin/views/page-status.php:76
+msgid "Unavailable"
+msgstr "Nicht verfügbar"
 
 #: admin/views/page-status.php:78
 msgid "If this breaks, blocking automatically falls back to monitor mode."
@@ -1414,22 +1451,26 @@ msgid "Core checksum verification"
 msgstr "Kern-Prüfsummenabgleich"
 
 #: admin/views/page-status.php:207
+msgid "Pending update check"
+msgstr "Prüfung auf ausstehende Updates"
+
+#: admin/views/page-status.php:208
 msgid "GeoIP database refresh"
 msgstr "GeoIP-Datenbank-Aktualisierung"
 
-#: admin/views/page-status.php:208
+#: admin/views/page-status.php:209
 msgid "Log retention cleanup"
 msgstr "Protokoll-Aufräumlauf"
 
-#: admin/views/page-status.php:222
+#: admin/views/page-status.php:223
 msgid "Not scheduled"
 msgstr "Nicht geplant"
 
-#: admin/views/page-status.php:224
+#: admin/views/page-status.php:225
 msgid "Overdue"
 msgstr "Überfällig"
 
-#: admin/views/page-status.php:236
+#: admin/views/page-status.php:237
 msgid ""
 "WP-Cron is disabled, so a real system cron must be driving wp-cron.php. That "
 "is the recommended setup."
@@ -1437,7 +1478,7 @@ msgstr ""
 "WP-Cron ist deaktiviert, ein echter System-Cron muss also wp-cron.php "
 "aufrufen. Das ist die empfohlene Einrichtung."
 
-#: admin/views/page-status.php:238
+#: admin/views/page-status.php:239
 msgid ""
 "WP-Cron runs on site traffic. On a quiet site these tasks can be badly late "
 "— which is precisely when a compromised site stops receiving visitors. "
@@ -1448,35 +1489,35 @@ msgstr ""
 "kompromittierte Website keine Besucher mehr bekommt. Erwäge, WP-Cron zu "
 "deaktivieren und wp-cron.php über einen echten System-Cron aufzurufen."
 
-#: admin/views/page-status.php:242
+#: admin/views/page-status.php:243
 msgid "Active bypass grants"
 msgstr "Aktive Notfall-Freigaben"
 
-#: admin/views/page-status.php:247
+#: admin/views/page-status.php:248
 msgid "Expires"
 msgstr "Läuft ab"
 
-#: admin/views/page-status.php:248
+#: admin/views/page-status.php:249
 msgid "User"
 msgstr "Benutzer"
 
-#: admin/views/page-status.php:264
+#: admin/views/page-status.php:265
 msgid "Actions"
 msgstr "Aktionen"
 
-#: admin/views/page-status.php:267
+#: admin/views/page-status.php:268
 msgid "Run all scans now"
 msgstr "Alle Prüfungen jetzt ausführen"
 
-#: admin/views/page-status.php:273
+#: admin/views/page-status.php:274
 msgid "Revoke all bypass grants"
 msgstr "Alle Notfall-Freigaben widerrufen"
 
-#: admin/views/page-status.php:279
+#: admin/views/page-status.php:280
 msgid "Sign every user out"
 msgstr "Alle Benutzer abmelden"
 
-#: admin/views/page-status.php:280
+#: admin/views/page-status.php:281
 msgid ""
 "Sessions created before location blocking was armed are not affected by it, "
 "because cookie checks never run the login rules. This ends every session, "
@@ -1774,55 +1815,55 @@ msgstr ""
 "Der Code konnte nicht gesendet werden. Prüfe die Mail-Konfiguration der "
 "Website."
 
-#: includes/class-event-registry.php:238
+#: includes/class-event-registry.php:242
 msgid "Critical"
 msgstr "Kritisch"
 
-#: includes/class-event-registry.php:240
+#: includes/class-event-registry.php:244
 msgid "High"
 msgstr "Hoch"
 
-#: includes/class-event-registry.php:242
+#: includes/class-event-registry.php:246
 msgid "Warning"
 msgstr "Warnung"
 
-#: includes/class-event-registry.php:244
+#: includes/class-event-registry.php:248
 msgid "Notice"
 msgstr "Hinweis"
 
-#: includes/class-event-registry.php:246
+#: includes/class-event-registry.php:250
 msgid "Info"
 msgstr "Info"
 
-#: includes/class-event-registry.php:257
+#: includes/class-event-registry.php:261
 msgid "Plugins"
 msgstr "Plugins"
 
-#: includes/class-event-registry.php:258
+#: includes/class-event-registry.php:262
 msgid "Themes"
 msgstr "Themes"
 
-#: includes/class-event-registry.php:259
+#: includes/class-event-registry.php:263
 msgid "Users & administrators"
 msgstr "Benutzer & Administratoren"
 
-#: includes/class-event-registry.php:260
+#: includes/class-event-registry.php:264
 msgid "Application passwords"
 msgstr "Anwendungspasswörter"
 
-#: includes/class-event-registry.php:261
+#: includes/class-event-registry.php:265
 msgid "Logins"
 msgstr "Logins"
 
-#: includes/class-event-registry.php:263
+#: includes/class-event-registry.php:267
 msgid "Configuration"
 msgstr "Konfiguration"
 
-#: includes/class-event-registry.php:264
+#: includes/class-event-registry.php:268
 msgid "Files & integrity"
 msgstr "Dateien & Integrität"
 
-#: includes/class-event-registry.php:265
+#: includes/class-event-registry.php:269
 msgid "Plugin status"
 msgstr "Plugin-Status"
 
@@ -2315,19 +2356,19 @@ msgstr ""
 "gestohlen wurde. Richte ihn auf der Seite «Zwei-Faktor» ein oder verlange "
 "ihn für Administratoren unter Einstellungen → Zwei-Faktor."
 
-#: includes/class-hardening.php:496
+#: includes/class-hardening.php:497
 msgid "XML-RPC"
 msgstr "XML-RPC"
 
-#: includes/class-hardening.php:499
+#: includes/class-hardening.php:500
 msgid "Enabled."
 msgstr "Aktiviert."
 
-#: includes/class-hardening.php:500
+#: includes/class-hardening.php:501
 msgid "Disabled."
 msgstr "Deaktiviert."
 
-#: includes/class-hardening.php:502
+#: includes/class-hardening.php:503
 msgid ""
 "It is a second front door for authentication, and one that can test many "
 "passwords in a single request. Turn it off unless something needs it — the "
@@ -2340,23 +2381,23 @@ msgstr ""
 "tun das. Dieses Plugin alarmiert, wenn sich die Einstellung in die eine oder "
 "andere Richtung ändert."
 
-#: includes/class-hardening.php:525
+#: includes/class-hardening.php:526
 msgid "Somewhere for alerts to go"
 msgstr "Ein Ziel für die Alarme"
 
-#: includes/class-hardening.php:528
+#: includes/class-hardening.php:529
 msgid "No alert recipients are configured."
 msgstr "Es sind keine Alarm-Empfänger konfiguriert."
 
 #. translators: %d: number of alert recipients
-#: includes/class-hardening.php:531
+#: includes/class-hardening.php:532
 #, php-format
 msgid "%d recipient configured."
 msgid_plural "%d recipients configured."
 msgstr[0] "%d Empfänger konfiguriert."
 msgstr[1] "%d Empfänger konfiguriert."
 
-#: includes/class-hardening.php:535
+#: includes/class-hardening.php:536
 msgid ""
 "Everything is still being written to the log, but nothing will reach you. "
 "Add at least one address on Settings → General and send yourself a test "
@@ -2368,19 +2409,19 @@ msgstr ""
 "eine Testnachricht — ein Alarmsystem, das noch nie jemand hat funktionieren "
 "sehen, ist kein Alarmsystem."
 
-#: includes/class-hardening.php:546
+#: includes/class-hardening.php:547
 msgid "Watching the filesystem"
 msgstr "Überwachung des Dateisystems"
 
-#: includes/class-hardening.php:549
+#: includes/class-hardening.php:550
 msgid "Core checksums, mu-plugins and uploads are all being scanned."
 msgstr "Kern-Prüfsummen, mu-plugins und uploads werden alle geprüft."
 
-#: includes/class-hardening.php:550
+#: includes/class-hardening.php:551
 msgid "Some filesystem checks are switched off."
 msgstr "Einige Dateisystem-Prüfungen sind ausgeschaltet."
 
-#: includes/class-hardening.php:553
+#: includes/class-hardening.php:554
 msgid ""
 "The guide treats file monitoring as a core part of hardening, because a "
 "backdoor that nobody looks for stays for years. Switch the missing scans "
@@ -2391,23 +2432,23 @@ msgstr ""
 "liegen. Schalte die fehlenden Prüfungen unter Einstellungen → "
 "Dateiintegrität wieder ein."
 
-#: includes/class-hardening.php:562
+#: includes/class-hardening.php:563
 msgid "Scans actually running"
 msgstr "Laufen die Prüfungen wirklich?"
 
-#: includes/class-hardening.php:565
+#: includes/class-hardening.php:566
 msgid "Every scheduled job is on time."
 msgstr "Alle geplanten Aufgaben sind pünktlich."
 
 #. translators: %d: number of overdue scheduled jobs
-#: includes/class-hardening.php:568
+#: includes/class-hardening.php:569
 #, php-format
 msgid "%d scheduled job is overdue."
 msgid_plural "%d scheduled jobs are overdue."
 msgstr[0] "%d geplante Aufgabe ist überfällig."
 msgstr[1] "%d geplante Aufgaben sind überfällig."
 
-#: includes/class-hardening.php:573
+#: includes/class-hardening.php:574
 msgid ""
 "WP-Cron only fires when someone visits the site, so a quiet site scans late "
 "— and a site that has stopped receiving visitors is exactly when you want "
@@ -2420,15 +2461,15 @@ msgstr ""
 "echten System-Cron auf. Die Statusseite zeigt, welche Aufgaben "
 "hinterherhinken."
 
-#: includes/class-hardening.php:580
+#: includes/class-hardening.php:581
 msgid "Backups"
 msgstr "Backups"
 
-#: includes/class-hardening.php:582
+#: includes/class-hardening.php:583
 msgid "Not something this plugin can see."
 msgstr "Das kann dieses Plugin nicht sehen."
 
-#: includes/class-hardening.php:583
+#: includes/class-hardening.php:584
 msgid ""
 "No security plugin can tell you whether your backups work — only a restore "
 "can. The guide puts backups alongside hardening for a reason: everything "
@@ -2444,33 +2485,33 @@ msgstr ""
 "eines an einem harmlosen Ort wieder her, um zu belegen, dass sie echt sind."
 
 #. translators: %s: comma-separated constant names
-#: includes/class-hardening.php:676
+#: includes/class-hardening.php:677
 #, php-format
 msgid "Not defined: %s."
 msgstr "Nicht definiert: %s."
 
 #. translators: %s: comma-separated constant names
-#: includes/class-hardening.php:684
+#: includes/class-hardening.php:685
 #, php-format
 msgid "Still the sample value, empty or too short: %s."
 msgstr "Noch der Beispielwert, leer oder zu kurz: %s."
 
-#: includes/class-hardening.php:690
+#: includes/class-hardening.php:691
 msgid ""
 "Two or more of them are identical, which defeats the point of having eight."
 msgstr ""
 "Zwei oder mehr davon sind identisch, was den Sinn von acht Stück "
 "zunichtemacht."
 
-#: includes/class-installer.php:131
+#: includes/class-installer.php:135
 msgid ""
-"Sentinel Security Center does not support WordPress Multisite. It has not been "
-"activated."
+"Sentinel Security Center does not support WordPress Multisite. It has not "
+"been activated."
 msgstr ""
-"Sentinel Security Center unterstützt WordPress-Multisite nicht. Es wurde nicht "
-"aktiviert."
+"Sentinel Security Center unterstützt WordPress-Multisite nicht. Es wurde "
+"nicht aktiviert."
 
-#: includes/class-installer.php:132
+#: includes/class-installer.php:136
 msgid "Multisite is not supported"
 msgstr "Multisite wird nicht unterstützt"
 
@@ -2500,214 +2541,263 @@ msgstr "Alarm-Einstellungen:"
 
 #: includes/class-mailer.php:132
 msgid ""
-"Sent by Sentinel Security Center. If this alert is noise, the event type can be "
-"switched to log-only on the settings screen."
+"Sent by Sentinel Security Center. If this alert is noise, the event type can "
+"be switched to log-only on the settings screen."
 msgstr ""
-"Gesendet von Sentinel Security Center. Falls dieser Alarm nur Rauschen ist, lässt "
-"sich der Ereignistyp in den Einstellungen auf „nur protokollieren“ umstellen."
+"Gesendet von Sentinel Security Center. Falls dieser Alarm nur Rauschen ist, "
+"lässt sich der Ereignistyp in den Einstellungen auf „nur protokollieren“ "
+"umstellen."
 
-#: includes/class-mailer.php:206
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:207
 #, php-format
 msgid "Plugin installed: %1$s"
 msgstr "Plugin installiert: %1$s"
 
-#: includes/class-mailer.php:207
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:209
 #, php-format
 msgid "Plugin activated: %1$s"
 msgstr "Plugin aktiviert: %1$s"
 
-#: includes/class-mailer.php:208
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:211
 #, php-format
 msgid "Plugin deactivated: %1$s"
 msgstr "Plugin deaktiviert: %1$s"
 
-#: includes/class-mailer.php:209
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:213
 #, php-format
 msgid "Plugin updated: %1$s"
 msgstr "Plugin aktualisiert: %1$s"
 
-#: includes/class-mailer.php:210
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:215
 #, php-format
 msgid "Plugin deleted: %1$s"
 msgstr "Plugin gelöscht: %1$s"
 
-#: includes/class-mailer.php:211
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:217
 #, php-format
 msgid "Plugin auto-updated: %1$s"
 msgstr "Plugin automatisch aktualisiert: %1$s"
 
-#: includes/class-mailer.php:212
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:219
 #, php-format
 msgid "Plugin appeared without an install: %1$s"
 msgstr "Plugin ohne Installation aufgetaucht: %1$s"
 
-#: includes/class-mailer.php:213
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:221
+#, php-format
+msgid "Plugin update available: %1$s"
+msgstr "Plugin-Update verfügbar: %1$s"
+
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:223
 #, php-format
 msgid "Theme installed: %1$s"
 msgstr "Theme installiert: %1$s"
 
-#: includes/class-mailer.php:214
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:225
 #, php-format
 msgid "Theme activated: %1$s"
 msgstr "Theme aktiviert: %1$s"
 
-#: includes/class-mailer.php:215
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:227
 #, php-format
 msgid "Theme updated: %1$s"
 msgstr "Theme aktualisiert: %1$s"
 
-#: includes/class-mailer.php:216
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:229
 #, php-format
 msgid "Theme deleted: %1$s"
 msgstr "Theme gelöscht: %1$s"
 
-#: includes/class-mailer.php:217
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:231
 #, php-format
 msgid "New user created: %1$s"
 msgstr "Neuer Benutzer angelegt: %1$s"
 
-#: includes/class-mailer.php:218
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:233
 #, php-format
 msgid "New ADMINISTRATOR created: %1$s"
 msgstr "Neuer ADMINISTRATOR angelegt: %1$s"
 
-#: includes/class-mailer.php:219
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:235
 #, php-format
 msgid "User deleted: %1$s"
 msgstr "Benutzer gelöscht: %1$s"
 
-#: includes/class-mailer.php:220
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:237
 #, php-format
 msgid "ADMINISTRATOR deleted: %1$s"
 msgstr "ADMINISTRATOR gelöscht: %1$s"
 
-#: includes/class-mailer.php:221
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:239
 #, php-format
 msgid "Role changed for %1$s"
 msgstr "Rolle geändert für %1$s"
 
-#: includes/class-mailer.php:222
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:241
 #, php-format
 msgid "%1$s was promoted to ADMINISTRATOR"
 msgstr "%1$s wurde zum ADMINISTRATOR hochgestuft"
 
-#: includes/class-mailer.php:223
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:243
 #, php-format
 msgid "%1$s was demoted from administrator"
 msgstr "%1$s wurde als Administrator herabgestuft"
 
-#: includes/class-mailer.php:224
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:245
 #, php-format
 msgid "E-mail address changed for %1$s"
 msgstr "E-Mail-Adresse geändert für %1$s"
 
-#: includes/class-mailer.php:225
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:247
 #, php-format
 msgid "E-mail change requested for %1$s"
 msgstr "E-Mail-Änderung angefordert für %1$s"
 
-#: includes/class-mailer.php:226
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:249
 #, php-format
 msgid "Password changed for %1$s"
 msgstr "Passwort geändert für %1$s"
 
-#: includes/class-mailer.php:227
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:251
 #, php-format
 msgid "Password reset requested for %1$s"
 msgstr "Passwort-Zurücksetzung angefordert für %1$s"
 
-#: includes/class-mailer.php:228
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:253
 #, php-format
 msgid "Password reset completed for %1$s"
 msgstr "Passwort-Zurücksetzung abgeschlossen für %1$s"
 
-#: includes/class-mailer.php:229
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:255
 #, php-format
 msgid "Administrator %1$s modified their own account"
 msgstr "Administrator %1$s hat das eigene Konto geändert"
 
-#: includes/class-mailer.php:230
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:257
 #, php-format
 msgid "Login name changed: %1$s"
 msgstr "Loginname geändert: %1$s"
 
-#: includes/class-mailer.php:231
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:259
 #, php-format
 msgid "User created directly in the database: %1$s"
 msgstr "Benutzer direkt in der Datenbank angelegt: %1$s"
 
-#: includes/class-mailer.php:232
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:261
 #, php-format
 msgid "User deleted directly in the database: %1$s"
 msgstr "Benutzer direkt in der Datenbank gelöscht: %1$s"
 
-#: includes/class-mailer.php:233
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:263
 #, php-format
 msgid "User modified directly in the database: %1$s"
 msgstr "Benutzer direkt in der Datenbank geändert: %1$s"
 
-#: includes/class-mailer.php:234
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:265
 #, php-format
 msgid "Application password created for %1$s"
 msgstr "Anwendungspasswort angelegt für %1$s"
 
-#: includes/class-mailer.php:235
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:267
 #, php-format
 msgid "Application password revoked for %1$s"
 msgstr "Anwendungspasswort widerrufen für %1$s"
 
-#: includes/class-mailer.php:236
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:269
 #, php-format
 msgid "Two-factor authentication switched on: %1$s"
 msgstr "Zwei-Faktor-Authentifizierung eingeschaltet: %1$s"
 
-#: includes/class-mailer.php:237
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:271
 #, php-format
 msgid "Two-factor authentication switched OFF: %1$s"
 msgstr "Zwei-Faktor-Authentifizierung AUSGESCHALTET: %1$s"
 
-#: includes/class-mailer.php:238
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:273
 #, php-format
 msgid "Two-factor authentication reset by an administrator: %1$s"
 msgstr ""
 "Zwei-Faktor-Authentifizierung durch einen Administrator zurückgesetzt: %1$s"
 
-#: includes/class-mailer.php:239
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:275
 #, php-format
 msgid "Second factor requested: %1$s"
 msgstr "Zweiter Faktor angefordert: %1$s"
 
-#: includes/class-mailer.php:240
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:277
 #, php-format
 msgid "Second factor accepted: %1$s"
 msgstr "Zweiter Faktor akzeptiert: %1$s"
 
-#: includes/class-mailer.php:241
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:279
 #, php-format
 msgid "Wrong second-factor code after a correct password: %1$s"
 msgstr "Falscher Zwei-Faktor-Code nach korrektem Passwort: %1$s"
 
-#: includes/class-mailer.php:242
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:281
 #, php-format
 msgid "API login with the account password refused (two-factor active): %1$s"
-msgstr "API-Anmeldung mit dem Konto-Passwort abgelehnt (Zwei-Faktor aktiv): %1$s"
+msgstr ""
+"API-Anmeldung mit dem Konto-Passwort abgelehnt (Zwei-Faktor aktiv): %1$s"
 
-#: includes/class-mailer.php:243
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:283
 #, php-format
 msgid "Signed in with a two-factor recovery code: %1$s"
 msgstr "Anmeldung mit einem Zwei-Faktor-Wiederherstellungscode: %1$s"
 
-#: includes/class-mailer.php:244
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:285
 #, php-format
 msgid "New two-factor recovery codes generated: %1$s"
 msgstr "Neue Zwei-Faktor-Wiederherstellungscodes erzeugt: %1$s"
 
-#: includes/class-mailer.php:245
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:287
 #, php-format
 msgid "One-time sign-in code e-mailed: %1$s"
 msgstr "Einmaliger Anmeldecode per E-Mail versendet: %1$s"
 
-#: includes/class-mailer.php:246
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:289
 #, php-format
 msgid ""
 "Signed in with an e-mailed one-time code instead of an authenticator: %1$s"
@@ -2715,216 +2805,225 @@ msgstr ""
 "Anmeldung mit einem per E-Mail versendeten Einmalcode statt mit einem "
 "Authenticator: %1$s"
 
-#: includes/class-mailer.php:247
+#: includes/class-mailer.php:290
 msgid "Two-factor policy changed"
 msgstr "Zwei-Faktor-Richtlinie geändert"
 
-#: includes/class-mailer.php:248
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:292
 #, php-format
 msgid "Failed login attempt: %1$s"
 msgstr "Fehlgeschlagener Anmeldeversuch: %1$s"
 
-#: includes/class-mailer.php:249
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:294
 #, php-format
 msgid "Login from a country that is not on the allow list: %1$s"
 msgstr "Login aus einem Land, das nicht auf der Positivliste steht: %1$s"
 
-#: includes/class-mailer.php:250
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:296
 #, php-format
 msgid "Login WOULD have been blocked (monitor mode): %1$s"
 msgstr "Login WÄRE gesperrt worden (Beobachtungsmodus): %1$s"
 
-#: includes/class-mailer.php:251
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:298
 #, php-format
 msgid "Login BLOCKED from a disallowed country: %1$s"
 msgstr "Login aus nicht erlaubtem Land GESPERRT: %1$s"
 
-#: includes/class-mailer.php:252
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:300
 #, php-format
 msgid "Login BLOCKED from an address on the deny list: %1$s"
 msgstr "Anmeldung GESPERRT von einer Adresse auf der Sperrliste: %1$s"
 
-#: includes/class-mailer.php:253
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:302
 #, php-format
 msgid "Login allowed by a bypass grant: %1$s"
 msgstr "Login durch eine Notfall-Freigabe erlaubt: %1$s"
 
-#: includes/class-mailer.php:254
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:304
 #, php-format
 msgid "Bypass link redeemed by %1$s"
 msgstr "Notfall-Link eingelöst von %1$s"
 
-#: includes/class-mailer.php:255
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:306
 #, php-format
 msgid "Login would have been blocked but the kill switch is active: %1$s"
 msgstr "Login wäre gesperrt worden, aber die Notabschaltung ist aktiv: %1$s"
 
-#: includes/class-mailer.php:256
+#: includes/class-mailer.php:307
 msgid "The site URL was changed"
 msgstr "Die Website-URL wurde geändert"
 
-#: includes/class-mailer.php:257
+#: includes/class-mailer.php:308
 msgid "The home URL was changed"
 msgstr "Die Startseiten-URL wurde geändert"
 
-#: includes/class-mailer.php:258
+#: includes/class-mailer.php:309
 msgid "The site administrator e-mail address was changed"
 msgstr "Die Administrator-E-Mail-Adresse der Website wurde geändert"
 
-#: includes/class-mailer.php:259
+#: includes/class-mailer.php:310
 msgid "A change of the administrator e-mail address was requested"
 msgstr "Eine Änderung der Administrator-E-Mail-Adresse wurde angefordert"
 
-#: includes/class-mailer.php:260
+#: includes/class-mailer.php:311
 msgid "Open user registration was changed"
 msgstr "Die offene Benutzerregistrierung wurde geändert"
 
-#: includes/class-mailer.php:261
+#: includes/class-mailer.php:312
 msgid "The default role for new users was changed"
 msgstr "Die Standardrolle für neue Benutzer wurde geändert"
 
-#: includes/class-mailer.php:262
+#: includes/class-mailer.php:313
 msgid "Search engine visibility was changed"
 msgstr "Die Sichtbarkeit für Suchmaschinen wurde geändert"
 
-#: includes/class-mailer.php:263
-msgid "Automatic update settings were changed"
-msgstr "Die Einstellungen für automatische Updates wurden geändert"
-
-#: includes/class-mailer.php:264
+#: includes/class-mailer.php:314
 msgid "The active plugin list was written directly"
 msgstr "Die Liste aktiver Plugins wurde direkt geschrieben"
 
-#: includes/class-mailer.php:265
+#: includes/class-mailer.php:315
 msgid "XML-RPC availability changed"
 msgstr "Die Verfügbarkeit von XML-RPC hat sich geändert"
 
-#: includes/class-mailer.php:266
+#: includes/class-mailer.php:316
 msgid "The file-editing configuration changed"
 msgstr "Die Konfiguration für die Dateibearbeitung hat sich geändert"
 
-#: includes/class-mailer.php:267
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:318
 #, php-format
 msgid "A file was edited through the built-in editor: %1$s"
 msgstr "Eine Datei wurde über den eingebauten Editor bearbeitet: %1$s"
 
-#: includes/class-mailer.php:268
+#: includes/class-mailer.php:319
 msgid "An automatic-update constant changed"
 msgstr "Eine Konstante für automatische Updates hat sich geändert"
 
-#: includes/class-mailer.php:269
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:321
 #, php-format
 msgid "New scheduled task: %1$s"
 msgstr "Neue geplante Aufgabe: %1$s"
 
-#: includes/class-mailer.php:270
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:323
 #, php-format
 msgid "Scheduled task removed: %1$s"
 msgstr "Geplante Aufgabe entfernt: %1$s"
 
-#: includes/class-mailer.php:271
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:325
 #, php-format
 msgid "New must-use plugin appeared: %1$s"
 msgstr "Neues Must-Use-Plugin aufgetaucht: %1$s"
 
-#: includes/class-mailer.php:272
+#: includes/class-mailer.php:326
 msgid "wp-config.php was modified"
 msgstr "wp-config.php wurde verändert"
 
-#: includes/class-mailer.php:273
+#: includes/class-mailer.php:327
 msgid ".htaccess was modified"
 msgstr ".htaccess wurde verändert"
 
-#: includes/class-mailer.php:274
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:329
 #, php-format
 msgid "New file in mu-plugins: %1$s"
 msgstr "Neue Datei in mu-plugins: %1$s"
 
-#: includes/class-mailer.php:275
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:331
 #, php-format
 msgid "Changed file in mu-plugins: %1$s"
 msgstr "Geänderte Datei in mu-plugins: %1$s"
 
-#: includes/class-mailer.php:276
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:333
 #, php-format
 msgid "PHP file found in the uploads directory: %1$s"
 msgstr "PHP-Datei im Upload-Verzeichnis gefunden: %1$s"
 
-#: includes/class-mailer.php:277
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:335
 #, php-format
 msgid ".htaccess in the uploads directory changed: %1$s"
 msgstr ".htaccess im Upload-Verzeichnis geändert: %1$s"
 
-#: includes/class-mailer.php:278
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:337
 #, php-format
 msgid "Known PHP file in uploads changed: %1$s"
 msgstr "Bekannte PHP-Datei in uploads geändert: %1$s"
 
-#: includes/class-mailer.php:279
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:339
 #, php-format
 msgid "Possible backdoor signature: %1$s"
 msgstr "Mögliche Backdoor-Signatur: %1$s"
 
-#: includes/class-mailer.php:280
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:341
 #, php-format
 msgid "Modified WordPress core file: %1$s"
 msgstr "Veränderte WordPress-Kerndatei: %1$s"
 
-#: includes/class-mailer.php:281
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:343
 #, php-format
 msgid "Missing WordPress core file: %1$s"
 msgstr "Fehlende WordPress-Kerndatei: %1$s"
 
-#: includes/class-mailer.php:282
+#. translators: %1$s: the plugin, theme, user, file or setting that the event concerns.
+#: includes/class-mailer.php:345
 #, php-format
 msgid "Unrecognised file in a core directory: %1$s"
 msgstr "Unbekannte Datei in einem Kernverzeichnis: %1$s"
 
-#: includes/class-mailer.php:283
+#: includes/class-mailer.php:346
 msgid "The GeoIP database could not be updated"
 msgstr "Die GeoIP-Datenbank konnte nicht aktualisiert werden"
 
-#: includes/class-mailer.php:284
+#: includes/class-mailer.php:347
 msgid "The GeoIP database is missing"
 msgstr "Die GeoIP-Datenbank fehlt"
 
-#: includes/class-mailer.php:285
+#: includes/class-mailer.php:348
 msgid "Login blocking was automatically disarmed"
 msgstr "Die Login-Sperre wurde automatisch entschärft"
 
-#: includes/class-mailer.php:286
+#: includes/class-mailer.php:349
 msgid "Alert e-mails are being throttled"
 msgstr "Alarm-E-Mails werden gedrosselt"
 
-#: includes/class-mailer.php:287
+#: includes/class-mailer.php:350
 msgid "Sentinel Security Center was activated"
 msgstr "Sentinel Security Center wurde aktiviert"
 
-#: includes/class-mailer.php:288
+#: includes/class-mailer.php:351
 msgid "Sentinel Security Center was deactivated"
 msgstr "Sentinel Security Center wurde deaktiviert"
 
-#: includes/class-updater.php:262
-msgid "See the GitHub release notes for details."
-msgstr "Einzelheiten stehen in den GitHub-Release-Notes."
-
-#: includes/class-updater.php:345
-msgid "Could not rename the downloaded update folder."
-msgstr "Der heruntergeladene Update-Ordner konnte nicht umbenannt werden."
-
-#: includes/geo/class-cloudflare-ranges.php:55
+#: includes/geo/class-cloudflare-ranges.php:63
 msgid "The Cloudflare address list could not be retrieved."
 msgstr "Die Cloudflare-Adressliste konnte nicht abgerufen werden."
 
-#: includes/geo/class-cloudflare-ranges.php:99
+#: includes/geo/class-cloudflare-ranges.php:107
 msgid "Cloudflare"
 msgstr "Cloudflare"
 
-#: includes/geo/class-cloudflare-ranges.php:103
+#: includes/geo/class-cloudflare-ranges.php:111
 msgid "Traefik / Docker / private networks"
 msgstr "Traefik / Docker / private Netze"
 
-#: includes/geo/class-cloudflare-ranges.php:107
+#: includes/geo/class-cloudflare-ranges.php:115
 msgid "Loopback only"
 msgstr "Nur Loopback"
 
@@ -2949,16 +3048,16 @@ msgstr ""
 msgid "The extracted file does not look like a MaxMind database."
 msgstr "Die entpackte Datei sieht nicht wie eine MaxMind-Datenbank aus."
 
-#: includes/geo/class-geoip-database.php:240
+#: includes/geo/class-geoip-database.php:241
 msgid "The new database could not replace the existing one."
 msgstr "Die neue Datenbank konnte die bestehende nicht ersetzen."
 
-#: includes/geo/class-geoip-database.php:277
+#: includes/geo/class-geoip-database.php:278
 msgid "MaxMind rejected the licence key."
 msgstr "MaxMind hat den Lizenzschlüssel abgelehnt."
 
 #. translators: %d: HTTP status code
-#: includes/geo/class-geoip-database.php:282
+#: includes/geo/class-geoip-database.php:283
 #, php-format
 msgid "MaxMind returned HTTP %d."
 msgstr "MaxMind antwortete mit HTTP %d."
@@ -2971,24 +3070,24 @@ msgstr "Das heruntergeladene Archiv konnte nicht gelesen werden."
 msgid "The downloaded archive was empty."
 msgstr "Das heruntergeladene Archiv war leer."
 
-#: includes/geo/class-tar-reader.php:48
+#: includes/geo/class-tar-reader.php:49
 msgid "The downloaded archive is not valid gzip data."
 msgstr "Das heruntergeladene Archiv enthält keine gültigen gzip-Daten."
 
-#: includes/geo/class-tar-reader.php:76
+#: includes/geo/class-tar-reader.php:77
 msgid "The archive contains an unsafe file path and was rejected."
 msgstr "Das Archiv enthält einen unsicheren Dateipfad und wurde abgewiesen."
 
-#: includes/geo/class-tar-reader.php:85
+#: includes/geo/class-tar-reader.php:86
 msgid "The downloaded archive is truncated."
 msgstr "Das heruntergeladene Archiv ist unvollständig."
 
-#: includes/geo/class-tar-reader.php:92
+#: includes/geo/class-tar-reader.php:93
 msgid "The extracted database could not be written to disk."
 msgstr ""
 "Die entpackte Datenbank konnte nicht auf die Festplatte geschrieben werden."
 
-#: includes/geo/class-tar-reader.php:103
+#: includes/geo/class-tar-reader.php:104
 msgid "The archive did not contain the expected database file."
 msgstr "Das Archiv enthielt nicht die erwartete Datenbankdatei."
 
@@ -3012,41 +3111,14 @@ msgstr "Anzeigename"
 msgid "roles"
 msgstr "Rollen"
 
-#. Description of the plugin
-#: sentinel-security-center.php
-msgid ""
-"Security monitoring and alerting for WordPress. Logs and alerts on plugin/"
-"theme changes, administrator and role changes, configuration changes, "
-"filesystem integrity and logins from countries outside your allow list — "
-"with optional login blocking and two-factor authentication. Administrator-"
-"only, with immediate e-mail alerts."
-msgstr ""
-"Sicherheitsüberwachung und Alarmierung für WordPress. Protokolliert und "
-"meldet Änderungen an Plugins und Themes, an Administratoren und Rollen, an "
-"der Konfiguration und am Dateibestand sowie Logins aus Ländern ausserhalb "
-"deiner Positivliste — mit optionaler Login-Sperre und Zwei-Faktor-"
-"Authentifizierung. Nur für Administratoren sichtbar, mit sofortigen E-Mail-"
-"Alarmen."
+#~ msgid "Automatic update settings were changed"
+#~ msgstr "Die Einstellungen für automatische Updates wurden geändert"
 
-#. Author of the plugin
-#: sentinel-security-center.php
-msgid "Steven Glogger"
-msgstr ""
+#~ msgid "See the GitHub release notes for details."
+#~ msgstr "Einzelheiten stehen in den GitHub-Release-Notes."
 
-#. Plugin Name of the plugin
-#: sentinel-security-center.php
-msgid "Sentinel Security Center"
-msgstr ""
-
-#. Plugin URI of the plugin
-#: sentinel-security-center.php
-msgid "https://github.com/sglogger/sentinel-security-center"
-msgstr ""
-
-#. Author URI of the plugin
-#: sentinel-security-center.php
-msgid "https://www.glogger.ch"
-msgstr ""
+#~ msgid "Could not rename the downloaded update folder."
+#~ msgstr "Der heruntergeladene Update-Ordner konnte nicht umbenannt werden."
 
 #~ msgid ""
 #~ "Security monitoring and alerting for WordPress. Logs and alerts on plugin/"

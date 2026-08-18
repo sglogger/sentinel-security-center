@@ -31,6 +31,7 @@ final class Installer {
 	public const OPTION_BYPASS       = 'wpsec_bypass_tokens';
 	public const OPTION_INTEGRITY    = 'wpsec_integrity';
 	public const OPTION_SNAPSHOT     = 'wpsec_config_snapshot';
+	public const OPTION_UPDATES_SEEN = 'wpsec_updates_seen';
 	public const OPTION_LOG          = 'wpsec_log_settings';
 	public const OPTION_SCAN_CURSOR  = 'wpsec_scan_cursor';
 	public const OPTION_CF_RANGES    = 'wpsec_cf_ranges';
@@ -55,6 +56,7 @@ final class Installer {
 			self::OPTION_BYPASS,
 			self::OPTION_INTEGRITY,
 			self::OPTION_SNAPSHOT,
+			self::OPTION_UPDATES_SEEN,
 			self::OPTION_LOG,
 			self::OPTION_SCAN_CURSOR,
 			self::OPTION_CF_RANGES,
@@ -70,6 +72,7 @@ final class Installer {
 	public const CRON_FILE_SCAN   = 'wpsec_file_scan';
 	public const CRON_CONFIG_SCAN = 'wpsec_config_scan';
 	public const CRON_CORE_SCAN   = 'wpsec_core_scan';
+	public const CRON_UPDATE_SCAN = 'wpsec_update_scan';
 	public const CRON_GEOIP       = 'wpsec_geoip_refresh';
 	public const CRON_PRUNE       = 'wpsec_prune_log';
 
@@ -85,6 +88,7 @@ final class Installer {
 			self::CRON_FILE_SCAN   => 'daily',
 			self::CRON_CONFIG_SCAN => 'twicedaily',
 			self::CRON_CORE_SCAN   => 'daily',
+			self::CRON_UPDATE_SCAN => 'daily',
 			self::CRON_GEOIP       => 'weekly',
 			self::CRON_PRUNE       => 'daily',
 		];

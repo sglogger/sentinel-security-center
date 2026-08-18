@@ -347,6 +347,7 @@ final class Admin {
 				User_Reconciler::run();
 				Config_Scanner::run();
 				Core_Checksums::run();
+				Update_Scanner::run();
 				$this->redirect_status( 'scanned' );
 				break;
 

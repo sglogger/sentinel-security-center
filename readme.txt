@@ -4,7 +4,7 @@ Tags: security, activity log, audit log, two-factor, file integrity
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 1.6.0
+Stable tag: 1.6.5
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,7 +18,7 @@ It is built around two goals that pull against each other: miss as little as pos
 
 **What is monitored**
 
-* Plugins: installed, activated, deactivated, updated, deleted, and plugins that appear without a matching install (an SFTP drop).
+* Plugins: installed, activated, deactivated, updated, deleted, plugins with an update waiting, and plugins that appear without a matching install (an SFTP drop).
 * Themes: installed, activated, updated, deleted.
 * Users and administrators: created, deleted, role changed, promoted to administrator, demoted, e-mail changed, password changed or reset — including changes an administrator makes to their own account.
 * User records altered directly in the database, outside WordPress, detected by a periodic reconciliation scan.
@@ -103,6 +103,10 @@ No. Activation on a network stops with a message rather than misbehaving quietly
 
 == Changelog ==
 
+= 1.6.5 =
+* Added: a daily check for plugins with an update waiting, logged as its own event with the installed and available versions. It starts at log only — switch it to e-mail under Settings if you want to be told. An unpatched plugin is the most common way a site is taken over.
+* Removed: the log event for changes to the automatic-update options. The Hardening screen still reports whether automatic updates are switched on, and disabling them through wp-config.php is still logged.
+
 = 1.6.0 =
 * Removed: the built-in updater that installed updates from GitHub Releases, along with the Update URI header. Plugins hosted on WordPress.org may not install or serve updates from an external source; updates now reach your site the ordinary way, through WordPress.
 * Note: the WPSEC_GITHUB_TOKEN constant no longer does anything and can be deleted from wp-config.php.
@@ -166,6 +170,9 @@ No. Activation on a network stops with a message rather than misbehaving quietly
 * Initial scaffolding release.
 
 == Upgrade Notice ==
+
+= 1.6.5 =
+Adds an alert for plugins that have an update waiting. Nothing is e-mailed until you set that event to e-mail under Settings; until then it is written to the log like any other event.
 
 = 1.6.0 =
 The plugin no longer updates itself from GitHub; updates come through WordPress.org from this version on. Install this one through the update offer as it stands, or by uploading the ZIP. WPSEC_GITHUB_TOKEN, if you set it, can be removed from wp-config.php.

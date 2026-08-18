@@ -63,6 +63,11 @@ final class Event_Registry {
 			'plugin.auto_updated'                 => $e( self::NOTICE, self::MODE_LOG, 'plugin', 'plugins' ),
 			'plugin.appeared_out_of_band'         => $e( self::CRITICAL, self::MODE_EMAIL, 'plugin', 'plugins' ),
 
+			// An update waiting is not an incident, so this starts at log
+			// only — but it is the single most common way in, so it is worth
+			// switching to e-mail on a site nobody watches daily.
+			'plugin.update_available'             => $e( self::WARNING, self::MODE_LOG, 'plugin', 'plugins' ),
+
 			// -----------------------------------------------------------------
 			// Themes
 			// -----------------------------------------------------------------
@@ -148,7 +153,6 @@ final class Event_Registry {
 			'option.users_can_register_changed'   => $e( self::HIGH, self::MODE_EMAIL, 'option', 'config' ),
 			'option.default_role_changed'         => $e( self::CRITICAL, self::MODE_EMAIL, 'option', 'config' ),
 			'option.blog_public_changed'          => $e( self::WARNING, self::MODE_LOG, 'option', 'config' ),
-			'option.auto_update_changed'          => $e( self::WARNING, self::MODE_LOG, 'option', 'config' ),
 			'option.active_plugins_direct'        => $e( self::CRITICAL, self::MODE_EMAIL, 'option', 'config' ),
 			'config.xmlrpc_changed'               => $e( self::HIGH, self::MODE_EMAIL, 'config', 'config' ),
 			'config.file_edit_constant_changed'   => $e( self::HIGH, self::MODE_EMAIL, 'config', 'config' ),

@@ -37,12 +37,12 @@ as few false alarms as possible. Every decision below follows from that.
 
 | Area | Events |
 |---|---|
-| Plugins | installed, activated, deactivated, updated, deleted, auto-updated, and plugins that appear with no matching install (an SFTP drop) |
+| Plugins | installed, activated, deactivated, updated, deleted, auto-updated, an update becoming available, and plugins that appear with no matching install (an SFTP drop) |
 | Themes | installed, activated, updated, deleted |
 | Users | created, deleted, role changed, promoted to administrator, demoted, administrator deleted |
 | Administrators | e-mail changed, password changed or reset, capabilities written directly, and changes an administrator makes to their **own** account |
 | Out-of-band | user rows altered directly in the database, found by an hourly reconciliation scan against a stored baseline |
-| Configuration | `siteurl`, `home`, `admin_email`, `users_can_register`, `default_role`, `blog_public`, auto-update options, `wp-config.php` and `.htaccess` hashes, WordPress core files against the official checksums, cron jobs, new must-use plugins, XML-RPC state, file-editor state, application passwords |
+| Configuration | `siteurl`, `home`, `admin_email`, `users_can_register`, `default_role`, `blog_public`, `wp-config.php` and `.htaccess` hashes, WordPress core files against the official checksums, cron jobs, new must-use plugins, XML-RPC state, file-editor state, application passwords |
 | Filesystem | new or changed files in `wp-content/mu-plugins/`, any PHP file under `wp-content/uploads/`, and backdoor signatures in new PHP files |
 | Logins | failed attempts, successful logins, logins from a country outside the allow list, and logins refused by the IP deny list — with optional blocking |
 | Two-factor | enrolment, removal, wrong codes after a correct password, recovery-code and e-mail-fallback use |

@@ -204,6 +204,7 @@ $wpsec_row = static function ( string $label, bool $ok, string $value, string $d
 			Installer::CRON_FILE_SCAN   => __( 'File integrity scan', 'sentinel-security-center' ),
 			Installer::CRON_CONFIG_SCAN => __( 'Configuration snapshot', 'sentinel-security-center' ),
 			Installer::CRON_CORE_SCAN   => __( 'Core checksum verification', 'sentinel-security-center' ),
+			Installer::CRON_UPDATE_SCAN => __( 'Pending update check', 'sentinel-security-center' ),
 			Installer::CRON_GEOIP       => __( 'GeoIP database refresh', 'sentinel-security-center' ),
 			Installer::CRON_PRUNE       => __( 'Log retention cleanup', 'sentinel-security-center' ),
 		];

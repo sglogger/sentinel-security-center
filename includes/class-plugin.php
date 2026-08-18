@@ -71,6 +71,7 @@ final class Plugin {
 		$this->add( 'user_reconciler', new User_Reconciler() );
 		$this->add( 'config_scanner', new Config_Scanner() );
 		$this->add( 'core_checksums', new Core_Checksums() );
+		$this->add( 'update_scanner', new Update_Scanner() );
 		$this->add( 'geoip_database', new Geoip_Database() );
 
 		// Admin surface. Everything user-visible is gated on `manage_options`

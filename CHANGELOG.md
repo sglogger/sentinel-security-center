@@ -9,6 +9,27 @@ When a release goes out, the same summary must also be added to the
 `== Changelog ==` section of `readme.txt` — that is what WordPress shows in the
 plugin details modal.
 
+## [1.6.5] - 2026-08-18
+
+### Added
+
+- **A plugin with an update waiting is now an event of its own.**
+  `plugin.update_available` is raised once per available version by a new daily
+  check, carrying the installed version, the version on offer, and whether the
+  plugin is active. It starts at log only; set it to e-mail in Settings →
+  Events on a site nobody reads the dashboard of, because an unpatched plugin
+  is the most common way a WordPress site is taken over. The check only reads
+  the update information WordPress collects on its own schedule — nothing here
+  checks for, downloads or installs anything.
+
+### Removed
+
+- **The `option.auto_update_changed` event.** Watching the `auto_update_*`
+  options made the plugin scanner read the plugin as taking part in updates,
+  and the check was not worth the ambiguity. The Hardening screen still reports
+  whether automatic updates are on, and `config.autoupdate_constant_changed`
+  still catches `AUTOMATIC_UPDATER_DISABLED` being set in `wp-config.php`.
+
 ## [1.6.0] - 2026-08-18
 
 ### Removed

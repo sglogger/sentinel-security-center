@@ -93,14 +93,44 @@ final class Geoip_Database {
 	}
 
 	/**
-	 * Drop the usual web-server denials into the directory.
+	 * The web-server denials dropped into the directory, verbatim.
+	 *
+	 * The file scanner compares against these bytes to tell our own guard files
+	 * apart from something dropped in beside them, so this is the one place
+	 * their contents may be defined.
+	 *
+	 * @return array<string, string>
 	 */
-	private static function protect( string $dir ): void {
-		$files = [
+	public static function guard_files(): array {
+		return [
 			'index.php'  => "<?php\n// Silence is golden.\n",
 			'.htaccess'  => "Order allow,deny\nDeny from all\n<IfModule mod_authz_core.c>\n\tRequire all denied\n</IfModule>\n",
 			'web.config' => "<?xml version=\"1.0\"?>\n<configuration><system.webServer><security><requestFiltering><hiddenSegments><add segment=\".\" /></hiddenSegments></requestFiltering></security></system.webServer></configuration>\n",
 		];
+	}
+
+	/**
+	 * Is this file one of our guard files, with exactly the contents we wrote?
+	 *
+	 * Name alone is not enough. A shell written over our own index.php must
+	 * still be reported, so the bytes have to match too.
+	 */
+	public static function is_guard_file( string $path ): bool {
+		$files = self::guard_files();
+		$name  = basename( $path );
+
+		if ( ! isset( $files[ $name ] ) || ! is_readable( $path ) ) {
+			return false;
+		}
+
+		return hash_equals( hash( 'sha256', $files[ $name ] ), (string) hash_file( 'sha256', $path ) );
+	}
+
+	/**
+	 * Drop the usual web-server denials into the directory.
+	 */
+	private static function protect( string $dir ): void {
+		$files = self::guard_files();
 
 		foreach ( $files as $name => $contents ) {
 			if ( ! file_exists( $dir . $name ) ) {
@@ -136,6 +166,12 @@ final class Geoip_Database {
 
 			return new \WP_Error( 'wpsec_geoip_no_dir', $state['last_error'] );
 		}
+
+		// directory() may have just created the directory and written the path
+		// into the option. $state was read before that call, so every
+		// update_option() below would write the old, empty value back — and the
+		// file scanner relies on that path to recognise its own files.
+		$state['dir'] = $dir;
 
 		$base = add_query_arg(
 			[

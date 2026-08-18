@@ -24,9 +24,18 @@ It is built around two goals that pull against each other: miss as little as pos
 * User records altered directly in the database, outside WordPress, detected by a periodic reconciliation scan.
 * Configuration: critical options such as siteurl, home, admin_email, users_can_register and default_role; wp-config.php and .htaccess changes; WordPress core files verified against the official checksums; cron jobs; newly appearing must-use plugins; XML-RPC and file-editor state; application passwords.
 * Filesystem: new or changed files in wp-content/mu-plugins/, and any PHP file under wp-content/uploads/ — where one never belongs. New PHP files are additionally checked against common backdoor signatures.
-* Logins: a successful login from a country outside your allow list, with optional blocking.
+* Logins: failed attempts, successful logins, and a login from a country outside your allow list — with optional blocking.
+* Two-factor authentication: who switched it on or off, wrong codes submitted after a correct password, and every use of a recovery code or the e-mail fallback.
 
 **The plugin never modifies, quarantines or deletes a scanned file.** It reports, and leaves recovery to you.
+
+**Two-factor authentication**
+
+A one-time code from any authenticator app, asked for after the password is accepted — and the session is only issued once that code is right. Enrolment is per account and voluntary by default; a site setting can require it for administrators, with a grace period whose clock starts when you switch the requirement on.
+
+Shared secrets are encrypted with AES-256-GCM under a key derived from the site salts, so a database dump without wp-config.php is useless. Each code is accepted once, so a code read over your shoulder cannot be replayed. The QR code is drawn on your own server — the secret is never sent to an external QR service.
+
+Recovery, in order: ten single-use recovery codes issued at enrolment; optionally a one-time code mailed to the account address; and failing everything, a reset by another administrator.
 
 **Geo-aware login control**
 
@@ -36,7 +45,7 @@ Because locking yourself out is the real risk, there are four independent ways b
 
 **Administrator-only**
 
-The plugin adds no front-end output, no REST routes and no shortcodes. Its menu, notices, assets and actions all require the manage_options capability, and a blocked login is indistinguishable from an ordinary wrong password.
+The plugin adds no front-end output, no REST routes and no shortcodes. Its menu, notices, assets and actions all require the manage_options capability, and a blocked login is indistinguishable from an ordinary wrong password. The one exception is two-factor enrolment: that belongs to the account holder, so the setup screen is reachable by any signed-in user from their own profile — without appearing in the menu for anyone who cannot otherwise see the plugin.
 
 == Installation ==
 
@@ -48,9 +57,21 @@ The plugin adds no front-end output, no REST routes and no shortcodes. Its menu,
 
 == Frequently Asked Questions ==
 
+= What happens if I lose my authenticator app? =
+
+Use one of the ten recovery codes issued when you switched two-factor on. If those are gone too and the site has the e-mail fallback enabled, the sign-in screen can mail a one-time code to the address on your account. If everything is lost, any other administrator can reset your second factor from your profile screen — you then set it up again.
+
+The e-mail fallback is off by default on purpose. It means whoever can read that mailbox can finish the sign-in, which on many sites is the same person who controls the hosting account. Turn it on when losing a phone would otherwise mean losing the site; leave it off otherwise. Every code sent and every code used is written to the log.
+
+= Does two-factor cover the REST API and application passwords? =
+
+No. They are non-interactive — there is nobody there to type a code — and an application password is already a separate credential you can revoke on its own. If an account has to be locked down completely, revoke its application passwords as well.
+
 = Does it block brute-force login attempts? =
 
-No, by design. Failed logins are not processed at all — no counters, no thresholds, no lockouts. Rate limiting belongs in your firewall, CDN or fail2ban, where it can act before the request reaches PHP. This plugin only reacts to logins that actually succeeded.
+No, by design. Failed attempts are logged — `login.failed`, at Info and log-only, so a burst of them is visible in the log and searchable by user name and IP — but nothing is enforced: no counters, no thresholds, no lockouts. Rate limiting belongs in your firewall, CDN or fail2ban, where it can act before the request reaches PHP. Every rule this plugin enforces reacts only to logins that actually succeeded.
+
+Set the event to "E-mail" only if you know the site is quiet. On a public site bots guess passwords around the clock, and an inbox that learns to ignore this plugin is worse than no alert at all.
 
 = Will country blocking stop a determined attacker? =
 

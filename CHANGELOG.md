@@ -9,6 +9,88 @@ When a release goes out, the same summary must also be added to the
 `== Changelog ==` section of `readme.txt` — that is what WordPress shows in the
 plugin details modal.
 
+## [Unreleased]
+
+### Added
+
+- **Two-factor authentication (TOTP).** A one-time code from any authenticator
+  app, asked for after the password is accepted; the session is issued only once
+  that code is right. Enrolment is per account and voluntary by default, with a
+  site setting to require it for everyone who can `manage_options` after a grace
+  period that starts when the requirement is switched on.
+
+  - The secret is encrypted at rest with AES-256-GCM under a key derived from
+    `SECURE_AUTH_SALT`, so a database dump without `wp-config.php` cannot mint
+    codes.
+  - Each code is accepted once. The last accepted time step is recorded, which
+    closes the replay window a 30-second code would otherwise leave open.
+  - The QR code is rendered locally as inline SVG — sending the provisioning URI
+    to an external QR service would hand the shared secret to a third party.
+  - Nothing is switched on until a code from the app has been accepted, so a
+    mistyped setup key cannot lock anyone out.
+  - Application passwords, REST and XML-RPC are not challenged, by design.
+
+  **Recovery**, for the day the authenticator is gone: ten single-use recovery
+  codes issued at enrolment and shown once; optionally a one-time code mailed to
+  the account address, off by default because it reduces the second factor to
+  whoever reads that mailbox; and as a last resort a reset by another
+  administrator from the user's profile screen. Recovery codes are stored as
+  hashes rather than encrypted, so they keep working after a salt rotation —
+  which is exactly when the TOTP secrets stop decrypting.
+
+  Eleven new event types under a *Two-factor authentication* heading in the
+  alert matrix. Enrolment and passed challenges are Info; a wrong code after a
+  correct password is a Warning, because whoever submitted it has working
+  credentials; switching the factor off, using a recovery code, using the
+  e-mail fallback and changing the policy all e-mail immediately.
+
+  Adds one runtime dependency, `bacon/bacon-qr-code`, for the QR rendering.
+
+- **Failed login attempts are now recorded** as `login.failed`, and appear in
+  the alert matrix under Logins like every other event. The default is
+  deliberately Info / log only: on a public site bots guess passwords around the
+  clock, and mailing that out is how an inbox learns to ignore this plugin. The
+  row carries the submitted user name, the IP and its country, the reason core
+  gave (`invalid_username`, `incorrect_password`, …) and whether the account
+  actually exists — so a spray across many names and a hammering of one account
+  are distinguishable in the log. Still no counters, thresholds or lockouts:
+  nothing is enforced on a failed attempt.
+
+  A login refused by the country rule is not counted twice — it is already
+  recorded as `login.blocked_geo`.
+
+### Fixed
+
+- **The scanner reported its own files.** `Geoip_Database::refresh()` read the
+  state option before `directory()` created the GeoIP directory, then wrote the
+  stale copy back — erasing the recorded path. The file scanner uses that path
+  to recognise its own guard files, so from the first database refresh onward it
+  reported `wpsec-geoip-*/index.php` and `wpsec-geoip-*/.htaccess` as a critical
+  find. The exemption no longer depends on the option at all: a file is skipped
+  only when it sits in a `wpsec-geoip-*` directory under uploads, carries one of
+  our guard file names, and matches our bytes exactly — so a shell dropped in
+  beside them, or written over them, is still reported.
+
+- **A `.htaccess` in uploads was reported as an executable file.** It was walked
+  with the PHP files and inherited their event and wording ("An executable file
+  appeared … should never contain PHP"), which is wrong on both counts. It is
+  now a separate scope with its own message and the `file.uploads_htaccess_changed`
+  event — which the registry and the mailer already defined but nothing emitted.
+
+- **Localised installs reported `wp-includes/version.php` as modified, forever.**
+  Only `get_locale()` was consulted, so a site whose core package and current
+  language differ was checked against a manifest that describes a different
+  build. The lookup now prefers `$wp_local_package`, and accepts a manifest only
+  once its `version.php` matches the file on disk.
+
+- **"View details" disappeared whenever GitHub could not be reached.** The
+  updater returned early on a failed release lookup, leaving the plugin out of
+  the `update_plugins` transient — and WordPress renders that link only for
+  plugins it finds there. It now always registers, falling back to the version
+  and readme data on disk. The modal also stops offering a WordPress.org plugin
+  page that does not exist, and orders its tabs Description → Installation → FAQ
+  → Changelog.
+
 ## [1.1.1] - 2026-08-18
 
 ### Fixed

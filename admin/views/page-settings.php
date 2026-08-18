@@ -23,6 +23,7 @@ $wpsec_tabs = [
 	'general'   => __( 'General', 'wp-security-center' ),
 	'alerts'    => __( 'Alerts', 'wp-security-center' ),
 	'geo'       => __( 'Login & Location', 'wp-security-center' ),
+	'twofactor' => __( 'Two-Factor', 'wp-security-center' ),
 	'integrity' => __( 'File Integrity', 'wp-security-center' ),
 ];
 ?>
@@ -167,6 +168,97 @@ $wpsec_tabs = [
 		<?php endforeach; ?>
 		<?php submit_button(); ?>
 		</form>
+
+	<?php elseif ( 'twofactor' === $wpsec_tab ) : ?>
+
+		<?php $wpsec_2fa = Two_Factor::settings(); ?>
+
+		<?php if ( ! Secret_Cipher::is_available() ) : ?>
+			<div class="notice notice-error inline"><p>
+				<?php esc_html_e( 'PHP has no OpenSSL support on this server, so there is nowhere safe to keep a shared secret. Two-factor authentication stays off until that is fixed — storing the secret in the clear would make a database dump enough to bypass it.', 'wp-security-center' ); ?>
+			</p></div>
+		<?php endif; ?>
+
+		<p><?php esc_html_e( 'A one-time code from an authenticator app, asked for after the password is accepted. Enrolment is per account: every user manages their own from their profile.', 'wp-security-center' ); ?></p>
+
+		<?php Admin::form_open( 'save_two_factor' ); ?>
+		<table class="form-table" role="presentation">
+			<tr>
+				<th scope="row"><?php esc_html_e( 'Availability', 'wp-security-center' ); ?></th>
+				<td>
+					<label><input type="checkbox" name="2fa_enabled" value="1" <?php checked( ! empty( $wpsec_2fa['enabled'] ) ); ?>>
+						<?php esc_html_e( 'Let users protect their account with an authenticator app', 'wp-security-center' ); ?></label>
+					<p class="description"><?php esc_html_e( 'Switching this off does not delete anything. Enrolled users simply stop being asked, and are asked again if it is switched back on.', 'wp-security-center' ); ?></p>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><?php esc_html_e( 'Administrators', 'wp-security-center' ); ?></th>
+				<td>
+					<label><input type="checkbox" name="2fa_require_admins" value="1" <?php checked( ! empty( $wpsec_2fa['require_admins'] ) ); ?>>
+						<?php esc_html_e( 'Require it for everyone who can manage options', 'wp-security-center' ); ?></label>
+					<p class="description"><?php esc_html_e( 'They are nagged during the grace period below, and cannot sign in without enrolling once it has passed. The clock starts when you save this, not when the plugin was installed.', 'wp-security-center' ); ?></p>
+					<p>
+						<label for="wpsec-grace"><?php esc_html_e( 'Grace period', 'wp-security-center' ); ?></label>
+						<input type="number" id="wpsec-grace" name="2fa_grace_days" min="0" max="90" class="small-text"
+							value="<?php echo esc_attr( (string) ( $wpsec_2fa['grace_days'] ?? 7 ) ); ?>">
+						<?php esc_html_e( 'days', 'wp-security-center' ); ?>
+					</p>
+					<?php if ( ! empty( $wpsec_2fa['require_admins'] ) && Two_Factor::grace_ends() > 0 ) : ?>
+						<p class="description">
+							<?php
+							echo esc_html(
+								Two_Factor::grace_ends() > time()
+									? sprintf(
+										/* translators: %s: formatted date */
+										__( 'Enrolment becomes mandatory on %s.', 'wp-security-center' ),
+										wp_date( (string) get_option( 'date_format' ), Two_Factor::grace_ends() )
+									)
+									: __( 'The grace period has passed. Administrators without a second factor must enrol at their next sign-in.', 'wp-security-center' )
+							);
+							?>
+						</p>
+					<?php endif; ?>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><?php esc_html_e( 'Recovery', 'wp-security-center' ); ?></th>
+				<td>
+					<p><?php esc_html_e( 'Ten single-use recovery codes are issued at enrolment and shown once. They are stored only as hashes, which is also why they survive a rotation of the site salts when the authenticator secrets do not.', 'wp-security-center' ); ?></p>
+					<label><input type="checkbox" name="2fa_email_fallback" value="1" <?php checked( ! empty( $wpsec_2fa['email_fallback'] ) ); ?>>
+						<?php esc_html_e( 'Also allow a one-time code sent to the account e-mail address', 'wp-security-center' ); ?></label>
+					<p class="description">
+						<?php esc_html_e( 'A real weakening: anyone who can read that mailbox can complete the sign-in, and on many sites the mailbox is on the same hosting account. Worth having when losing a phone would otherwise mean losing the site — not worth having otherwise. Every send and every use is logged.', 'wp-security-center' ); ?>
+					</p>
+					<p>
+						<label for="wpsec-2fa-ttl"><?php esc_html_e( 'The mailed code expires after', 'wp-security-center' ); ?></label>
+						<input type="number" id="wpsec-2fa-ttl" name="2fa_email_ttl_min" min="2" max="60" class="small-text"
+							value="<?php echo esc_attr( (string) ( $wpsec_2fa['email_ttl_min'] ?? 10 ) ); ?>">
+						<?php esc_html_e( 'minutes', 'wp-security-center' ); ?>
+					</p>
+					<p class="description"><?php esc_html_e( 'If a user loses the authenticator, the recovery codes and the mailbox, any administrator can reset their second factor from that user\'s profile screen.', 'wp-security-center' ); ?></p>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><?php esc_html_e( 'Your account', 'wp-security-center' ); ?></th>
+				<td>
+					<p>
+						<?php
+						echo esc_html(
+							Two_Factor::is_active_for( get_current_user_id() )
+								? __( 'Two-factor authentication is on for your account.', 'wp-security-center' )
+								: __( 'Two-factor authentication is not set up for your account.', 'wp-security-center' )
+						);
+						?>
+					</p>
+					<p><a class="button" href="<?php echo esc_url( Two_Factor_Admin::url() ); ?>"><?php esc_html_e( 'Manage it', 'wp-security-center' ); ?></a></p>
+				</td>
+			</tr>
+		</table>
+		<?php submit_button(); ?>
+		</form>
+
+		<h2><?php esc_html_e( 'What is not covered', 'wp-security-center' ); ?></h2>
+		<p><?php esc_html_e( 'Application passwords, the REST API and XML-RPC are not challenged. There is nobody at the keyboard to type a code, and an application password is already a separate credential you can revoke on its own. If an account must be locked down completely, revoke its application passwords as well.', 'wp-security-center' ); ?></p>
 
 	<?php elseif ( 'geo' === $wpsec_tab ) : ?>
 

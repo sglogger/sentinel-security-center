@@ -208,8 +208,8 @@ final class Core_Checksums {
 	 */
 	private static function fetch(): ?array {
 		$version = (string) get_bloginfo( 'version' );
-		$locale  = (string) get_locale();
-		$key     = 'wpsec_checksums_' . md5( $version . '|' . $locale );
+		$locales = self::locales();
+		$key     = 'wpsec_checksums_' . md5( $version . '|' . implode( ',', $locales ) );
 
 		$cached = get_transient( $key );
 
@@ -221,21 +221,76 @@ final class Core_Checksums {
 			require_once ABSPATH . 'wp-admin/includes/update.php';
 		}
 
-		$checksums = get_core_checksums( $version, $locale );
+		$fallback = null;
 
-		// Not every locale has a published manifest; en_US always does.
-		if ( ! is_array( $checksums ) || empty( $checksums ) ) {
-			$checksums = get_core_checksums( $version, 'en_US' );
+		foreach ( $locales as $locale ) {
+			$checksums = get_core_checksums( $version, $locale );
+
+			// Not every locale has a published manifest; en_US always does.
+			if ( ! is_array( $checksums ) || empty( $checksums ) ) {
+				continue;
+			}
+
+			// The manifest that describes the installed build is the one whose
+			// version.php matches the one on disk. Checking it here is what
+			// keeps a localised install from reporting its own version.php as
+			// modified for the rest of its life.
+			if ( self::describes_this_build( $checksums ) ) {
+				set_transient( $key, $checksums, DAY_IN_SECONDS );
+				return $checksums;
+			}
+
+			$fallback ??= $checksums;
 		}
 
-		if ( ! is_array( $checksums ) || empty( $checksums ) ) {
+		if ( null === $fallback ) {
 			set_transient( $key, [], HOUR_IN_SECONDS );
 			return null;
 		}
 
-		set_transient( $key, $checksums, DAY_IN_SECONDS );
+		// Nothing matched. The manifest is still worth using — every other file
+		// is locale-independent — and a version.php that matches no published
+		// build is a finding in its own right.
+		set_transient( $key, $fallback, DAY_IN_SECONDS );
 
-		return $checksums;
+		return $fallback;
+	}
+
+	/**
+	 * Locales whose manifest could describe this install, best guess first.
+	 *
+	 * A localised build records the package it came from in $wp_local_package,
+	 * and that package — not the language the site is set to today — is what
+	 * determines the contents of wp-includes/version.php. Switching the site
+	 * language does not rewrite core, so get_locale() alone is not enough.
+	 *
+	 * @return string[]
+	 */
+	private static function locales(): array {
+		$locales = [];
+
+		if ( ! empty( $GLOBALS['wp_local_package'] ) ) {
+			$locales[] = (string) $GLOBALS['wp_local_package'];
+		}
+
+		$locales[] = (string) get_locale();
+		$locales[] = 'en_US';
+
+		return array_values( array_unique( array_filter( $locales ) ) );
+	}
+
+	/**
+	 * @param array<string, string> $checksums The manifest to test.
+	 */
+	private static function describes_this_build( array $checksums ): bool {
+		$expected = (string) ( $checksums['wp-includes/version.php'] ?? '' );
+		$path     = ABSPATH . 'wp-includes/version.php';
+
+		if ( '' === $expected || ! is_readable( $path ) ) {
+			return false;
+		}
+
+		return md5_file( $path ) === $expected;
 	}
 
 	private static function ignored( string $file ): bool {

@@ -233,6 +233,18 @@ final class Mailer {
 			'user.db_modified_out_of_band'        => __( 'User modified directly in the database: %1$s', 'wp-security-center' ),
 			'apppass.created'                     => __( 'Application password created for %1$s', 'wp-security-center' ),
 			'apppass.revoked'                     => __( 'Application password revoked for %1$s', 'wp-security-center' ),
+			'2fa.enabled'                         => __( 'Two-factor authentication switched on: %1$s', 'wp-security-center' ),
+			'2fa.disabled'                        => __( 'Two-factor authentication switched OFF: %1$s', 'wp-security-center' ),
+			'2fa.reset_by_admin'                  => __( 'Two-factor authentication reset by an administrator: %1$s', 'wp-security-center' ),
+			'2fa.challenge_issued'                => __( 'Second factor requested: %1$s', 'wp-security-center' ),
+			'2fa.challenge_passed'                => __( 'Second factor accepted: %1$s', 'wp-security-center' ),
+			'2fa.challenge_failed'                => __( 'Wrong second-factor code after a correct password: %1$s', 'wp-security-center' ),
+			'2fa.recovery_code_used'              => __( 'Signed in with a two-factor recovery code: %1$s', 'wp-security-center' ),
+			'2fa.recovery_codes_regenerated'      => __( 'New two-factor recovery codes generated: %1$s', 'wp-security-center' ),
+			'2fa.email_code_sent'                 => __( 'One-time sign-in code e-mailed: %1$s', 'wp-security-center' ),
+			'2fa.email_code_used'                 => __( 'Signed in with an e-mailed one-time code instead of an authenticator: %1$s', 'wp-security-center' ),
+			'2fa.policy_changed'                  => __( 'Two-factor policy changed', 'wp-security-center' ),
+			'login.failed'                        => __( 'Failed login attempt: %1$s', 'wp-security-center' ),
 			'login.foreign_allowed'               => __( 'Login from a country that is not on the allow list: %1$s', 'wp-security-center' ),
 			'login.would_block_geo'               => __( 'Login WOULD have been blocked (monitor mode): %1$s', 'wp-security-center' ),
 			'login.blocked_geo'                   => __( 'Login BLOCKED from a disallowed country: %1$s', 'wp-security-center' ),
@@ -273,6 +285,20 @@ final class Mailer {
 			'security_center.activated'           => __( 'WP Security Center was activated', 'wp-security-center' ),
 			'security_center.deactivated'         => __( 'WP Security Center was deactivated', 'wp-security-center' ),
 		];
+	}
+
+	/**
+	 * Send a message to one specific address, using the configured sender.
+	 *
+	 * Alerts go to the administrators; this is for the rare message aimed at a
+	 * single account — the two-factor fallback code being the only one so far.
+	 */
+	public static function send_to( string $to, string $subject, string $body ): bool {
+		if ( '' === $to || ! is_email( $to ) ) {
+			return false;
+		}
+
+		return (bool) wp_mail( $to, $subject, $body, self::headers() );
 	}
 
 	/**

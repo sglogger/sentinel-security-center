@@ -63,6 +63,7 @@ final class Plugin {
 		$this->add( 'option_monitor', new Option_Monitor() );
 		$this->add( 'login_guard', new Login_Guard() );
 		$this->add( 'bypass_token', new Bypass_Token() );
+		$this->add( 'two_factor_login', new Two_Factor_Login() );
 
 		// Scheduled work. Registering the handlers is cheap; they only do
 		// anything when their cron event fires.
@@ -78,6 +79,10 @@ final class Plugin {
 		if ( is_admin() ) {
 			$this->add( 'admin', new Admin() );
 			$this->add( 'csv_exporter', new Csv_Exporter() );
+
+			// Enrolment belongs to the account holder, not to administrators,
+			// so this one registers for every signed-in user.
+			$this->add( 'two_factor_admin', new Two_Factor_Admin() );
 		}
 
 		// GitHub Releases self-updater. Only ever needed in the admin, during

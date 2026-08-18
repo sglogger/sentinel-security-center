@@ -35,6 +35,7 @@ final class Installer {
 	public const OPTION_SCAN_CURSOR  = 'wpsec_scan_cursor';
 	public const OPTION_CF_RANGES    = 'wpsec_cf_ranges';
 	public const OPTION_NOTICES      = 'wpsec_notices';
+	public const OPTION_2FA          = 'wpsec_two_factor';
 
 	/**
 	 * Every option this plugin owns. Used by uninstall() so cleanup can never
@@ -58,6 +59,7 @@ final class Installer {
 			self::OPTION_SCAN_CURSOR,
 			self::OPTION_CF_RANGES,
 			self::OPTION_NOTICES,
+			self::OPTION_2FA,
 		];
 	}
 
@@ -205,8 +207,27 @@ final class Installer {
 		self::seed_options();
 		self::schedule_cron();
 
+		self::forget_own_baseline_rows();
+
 		update_option( self::OPTION_DATA_VERSION, WPSEC_DATA_VERSION );
 		update_option( self::OPTION_VERSION, WPSEC_VERSION );
+	}
+
+	/**
+	 * Drop baseline rows for this plugin's own GeoIP guard files.
+	 *
+	 * Earlier versions could record those files — and reporting them was the
+	 * bug. Left in place, the rows would now come back once as "no longer
+	 * present" the moment the scanner stops walking into that directory.
+	 */
+	private static function forget_own_baseline_rows(): void {
+		global $wpdb;
+
+		$table = self::table_file_baseline();
+		$like  = '%' . $wpdb->esc_like( 'wpsec-geoip-' ) . '%';
+
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared -- table name from $wpdb->prefix; the pattern IS bound through prepare().
+		$wpdb->query( $wpdb->prepare( "DELETE FROM `{$table}` WHERE path LIKE %s", $like ) );
 	}
 
 	/**
@@ -379,6 +400,7 @@ final class Installer {
 		add_option( self::OPTION_GEO, self::default_geo() );
 		add_option( self::OPTION_INTEGRITY, self::default_integrity() );
 		add_option( self::OPTION_LOG, self::default_log_settings() );
+		add_option( self::OPTION_2FA, self::default_two_factor() );
 
 		// Non-autoloaded working state. These are written on every scan or
 		// lookup, so keeping them out of the autoload set matters.
@@ -458,6 +480,26 @@ final class Installer {
 			'max_files_per_run'   => 20000,
 			'max_hash_bytes'      => 2097152,
 			'exclusions'          => [],
+		];
+	}
+
+	/**
+	 * Two-factor defaults.
+	 *
+	 * Available but never imposed: the feature is on, nobody is required to
+	 * use it, and the e-mail fallback — which reduces the second factor to
+	 * whoever can read the mailbox — starts switched off.
+	 *
+	 * @return array<string, mixed>
+	 */
+	public static function default_two_factor(): array {
+		return [
+			'enabled'        => true,
+			'require_admins' => false,
+			'required_since' => 0,
+			'grace_days'     => 7,
+			'email_fallback' => false,
+			'email_ttl_min'  => 10,
 		];
 	}
 

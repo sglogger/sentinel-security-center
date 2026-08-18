@@ -253,7 +253,7 @@ final class Admin {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- navigation only.
 		$tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( (string) $_GET['tab'] ) ) : 'general';
 
-		return in_array( $tab, [ 'general', 'alerts', 'geo', 'integrity' ], true ) ? $tab : 'general';
+		return in_array( $tab, [ 'general', 'alerts', 'geo', 'twofactor', 'integrity' ], true ) ? $tab : 'general';
 	}
 
 	// -------------------------------------------------------------------------
@@ -288,6 +288,11 @@ final class Admin {
 			case 'save_geo':
 				$this->save_geo( $post );
 				$this->redirect( 'geo', 'saved' );
+				break;
+
+			case 'save_two_factor':
+				$this->save_two_factor( $post );
+				$this->redirect( 'twofactor', 'saved' );
 				break;
 
 			case 'save_integrity':
@@ -429,6 +434,61 @@ final class Admin {
 		update_option( Installer::OPTION_GEO, $geo );
 
 		Country_Resolver::flush();
+	}
+
+	/**
+	 * @param array<string, mixed> $post Submitted data.
+	 */
+	private function save_two_factor( array $post ): void {
+		$before   = Two_Factor::settings();
+		$settings = $before;
+
+		$settings['enabled']        = ! empty( $post['2fa_enabled'] );
+		$settings['require_admins'] = ! empty( $post['2fa_require_admins'] );
+		$settings['email_fallback'] = ! empty( $post['2fa_email_fallback'] );
+		$settings['grace_days']     = max( 0, min( 90, (int) ( $post['2fa_grace_days'] ?? 7 ) ) );
+		$settings['email_ttl_min']  = max( 2, min( 60, (int) ( $post['2fa_email_ttl_min'] ?? 10 ) ) );
+
+		// The grace clock starts the moment the requirement is switched on, not
+		// when the plugin was installed. Otherwise turning it on would lock out
+		// every administrator who happens to be away from their phone.
+		if ( $settings['require_admins'] && empty( $before['require_admins'] ) ) {
+			$settings['required_since'] = time();
+		} elseif ( ! $settings['require_admins'] ) {
+			$settings['required_since'] = 0;
+		}
+
+		update_option( Installer::OPTION_2FA, $settings );
+
+		$changes = [];
+
+		foreach ( [
+			'enabled'        => 'the feature itself',
+			'require_admins' => 'the requirement for administrators',
+			'email_fallback' => 'the e-mail fallback',
+		] as $key => $label ) {
+			if ( (bool) $before[ $key ] !== (bool) $settings[ $key ] ) {
+				$changes[] = sprintf( '%s was switched %s', $label, $settings[ $key ] ? 'on' : 'off' );
+			}
+		}
+
+		if ( empty( $changes ) ) {
+			return;
+		}
+
+		Logger::log(
+			'2fa.policy_changed',
+			[
+				'object_id' => 'two_factor',
+				'message'   => sprintf( 'The two-factor policy changed: %s.', implode( '; ', $changes ) ),
+				'data'      => [
+					'enabled'        => $settings['enabled'],
+					'require_admins' => $settings['require_admins'],
+					'email_fallback' => $settings['email_fallback'],
+					'grace_days'     => $settings['grace_days'],
+				],
+			]
+		);
 	}
 
 	/**

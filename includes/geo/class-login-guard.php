@@ -25,6 +25,7 @@ final class Login_Guard {
 	public function register(): void {
 		add_filter( 'authenticate', [ $this, 'evaluate' ], 50, 3 );
 		add_action( 'wp_login', [ $this, 'on_login' ], 10, 2 );
+		add_action( 'wp_login_failed', [ $this, 'on_login_failed' ], 10, 2 );
 		add_action( 'wp_logout', [ $this, 'on_logout' ], 10, 1 );
 	}
 
@@ -35,8 +36,9 @@ final class Login_Guard {
 	 * @return \WP_User|\WP_Error|null
 	 */
 	public function evaluate( $user, $username = '', $password = '' ) {
-		// Credentials were wrong, or another filter already rejected. Failed
-		// logins are deliberately not processed at all by this plugin.
+		// Credentials were wrong, or another filter already rejected. There is
+		// no geo decision to make on a login that was never going to succeed —
+		// the attempt itself is recorded by on_login_failed().
 		if ( ! $user instanceof \WP_User ) {
 			return $user;
 		}
@@ -201,6 +203,63 @@ final class Login_Guard {
 					Country_Resolver::country_name( $resolved['country'] )
 				),
 				'data'          => [ 'source' => $resolved['source'] ],
+			]
+		);
+	}
+
+	/**
+	 * Record a failed authentication attempt.
+	 *
+	 * wp_authenticate() fires this for every WP_Error result, which includes
+	 * the error returned for a geo-blocked login. That one is already recorded
+	 * as login.blocked_geo, so it is skipped here rather than counted twice.
+	 *
+	 * Nothing is derived from the attempt beyond what was submitted: the
+	 * password is never touched, and whether the account exists is recorded
+	 * only in our own log — the login screen still says the same thing either
+	 * way.
+	 *
+	 * @param string          $username Submitted user name.
+	 * @param \WP_Error|null  $error    Why authentication failed.
+	 */
+	public function on_login_failed( $username = '', $error = null ): void {
+		$code = ( $error instanceof \WP_Error ) ? (string) $error->get_error_code() : '';
+
+		if ( 'wpsec_geo_blocked' === $code ) {
+			return;
+		}
+
+		$username = (string) $username;
+		$user     = '' !== $username ? get_user_by( 'login', $username ) : false;
+
+		if ( ! $user && '' !== $username && is_email( $username ) ) {
+			$user = get_user_by( 'email', $username );
+		}
+
+		$ip       = Context::client_ip();
+		$resolved = Country_Resolver::resolve( $ip );
+
+		Logger::log(
+			'login.failed',
+			[
+				'object_id'    => $username,
+				'object_label' => $username,
+				'target_user'  => $user ? (int) $user->ID : 0,
+				'actor_login'  => $username,
+				'ip'           => (string) $ip,
+				'country'      => $resolved['country'],
+				'message'      => sprintf(
+					'Failed login attempt for "%s" from %s (%s).',
+					'' !== $username ? $username : '(no user name)',
+					(string) $ip,
+					Country_Resolver::country_name( $resolved['country'] )
+				),
+				'data'         => [
+					'reason'      => '' !== $code ? $code : 'unknown',
+					'user_exists' => (bool) $user,
+					'api_auth'    => self::is_api_auth(),
+					'source'      => $resolved['source'],
+				],
 			]
 		);
 	}

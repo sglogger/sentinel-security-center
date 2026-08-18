@@ -115,10 +115,12 @@ final class Updater {
 			return $transient;
 		}
 
-		$release = $this->get_release();
-		if ( null === $release ) {
-			return $transient;
-		}
+		// A failed lookup must not make the plugin vanish from the transient.
+		// WordPress only renders the "View details" link for a plugin it finds
+		// in response or no_update, so bailing out here would take the details
+		// modal down with it every time GitHub is unreachable, rate-limited or
+		// has no release yet.
+		$release = $this->get_release() ?? $this->local_release();
 
 		$item = $this->build_response( $release );
 
@@ -168,20 +170,50 @@ final class Updater {
 		$info = [
 			'name'              => 'WP Security Center',
 			'slug'              => $this->slug,
+			// Without this WordPress offers a "WordPress.org Plugin Page" link
+			// built from the slug, and this plugin has no page there.
+			'external'          => true,
 			'version'           => $release['version'] ?? $this->version,
 			'author'            => '<a href="https://www.glogger.ch">Steven Glogger</a>',
+			'author_profile'    => 'https://www.glogger.ch',
 			'homepage'          => 'https://github.com/' . self::REPO,
 			'download_link'     => $release['package'] ?? '',
 			'requires'          => $readme['requires'],
 			'requires_php'      => $readme['requires_php'],
 			'tested'            => $readme['tested'],
 			'last_updated'      => $release['published_at'] ?? '',
+			'added'             => $release['published_at'] ?? '',
 			'short_description' => $readme['short_description'],
-			'sections'          => $sections,
+			'sections'          => $this->order_sections( $sections ),
 			'contributors'      => $readme['contributors'],
+			'banners'           => [],
+			'icons'             => [],
 		];
 
 		return (object) $info;
+	}
+
+	/**
+	 * Put the modal's tabs in the order WordPress.org uses, and drop the ones
+	 * it never shows there. The first entry is the tab that opens by default,
+	 * so "Description" has to come first whatever order readme.txt is in.
+	 *
+	 * @param array<string, string> $sections Parsed readme sections.
+	 * @return array<string, string>
+	 */
+	private function order_sections( array $sections ): array {
+		unset( $sections['upgrade_notice'] );
+
+		$ordered = [];
+
+		foreach ( [ 'description', 'installation', 'faq', 'screenshots', 'changelog' ] as $key ) {
+			if ( ! empty( $sections[ $key ] ) ) {
+				$ordered[ $key ] = $sections[ $key ];
+				unset( $sections[ $key ] );
+			}
+		}
+
+		return array_merge( $ordered, $sections );
 	}
 
 	/**
@@ -243,6 +275,27 @@ final class Updater {
 			'tested'       => $release['tested'],
 			'requires'     => $release['requires'],
 			'requires_php' => $release['requires_php'],
+		];
+	}
+
+	/**
+	 * What we know without asking GitHub: the installed version, described by
+	 * the bundled readme.txt. Used whenever the release lookup comes back
+	 * empty so the plugin still has an entry in the update transient.
+	 *
+	 * @return array<string, mixed>
+	 */
+	private function local_release(): array {
+		$readme = $this->readme();
+
+		return [
+			'version'      => $this->version,
+			'package'      => '',
+			'changelog'    => $readme['sections']['changelog'] ?? '',
+			'published_at' => '',
+			'requires'     => $readme['requires'],
+			'requires_php' => $readme['requires_php'],
+			'tested'       => $readme['tested'],
 		];
 	}
 

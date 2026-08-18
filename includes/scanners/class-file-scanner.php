@@ -23,9 +23,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 final class File_Scanner {
 
-	private const SCOPE_MU      = 'mu_plugins';
-	private const SCOPE_UPLOADS = 'uploads_php';
-	private const SCOPE_CONFIG  = 'config';
+	private const SCOPE_MU       = 'mu_plugins';
+	private const SCOPE_UPLOADS  = 'uploads_php';
+	private const SCOPE_HTACCESS = 'uploads_htaccess';
+	private const SCOPE_CONFIG   = 'config';
+
+	/** Directory prefix this plugin uses for its own storage under uploads. */
+	private const OWN_DIR_PREFIX = 'wpsec-geoip-';
 
 	/** Extensions that can be executed by a PHP handler. */
 	private const PHP_EXTENSIONS = [ 'php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phtml', 'phps', 'phar', 'pht' ];
@@ -108,29 +112,62 @@ final class File_Scanner {
 			];
 		}
 
-		// The plugin keeps its own GeoIP database under uploads, together with
-		// the index.php and .htaccess that shield it. Reporting those as
-		// "a PHP file appeared in uploads" would be the scanner alarming about
-		// itself, every single run.
-		$state   = (array) get_option( Installer::OPTION_GEOIP_STATE, [] );
-		$own_dir = wp_normalize_path( (string) ( $state['dir'] ?? '' ) );
-
-		return self::walk(
+		// A PHP file and a .htaccess are different findings with different
+		// answers, so they are walked separately. Lumping them together
+		// reported every .htaccess as "an executable file appeared", which is
+		// wrong on both counts: it is not executable and it is not PHP.
+		$php = self::walk(
 			$dir,
 			self::SCOPE_UPLOADS,
 			$settings,
-			static function ( string $path ) use ( $own_dir ): bool {
-				if ( '' !== $own_dir && str_starts_with( wp_normalize_path( $path ), $own_dir ) ) {
-					return false;
-				}
-
-				$ext = strtolower( (string) pathinfo( $path, PATHINFO_EXTENSION ) );
-
-				return in_array( $ext, self::PHP_EXTENSIONS, true ) || '.htaccess' === basename( $path );
-			},
+			static fn( string $path ): bool => self::is_php( $path ) && ! self::is_own_file( $path ),
 			'file.php_in_uploads',
 			'file.changed_in_uploads'
 		);
+
+		$htaccess = self::walk(
+			$dir,
+			self::SCOPE_HTACCESS,
+			$settings,
+			static fn( string $path ): bool => '.htaccess' === basename( $path ) && ! self::is_own_file( $path ),
+			'file.uploads_htaccess_changed',
+			'file.uploads_htaccess_changed'
+		);
+
+		return [
+			'scanned'  => $php['scanned'] + $htaccess['scanned'],
+			'findings' => $php['findings'] + $htaccess['findings'],
+			'seen'     => array_merge( $php['seen'], $htaccess['seen'] ),
+		];
+	}
+
+	/**
+	 * One of the guard files this plugin writes into its own uploads directory.
+	 *
+	 * The plugin keeps its GeoIP database under uploads behind an index.php and
+	 * a .htaccess. Reporting those would be the scanner alarming about itself
+	 * on every run. The exemption is deliberately narrow: the directory has to
+	 * carry our prefix, the name has to be one of ours, and the contents have
+	 * to be byte-for-byte what we wrote. Anything else in there — a shell named
+	 * something else, or a shell written over our own index.php — is reported
+	 * like any other file.
+	 */
+	private static function is_own_file( string $path ): bool {
+		$uploads = wp_upload_dir();
+		$base    = trailingslashit( wp_normalize_path( (string) ( $uploads['basedir'] ?? '' ) ) );
+		$path    = wp_normalize_path( $path );
+
+		if ( '/' === $base || ! str_starts_with( $path, $base ) ) {
+			return false;
+		}
+
+		$segment = strtok( substr( $path, strlen( $base ) ), '/' );
+
+		if ( ! is_string( $segment ) || ! str_starts_with( $segment, self::OWN_DIR_PREFIX ) ) {
+			return false;
+		}
+
+		return Geoip_Database::is_guard_file( $path );
 	}
 
 	/**
@@ -360,6 +397,14 @@ final class File_Scanner {
 		if ( self::SCOPE_UPLOADS === $scope ) {
 			return sprintf(
 				'An executable file appeared in the uploads directory: %s (%s). The uploads directory should never contain PHP.',
+				$relative,
+				size_format( $size )
+			);
+		}
+
+		if ( self::SCOPE_HTACCESS === $scope ) {
+			return sprintf(
+				'A .htaccess appeared in the uploads directory: %s (%s). Plugins and hardening tools add these routinely, but one can also be used to make uploaded files executable — check what it contains.',
 				$relative,
 				size_format( $size )
 			);

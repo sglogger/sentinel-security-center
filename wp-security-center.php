@@ -44,7 +44,7 @@ define( 'WPSEC_MIN_WP', '6.5' );
 // Internal data-version constant – used by the migrator to know whether the
 // schema or stored options need patching up after an upgrade. Bumped
 // independently of the plugin version.
-define( 'WPSEC_DATA_VERSION', '1.0' );
+define( 'WPSEC_DATA_VERSION', '1.2' );
 
 // -----------------------------------------------------------------------------
 // Platform guards
@@ -118,6 +118,13 @@ require_once WPSEC_DIR . 'includes/geo/class-allowlist.php';
 require_once WPSEC_DIR . 'includes/geo/class-bypass-token.php';
 require_once WPSEC_DIR . 'includes/geo/class-login-guard.php';
 
+// Two-factor authentication. Totp and Secret_Cipher are free of WordPress so
+// the code generation can be tested against the RFC vectors.
+require_once WPSEC_DIR . 'includes/auth/class-totp.php';
+require_once WPSEC_DIR . 'includes/auth/class-secret-cipher.php';
+require_once WPSEC_DIR . 'includes/auth/class-two-factor.php';
+require_once WPSEC_DIR . 'includes/auth/class-two-factor-login.php';
+
 // Hook-driven monitors.
 require_once WPSEC_DIR . 'includes/monitors/class-plugin-monitor.php';
 require_once WPSEC_DIR . 'includes/monitors/class-user-monitor.php';
@@ -134,6 +141,7 @@ require_once WPSEC_DIR . 'includes/scanners/class-core-checksums.php';
 require_once WPSEC_DIR . 'admin/class-admin.php';
 require_once WPSEC_DIR . 'admin/class-log-list-table.php';
 require_once WPSEC_DIR . 'admin/class-csv-exporter.php';
+require_once WPSEC_DIR . 'admin/class-two-factor-admin.php';
 
 // -----------------------------------------------------------------------------
 // Lifecycle hooks

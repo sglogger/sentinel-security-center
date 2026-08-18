@@ -21,10 +21,12 @@ as few false alarms as possible. Every decision below follows from that.
   only, or off.
 - **Blocking is never on by default.** Login blocking ships in monitor mode, so
   you can see what a rule *would* have done before arming it.
-- **Failed logins are not processed at all.** No counters, no thresholds, no
-  lockouts. Rate limiting belongs in the firewall, CDN or fail2ban, where it can
-  act before the request reaches PHP. This plugin reacts only to authentication
-  that actually succeeded.
+- **Failed logins are recorded, not acted on.** `login.failed` is written to the
+  log at Info, log-only, so the attempts are there when you need them — but
+  there are no counters, no thresholds and no lockouts. Rate limiting belongs in
+  the firewall, CDN or fail2ban, where it can act before the request reaches
+  PHP. Every rule this plugin *enforces* reacts only to authentication that
+  actually succeeded.
 - **The plugin never modifies, quarantines or deletes a scanned file.** It
   reports; recovery is your call. A false positive must never be able to break a
   working site.
@@ -42,7 +44,48 @@ as few false alarms as possible. Every decision below follows from that.
 | Out-of-band | user rows altered directly in the database, found by an hourly reconciliation scan against a stored baseline |
 | Configuration | `siteurl`, `home`, `admin_email`, `users_can_register`, `default_role`, `blog_public`, auto-update options, `wp-config.php` and `.htaccess` hashes, WordPress core files against the official checksums, cron jobs, new must-use plugins, XML-RPC state, file-editor state, application passwords |
 | Filesystem | new or changed files in `wp-content/mu-plugins/`, any PHP file under `wp-content/uploads/`, and backdoor signatures in new PHP files |
-| Logins | successful login from a country outside the allow list, with optional blocking |
+| Logins | failed attempts, successful logins, and logins from a country outside the allow list — with optional blocking |
+| Two-factor | enrolment, removal, wrong codes after a correct password, recovery-code and e-mail-fallback use |
+
+## Two-factor authentication
+
+A TOTP code from any authenticator app, asked for after the password is
+accepted. Enrolment is per account and voluntary by default; a site setting can
+additionally require it for everyone who can `manage_options`, with a grace
+period whose clock starts when the requirement is switched on.
+
+How it holds together:
+
+- **The session is issued only after the second factor.** `wp_login` fires after
+  WordPress has already set the cookie, so the first thing that happens is that
+  the session it just created is destroyed again — by token, so other sessions
+  the user has open elsewhere are untouched.
+- **Secrets are encrypted at rest** with AES-256-GCM under a key derived from
+  `SECURE_AUTH_SALT`. A database dump without `wp-config.php` yields nothing
+  usable.
+- **A code is accepted once.** The last accepted time step is recorded, so a
+  code captured over the shoulder cannot be replayed for the rest of its window.
+- **The QR code is generated locally.** Sending the provisioning URI to an
+  external QR service would hand the shared secret to a third party.
+- **Nothing is switched on until a code is proven**, so a mistyped setup key
+  cannot lock anyone out.
+
+### If the authenticator is lost
+
+1. **Recovery codes.** Ten single-use codes, issued at enrolment and shown once.
+   Stored as hashes — which is also why they still work after a salt rotation,
+   when the encrypted TOTP secrets no longer decrypt.
+2. **A one-time code by e-mail**, off by default. It reduces the second factor
+   to whoever can read the mailbox, and on many sites that mailbox lives on the
+   same hosting account — so it is a deliberate, logged, opt-in weakening for
+   sites where losing a phone would otherwise mean losing the site.
+3. **An administrator reset.** Any user with `edit_user` can clear someone
+   else's second factor from that user's profile screen. It is a reset, not a
+   bypass: they must enrol again, and the event is logged as `2fa.reset_by_admin`.
+
+Application passwords, REST and XML-RPC are not challenged. There is nobody at
+the keyboard to type a code, and an application password is already a separate
+credential that can be revoked on its own.
 
 ## Geo-aware login control
 

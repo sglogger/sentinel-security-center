@@ -101,9 +101,12 @@ final class Event_Registry {
 			'apppass.used'                        => $e( self::INFO, self::MODE_OFF, 'user', 'apppass' ),
 
 			// -----------------------------------------------------------------
-			// Logins. There is deliberately NO failed-login event: this plugin
-			// does not process authentication failures at all.
+			// Logins. A failed attempt is recorded but deliberately starts at
+			// Info / log only: on any public site the background noise of bots
+			// guessing passwords is constant, and mailing it out is how a
+			// mailbox gets trained to ignore this plugin.
 			// -----------------------------------------------------------------
+			'login.failed'                        => $e( self::INFO, self::MODE_LOG, 'login', 'login' ),
 			'login.success'                       => $e( self::INFO, self::MODE_LOG, 'login', 'login' ),
 			'login.allowed_private_ip'            => $e( self::INFO, self::MODE_LOG, 'login', 'login' ),
 			'login.allowed_by_allowlist'          => $e( self::INFO, self::MODE_LOG, 'login', 'login' ),
@@ -116,6 +119,22 @@ final class Event_Registry {
 			'login.bypass_rejected'               => $e( self::WARNING, self::MODE_LOG, 'login', 'login' ),
 			'login.blocking_kill_switch'          => $e( self::HIGH, self::MODE_EMAIL, 'login', 'login' ),
 			'user.logout'                         => $e( self::INFO, self::MODE_OFF, 'login', 'login' ),
+
+			// -----------------------------------------------------------------
+			// Two-factor authentication. A failed challenge means someone had
+			// the right password, which is why it is not filed as noise.
+			// -----------------------------------------------------------------
+			'2fa.enabled'                         => $e( self::NOTICE, self::MODE_LOG, 'user', 'twofactor' ),
+			'2fa.disabled'                        => $e( self::HIGH, self::MODE_EMAIL, 'user', 'twofactor' ),
+			'2fa.reset_by_admin'                  => $e( self::HIGH, self::MODE_EMAIL, 'user', 'twofactor' ),
+			'2fa.challenge_issued'                => $e( self::INFO, self::MODE_LOG, 'user', 'twofactor' ),
+			'2fa.challenge_passed'                => $e( self::INFO, self::MODE_LOG, 'user', 'twofactor' ),
+			'2fa.challenge_failed'                => $e( self::WARNING, self::MODE_LOG, 'user', 'twofactor' ),
+			'2fa.recovery_code_used'              => $e( self::HIGH, self::MODE_EMAIL, 'user', 'twofactor' ),
+			'2fa.recovery_codes_regenerated'      => $e( self::NOTICE, self::MODE_LOG, 'user', 'twofactor' ),
+			'2fa.email_code_sent'                 => $e( self::NOTICE, self::MODE_LOG, 'user', 'twofactor' ),
+			'2fa.email_code_used'                 => $e( self::HIGH, self::MODE_EMAIL, 'user', 'twofactor' ),
+			'2fa.policy_changed'                  => $e( self::HIGH, self::MODE_EMAIL, 'system', 'twofactor' ),
 
 			// -----------------------------------------------------------------
 			// Options and configuration
@@ -233,14 +252,15 @@ final class Event_Registry {
 	 */
 	public static function groups(): array {
 		return [
-			'plugins' => __( 'Plugins', 'wp-security-center' ),
-			'themes'  => __( 'Themes', 'wp-security-center' ),
-			'users'   => __( 'Users & administrators', 'wp-security-center' ),
-			'apppass' => __( 'Application passwords', 'wp-security-center' ),
-			'login'   => __( 'Logins', 'wp-security-center' ),
-			'config'  => __( 'Configuration', 'wp-security-center' ),
-			'files'   => __( 'Files & integrity', 'wp-security-center' ),
-			'system'  => __( 'Plugin status', 'wp-security-center' ),
+			'plugins'   => __( 'Plugins', 'wp-security-center' ),
+			'themes'    => __( 'Themes', 'wp-security-center' ),
+			'users'     => __( 'Users & administrators', 'wp-security-center' ),
+			'apppass'   => __( 'Application passwords', 'wp-security-center' ),
+			'login'     => __( 'Logins', 'wp-security-center' ),
+			'twofactor' => __( 'Two-factor authentication', 'wp-security-center' ),
+			'config'    => __( 'Configuration', 'wp-security-center' ),
+			'files'     => __( 'Files & integrity', 'wp-security-center' ),
+			'system'    => __( 'Plugin status', 'wp-security-center' ),
 		];
 	}
 }

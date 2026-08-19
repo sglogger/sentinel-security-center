@@ -12,6 +12,33 @@ updates arrive the ordinary way, through WordPress.
 
 ---
 
+## Screens
+
+Click any screenshot to open it full size.
+
+<table>
+<tr>
+<td width="50%" valign="top">
+<a href="screenshots/Security_Event_Log.png"><img src="screenshots/Security_Event_Log.png" alt="Security Center &rarr; Event Log" width="100%"></a>
+<p><b>Event Log</b> &mdash; every event with its severity, its stable event key
+(<code>plugin.deleted</code>, <code>geoip.db_update_failed</code>), who did it and
+from which address. Filter by category, severity, time window or IP, search the
+descriptions, export the result as CSV. Rows that triggered an e-mail say so.</p>
+</td>
+<td width="50%" valign="top">
+<a href="screenshots/Security_Center_Status.png"><img src="screenshots/Security_Center_Status.png" alt="Security Center &rarr; Status" width="100%"></a>
+<p><b>Status</b> &mdash; whether login protection is armed or only watching, the
+state and age of the GeoIP database (including whether it can be downloaded off
+your own site), who alerts go to, how much of the hourly e-mail budget is used,
+and when each scheduled scan runs next.</p>
+</td>
+</tr>
+</table>
+
+The `screenshots/` directory is repository documentation only. The release
+workflow stages the ZIP from an allow list, so nothing here can reach the
+plugin shipped to WordPress.org.
+
 ## Design principles
 
 Two goals pull against each other here — miss as little as possible, and raise
@@ -47,6 +74,53 @@ as few false alarms as possible. Every decision below follows from that.
 | Logins | failed attempts, successful logins, logins from a country outside the allow list, and logins refused by the IP deny list — with optional blocking |
 | Two-factor | enrolment, removal, wrong codes after a correct password, recovery-code and e-mail-fallback use |
 
+## Settings
+
+Five tabs under **Security Center → Settings**.
+
+<table>
+<tr>
+<td width="50%" valign="top">
+<a href="screenshots/Settings_General.png"><img src="screenshots/Settings_General.png" alt="Settings &rarr; General" width="100%"></a>
+<p><b>General</b> &mdash; recipients, sender identity, log retention, and the
+hourly e-mail limit: a safety valve rather than a digest, since every event is
+written to the log whether or not its alert was sent. <i>Send a test alert</i>
+proves delivery works, because a rejected sender fails silently on many hosts.</p>
+</td>
+<td width="50%" valign="top">
+<a href="screenshots/Settings_Alerts.png"><img src="screenshots/Settings_Alerts.png" alt="Settings &rarr; Alerts" width="100%"></a>
+<p><b>Alerts</b> &mdash; the design principle made concrete: every event type is
+individually <i>E-mail</i>, <i>Log only</i> or <i>Off</i>, next to the severity it
+carries. The defaults mail what an attacker needs and log what an administrator
+does routinely.</p>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+<a href="screenshots/Settings_Login_Locations.png"><img src="screenshots/Settings_Login_Locations.png" alt="Settings &rarr; Login &amp; Location" width="100%"></a>
+<p><b>Login &amp; Location</b> &mdash; allowed countries, the IP/CIDR allow and deny
+lists, trusted proxies and the CDN country header, and the bypass-link timings.
+The screen refuses a deny entry that matches the address you are saving from.</p>
+</td>
+<td width="50%" valign="top">
+<a href="screenshots/Settings_2FA.png"><img src="screenshots/Settings_2FA.png" alt="Settings &rarr; Two-Factor" width="100%"></a>
+<p><b>Two-Factor</b> &mdash; availability for everyone, an optional requirement for
+anyone who can <code>manage_options</code> with a grace period, and the recovery
+route: ten hashed single-use codes, plus the e-mail fallback that is off by
+default because it is a real weakening.</p>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+<a href="screenshots/Settings_File_Integrity.png"><img src="screenshots/Settings_File_Integrity.png" alt="Settings &rarr; File Integrity" width="100%"></a>
+<p><b>File Integrity</b> &mdash; which trees are scanned, the backdoor-heuristic
+score at which a new PHP file is reported, a per-run file ceiling so a huge
+uploads directory cannot exhaust the PHP time limit, and path fragments to skip.</p>
+</td>
+<td width="50%" valign="top"></td>
+</tr>
+</table>
+
 ## Hardening report
 
 A read-only screen — **Security Center → Hardening** — grading the installation
@@ -68,6 +142,8 @@ instead. Moving wp-config.php, changing the table prefix and renaming the
 all three.
 
 Nothing on the page changes anything, and nothing is written.
+
+<a href="screenshots/Hardening.png"><img src="screenshots/Hardening.png" alt="Security Center &rarr; Hardening" width="600"></a>
 
 ## Two-factor authentication
 
@@ -91,6 +167,12 @@ How it holds together:
   external QR service would hand the shared secret to a third party.
 - **Nothing is switched on until a code is proven**, so a mistyped setup key
   cannot lock anyone out.
+
+<a href="screenshots/2FA.png"><img src="screenshots/2FA.png" alt="Security Center &rarr; Two-factor enrolment" width="600"></a>
+
+Enrolment under **Security Center → Two-factor**: the QR code is rendered on the
+server, the same secret is offered as a typed key, and step 2 will not switch
+anything on until a code from the app is accepted.
 
 ### If the authenticator is lost
 
@@ -173,6 +255,18 @@ On top of that: private, loopback and link-local addresses are always allowed
 and are never reported as a foreign login, and if the GeoIP subsystem as a whole
 becomes unavailable, blocking automatically falls back to monitor mode and
 raises a critical alert. A deleted database file cannot lock you out.
+
+### Diagnostics
+
+<a href="screenshots/Diagnostics.png"><img src="screenshots/Diagnostics.png" alt="Security Center &rarr; Diagnostics" width="600"></a>
+
+**Security Center → Diagnostics** answers the question the other screens raise:
+*why* was this decision made. It shows the connecting address, whether it counts
+as a trusted proxy, the client address that was resolved from it, the country
+and where that country came from, and the verdict with the rule that produced it.
+Any other address can be tested without waiting for a login, and every header the
+web server passed to PHP is listed — which is how you find out what your CDN
+actually sets.
 
 ## Requirements
 

@@ -176,7 +176,7 @@ jobs:
             fi
           done
 
-          for unwanted in tests dev .github steven local_wp_core db_data; do
+          for unwanted in tests dev .github steven local_wp_core db_data screenshots; do
             if [ -e "$STAGE/$unwanted" ]; then
               echo "::error::directory $unwanted must not ship inside the plugin"
               exit 1
